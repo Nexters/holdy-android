@@ -1,9 +1,14 @@
 object Dependencies {
-    const val Hilt = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
 
     val Essential = listOf(
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Essential.Coroutines}"
     )
+
+    object Hilt {
+        const val Core = "com.google.dagger:hilt-core:${Versions.Jetpack.Hilt}"
+        const val Android = "com.google.dagger:hilt-android:${Versions.Jetpack.Hilt}"
+        const val Kapt = "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}"
+    }
 
     val Ktx = listOf(
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
@@ -32,10 +37,6 @@ object Dependencies {
         "androidx.compose.ui:ui-tooling-preview:${Versions.Compose.Main}",
         "io.coil-kt:coil-compose:${Versions.Compose.Coil}"
     )
-    val Compiler = listOf(
-        "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}",
-    )
-
     val Test = listOf(
         "org.junit.jupiter:junit-jupiter-api:${Versions.Test.JUnit}",
         "org.junit.jupiter:junit-jupiter-engine:${Versions.Test.JUnit}",

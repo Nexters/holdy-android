@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -28,17 +28,24 @@ android {
         targetCompatibility = Apps.targetCompat
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.Main
+    }
+
     kotlinOptions {
         jvmTarget = Apps.jvmTarget
     }
 }
 
 dependencies {
-    implementation(project(Modules.DOMAIN))
-    implementation(project(Modules.DATA))
-    implementation(project(Modules.PRESENTATION))
-
-    implementation(Dependencies.Hilt)
+    implementation(project(Modules.Domain))
+    kapt(Dependencies.Hilt.Kapt)
+    implementation(Dependencies.Hilt.Android)
     Dependencies.Essential.forEach(::implementation)
-    Dependencies.Compiler.forEach(::kapt)
+    Dependencies.Compose.forEach(::implementation)
+    Dependencies.Ktx.forEach(::implementation)
 }

@@ -1,5 +1,5 @@
 object Modules {
-    const val DOMAIN = ":domain"
-    const val DATA = ":data"
-    const val PRESENTATION = ":presentation"
+    const val Domain = ":domain"
+    const val Data = ":data"
+    const val Presentation = ":presentation"
 }

@@ -1,10 +1,6 @@
 object Versions {
-    const val DOMAIN = "0.1.0"
-    const val DATA = "0.1.0"
-    const val PRESENTATION = "0.1.0"
-
     object Essential {
-        const val Kotlin = "1.6.21"
+        const val Kotlin = "1.6.10"
         const val Gradle = "7.2.1"
         const val Coroutines = "1.6.2"
     }
@@ -25,7 +21,7 @@ object Versions {
     }
 
     object Compose {
-        const val Main = "1.2.0-beta02"
+        const val Main = "1.1.1"
         const val Material3 = "1.0.0-alpha13"
         const val Activity = "1.4.0"
         const val LifecycleViewModel = "2.4.1"

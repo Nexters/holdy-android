@@ -1,6 +1,6 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("kotlin-android")
     id("de.mannodermaus.android-junit5")
     id("kotlin-kapt")
 }
@@ -10,6 +10,8 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.Hilt)
+    kapt(Dependencies.Hilt.Kapt)
+    implementation(Dependencies.Hilt.Core)
+    Dependencies.Essential.forEach(::implementation)
     Dependencies.Test.forEach(::testImplementation)
 }
