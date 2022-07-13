@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -7,6 +9,9 @@ plugins {
 
 android {
     compileSdk = Apps.compileSdk
+    defaultConfig{
+        buildConfigField("String", "API_URL", "\"http://example.com\"")
+    }
 }
 
 dependencies {
@@ -15,5 +20,4 @@ dependencies {
     Dependencies.Test.forEach(::testImplementation)
     Dependencies.Essential.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)
-
 }
