@@ -10,7 +10,7 @@ plugins {
 android {
     compileSdk = Apps.compileSdk
     defaultConfig{
-        buildConfigField("String", "API_URL", "\"http://example.com\"")
+        buildConfigField("String", "API_URL", "http://api-dev.semonemo.xyz/")
     }
 }
 
