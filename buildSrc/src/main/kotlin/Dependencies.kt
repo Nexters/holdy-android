@@ -21,7 +21,7 @@ object Dependencies {
         "com.squareup.retrofit2:retrofit:${Versions.Network.Retrofit}",
         "com.squareup.okhttp3:logging-interceptor:${Versions.Network.OkHttp}",
         "com.squareup.okhttp3:okhttp:${Versions.Network.OkHttp}",
-        "com.squareup.retrofit2:converter-jackson:${Versions.Network.Retrofit}"
+        "com.squareup.retrofit2:converter-gson:${Versions.Network.Retrofit}"
     )
 
     val Compose = listOf(
