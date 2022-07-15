@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SemoNemo">
         <activity
-            android:name="team.nexters.semonemo.ui.MainActivity"
+            android:name="team.nexters.semonemo.ui.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

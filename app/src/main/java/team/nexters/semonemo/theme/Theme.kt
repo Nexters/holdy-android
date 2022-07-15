@@ -1,4 +1,4 @@
-package team.nexters.semonemo.ui.theme
+package team.nexters.semonemo.theme
 
 import android.app.Activity
 import android.os.Build
