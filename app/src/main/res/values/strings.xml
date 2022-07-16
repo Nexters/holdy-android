@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SemoNemo</string>
+
+    //home
+    <string name="description_home">home</string>
+    <string name="description_creating">creating</string>
+    <string name="description_reward">reward</string>
 </resources>

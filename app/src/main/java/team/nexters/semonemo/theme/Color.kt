@@ -1,4 +1,4 @@
-package team.nexters.semonemo.ui.theme
+package team.nexters.semonemo.theme
 
 import androidx.compose.ui.graphics.Color
 
