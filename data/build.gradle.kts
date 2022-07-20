@@ -10,11 +10,12 @@ plugins {
 android {
     compileSdk = Apps.compileSdk
     defaultConfig{
-        buildConfigField("String", "API_URL", "http://api-dev.semonemo.xyz/")
+        buildConfigField("String", "API_URL", "\"http://api-dev.semonemo.xyz/\"")
     }
 }
 
 dependencies {
+    implementation(project(Modules.Domain))
     kapt(Dependencies.Hilt.Kapt)
     implementation(Dependencies.Hilt.Core)
     Dependencies.Test.forEach(::testImplementation)
