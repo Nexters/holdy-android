@@ -1,0 +1,28 @@
+[
+  {
+    "id": 36,
+    "host": {
+      "nickname": "상도동불도져"
+    },
+    "place": {
+      "summary": "락스타 클라이밍",
+      "address": "서울 송파구 백제고분로 435 예스빌딩 B1",
+      "mapLink": "https://naver.me/57w81EVT"
+    },
+    "startDate": "2022-07-19T18:00:00",
+    "endDate": "2022-07-19T21:00:00"
+  },
+  {
+    "id": 37,
+    "host": {
+      "nickname": "상도동불도져"
+    },
+    "place": {
+      "summary": "비블럭 클라이밍 강남점",
+      "address": "서울 강남구 논현로 563 언주타워 지하 1층 비블럭 클라이밍",
+      "mapLink": "https://naver.me/FT0kU0D9"
+    },
+    "startDate": "2022-07-23T10:00:00",
+    "endDate": "2022-07-23T12:00:00"
+  }
+]
