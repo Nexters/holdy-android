@@ -8,7 +8,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import team.nexters.data.BuildConfig
+import team.nexters.data.moim.api.MoimApi
+
 import javax.inject.Singleton
 
 @Module
@@ -16,12 +19,21 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
+    fun provideBaseUrl() = BuildConfig.API_URL
+
+    @Provides
+    @Singleton
+    fun provideMoimApi(retrofit: Retrofit): MoimApi =
+        retrofit.create(MoimApi::class.java)
+
+    @Provides
     @Singleton
     fun provideRetrofit(
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
+        BASE_URL: String
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BuildConfig.API_URL)
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

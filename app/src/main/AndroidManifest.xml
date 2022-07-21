@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="team.nexters.semonemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".SemoNemo"
         android:allowBackup="true"
@@ -9,7 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SemoNemo">
+        android:theme="@style/Theme.SemoNemo"
+        android:usesCleartextTraffic="true">
         <activity
             android:name="team.nexters.semonemo.ui.start.StartActivity"
             android:exported="true"

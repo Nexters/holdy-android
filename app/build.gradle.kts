@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -46,6 +46,7 @@ android {
 }
 
 dependencies {
+    implementation(project(Modules.Data))
     implementation(project(Modules.Domain))
     kapt(Dependencies.Hilt.Kapt)
     implementation(Dependencies.Hilt.Android)
