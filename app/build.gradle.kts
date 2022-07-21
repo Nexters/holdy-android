@@ -38,6 +38,10 @@ android {
 
     kotlinOptions {
         jvmTarget = Apps.jvmTarget
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${rootProject.file(".").absolutePath}/report/compose-reports"
+        )
     }
 }
 
