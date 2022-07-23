@@ -8,20 +8,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import team.nexters.semonemo.theme.Green800
-
-object SemonemoButtonDefaults {
-    @Composable
-    fun colors() = ButtonDefaults.buttonColors(
-        containerColor = Green800
-    )
-}
 
 @Composable
-internal fun SemonemoButton(
+internal fun Button(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    colors: ButtonColors = SemonemoButtonDefaults.colors(),
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
     text: String
 ) {
     Button(
