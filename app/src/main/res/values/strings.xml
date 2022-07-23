@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SemoNemo</string>
     //login
-    <string name="code_placeholder">16자리 코드를 입력해주세요</string>
+    <string name="placeholder_code">16자리 코드를 입력해주세요</string>
     <string name="start">시작하기</string>
     <string name="no_code">코드가 없나요?</string>
     <string name="code_error">코드를 확인해 주세요</string>
@@ -10,4 +10,17 @@
     <string name="description_home">home</string>
     <string name="description_creating">creating</string>
     <string name="description_reward">reward</string>
+
+    //moim create
+    <string name="moim_create">모임 만들기</string>
+    <string name="star"> *</string>
+    <string name="title_date">날짜</string>
+    <string name="placeholder_date">2022년 7월 12일(화요일)</string>
+    <string name="placeholder_time">오전 10 : 00\u0020:\u0020오전 12 : 00</string>
+    <string name="title_place">장소</string>
+    <string name="placeholder_address">주소</string>
+    <string name="placeholder_detail_address">상세 주소</string>
+    <string name="title_place_link">장소 링크</string>
+    <string name="placeholder_address_link">네이버 지도, 카카오 지도 링크를 입력하세요</string>
+    <string name="link_is_correct">링크가 잘못되지 않았는지 확인해주세요</string>
 </resources>
