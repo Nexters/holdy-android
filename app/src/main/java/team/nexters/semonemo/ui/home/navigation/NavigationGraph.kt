@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import team.nexters.semonemo.ui.home.moimcreate.MoimCreateScreen
 import team.nexters.semonemo.ui.home.moimlist.MoimListScreen
 
 @Composable
@@ -16,7 +17,7 @@ internal fun NavigationGraph(navController: NavHostController) {
             MoimListScreen()
         }
         composable(HomeScreens.Creating.route) {
-
+            MoimCreateScreen()
         }
         composable(HomeScreens.Reward.route) {
         }
