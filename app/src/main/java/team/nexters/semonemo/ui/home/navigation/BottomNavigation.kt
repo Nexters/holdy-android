@@ -20,8 +20,8 @@ internal fun BottomNavigation(
 ) {
     val items: List<HomeScreens> = listOf(
         HomeScreens.List,
+        HomeScreens.Creating,
         HomeScreens.Reward,
-        HomeScreens.Creating
     )
     var selectedItem by remember { mutableStateOf(0) }
     NavigationBar {

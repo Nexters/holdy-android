@@ -2,19 +2,19 @@ package team.nexters.semonemo.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val Blue7 = Color(0xFF5C78FF)
+val Orange6 = Color(0xFFF35916)
+val White = Color(0xFFFFFFFF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val Gray0 = Color(0xFFF8F9FA)
+val Gray1 = Color(0xFFF1F3F5)
+val Gray2 = Color(0xFFEAECEF)
+val Gray3 = Color(0xFFDFDEE6)
+val Gray4 = Color(0xFFCFD4D9)
+val Gray5 = Color(0xFFAEB5BC)
+val Gray6 = Color(0xFF878E95)
+val Gray7 = Color(0xFF4A5056)
+val Gray8 = Color(0xFF353A3F)
+val Gray9 = Color(0xFF222529)
 
-val Grey600 = Color(0xFF4A5056)
-val Grey400 = Color(0xFF89888C)
-val Grey300 = Color(0xFFAEB5BC)
-val Grey200 = Color(0xFFC9CACB)
-val Grey100 = Color(0xFFDFE2E6)
-val Grey50 = Color(0xFFE6E8E7)
 
-val Green800 = Color(0xFF377B65)

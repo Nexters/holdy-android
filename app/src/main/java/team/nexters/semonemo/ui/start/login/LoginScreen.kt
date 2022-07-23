@@ -1,5 +1,6 @@
 package team.nexters.semonemo.ui.start.login
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,12 +25,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import team.nexters.semonemo.R
-import team.nexters.semonemo.common.SemonemoButton
-import team.nexters.semonemo.common.SemonemoTextField
+import team.nexters.semonemo.common.Button
+import team.nexters.semonemo.common.TextField
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
-import team.nexters.semonemo.extension.toast
-import team.nexters.semonemo.theme.Grey200
+import team.nexters.semonemo.theme.Gray6
 import team.nexters.semonemo.ui.start.StartActivity
 
 @Composable
@@ -43,7 +43,11 @@ internal fun LoginScreen(
                 LoginEvent.Success ->
                     (context as StartActivity).startMain()
                 LoginEvent.Failed ->
-                    toast(context, context.getString(R.string.code_error))
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.code_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
             }
         }
     }
@@ -64,22 +68,23 @@ private fun LoginScreen(
         Spacer(modifier = Modifier.height(84.dp))
         Text("logo") //TODO
         Spacer(modifier = Modifier.height(157.dp))
-        SemonemoTextField(
+        TextField(
             modifier = Modifier
                 .padding(horizontal = 20.dp)
                 .drawColoredShadow(
                     offsetY = (-2).dp
                 ),
             value = code,
-            onValueChange = { s ->
+            onValueChanged = { s ->
                 val count = s.count { it == '\n' }
                 if (count < 1) {
                     code = s
                 }
 
-            }
+            },
+            placeHolderText = stringResource(id = R.string.placeholder_code)
         )
-        SemonemoButton(
+        Button(
             modifier = Modifier
                 .padding(20.dp)
                 .fillMaxWidth()
@@ -90,7 +95,7 @@ private fun LoginScreen(
         Text(
             modifier = Modifier.noRippleClickable { },
             text = stringResource(id = R.string.no_code),
-            style = TextStyle(fontSize = 12.sp, color = Grey200),
+            style = TextStyle(fontSize = 12.sp, color = Gray6),
         )
     }
 }
