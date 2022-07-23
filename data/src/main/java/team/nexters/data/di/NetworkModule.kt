@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import team.nexters.data.BuildConfig
 import team.nexters.data.moim.api.MoimApi
+import team.nexters.data.user.api.UserApi
 
 import javax.inject.Singleton
 
@@ -25,6 +26,11 @@ class NetworkModule {
     @Singleton
     fun provideMoimApi(retrofit: Retrofit): MoimApi =
         retrofit.create(MoimApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi =
+        retrofit.create(UserApi::class.java)
 
     @Provides
     @Singleton
