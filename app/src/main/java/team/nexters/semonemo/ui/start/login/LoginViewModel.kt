@@ -2,9 +2,9 @@ package team.nexters.semonemo.ui.start.login
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import team.nexters.semonemo.base.BaseViewModel
+import team.nexters.semonemo.base.ExceptionEmitter
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel : ExceptionEmitter() {
     private val _eventFlow = MutableSharedFlow<LoginEvent>(extraBufferCapacity = 1)
     val eventFlow = _eventFlow.asSharedFlow()
 
