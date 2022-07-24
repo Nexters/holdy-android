@@ -10,6 +10,10 @@ object Dependencies {
         const val Kapt = "com.google.dagger:hilt-android-compiler:${Versions.Jetpack.Hilt}"
     }
 
+    object Jetpack {
+        const val DataStore = "androidx.datastore:datastore-preferences:1.0.0"
+    }
+
     val Ktx = listOf(
         "androidx.core:core-ktx:${Versions.Ktx.Core}",
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.Ktx.LifeCycle}",

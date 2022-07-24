@@ -17,7 +17,8 @@ android {
 dependencies {
     implementation(project(Modules.Domain))
     kapt(Dependencies.Hilt.Kapt)
-    implementation(Dependencies.Hilt.Core)
+    implementation(Dependencies.Hilt.Android)
+    implementation(Dependencies.Jetpack.DataStore)
     Dependencies.Test.forEach(::testImplementation)
     Dependencies.Essential.forEach(::implementation)
     Dependencies.Network.forEach(::implementation)

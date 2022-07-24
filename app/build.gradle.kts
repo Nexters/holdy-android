@@ -50,6 +50,7 @@ dependencies {
     implementation(project(Modules.Domain))
     kapt(Dependencies.Hilt.Kapt)
     implementation(Dependencies.Hilt.Android)
+    implementation(Dependencies.Jetpack.DataStore)
     Dependencies.Essential.forEach(::implementation)
     Dependencies.Compose.forEach(::implementation)
     Dependencies.Ktx.forEach(::implementation)
