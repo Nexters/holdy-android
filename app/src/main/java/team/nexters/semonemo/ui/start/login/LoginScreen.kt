@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.TextField
+import team.nexters.semonemo.extension.basicExceptionHandler
+import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Gray6
@@ -36,19 +39,26 @@ import team.nexters.semonemo.ui.start.StartActivity
 internal fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
+    val activity = (LocalContext.current as StartActivity)
+    val lifecycleOwner = LocalLifecycleOwner.current
+
     LaunchedEffect(Unit) {
-        viewModel.eventFlow.collect { event ->
+        viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
             when (event) {
                 LoginEvent.Success ->
-                    (context as StartActivity).startMain()
+                    activity.startMain()
                 LoginEvent.Failed ->
                     Toast.makeText(
-                        context,
-                        context.getString(R.string.code_error),
+                        activity,
+                        activity.getString(R.string.code_error),
                         Toast.LENGTH_SHORT
                     ).show()
             }
+        }
+    }
+    LaunchedEffect(Unit) {
+        viewModel.exceptionFlow.collectWithLifecycle(lifecycleOwner) {
+            activity.basicExceptionHandler(it)
         }
     }
     LoginScreen(onLogin = viewModel::login)

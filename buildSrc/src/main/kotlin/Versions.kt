@@ -7,8 +7,8 @@ object Versions {
 
     object Ktx {
         const val Core = "1.7.0"
-        const val LifeCycle = "2.4.1"
-        const val ViewModel = "2.4.1"
+        const val LifeCycle = "2.5.0"
+        const val ViewModel = "2.5.0"
     }
 
     object Network {
@@ -18,13 +18,14 @@ object Versions {
 
     object Jetpack {
         const val Hilt = "2.42"
+        const val DataStore = "1.0.0"
     }
 
     object Compose {
         const val Main = "1.1.1"
         const val Material3 = "1.0.0-alpha13"
         const val Activity = "1.4.0"
-        const val LifecycleViewModel = "2.4.1"
+        const val LifecycleViewModel = "2.5.0"
         const val Accompanist = "0.24.4-alpha"
         const val HiltNavigationCompose = "1.0.0"
         const val Coil = "2.1.0"

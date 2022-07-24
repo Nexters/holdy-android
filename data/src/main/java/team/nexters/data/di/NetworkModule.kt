@@ -1,22 +1,33 @@
 package team.nexters.data.di
 
+import android.util.Log
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import team.nexters.data.BuildConfig
+import team.nexters.data.datastore.DataStoreManager
 import team.nexters.data.moim.api.MoimApi
+import team.nexters.data.user.api.UserApi
 
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+internal class NetworkModule {
 
     @Provides
     fun provideBaseUrl() = BuildConfig.API_URL
@@ -25,6 +36,11 @@ class NetworkModule {
     @Singleton
     fun provideMoimApi(retrofit: Retrofit): MoimApi =
         retrofit.create(MoimApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi =
+        retrofit.create(UserApi::class.java)
 
     @Provides
     @Singleton
@@ -41,13 +57,16 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        requestInterceptor: Interceptor
     ): OkHttpClient = if (BuildConfig.DEBUG) {
         OkHttpClient.Builder()
+            .addInterceptor(requestInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .build()
     } else {
         OkHttpClient.Builder()
+            .addInterceptor(requestInterceptor)
             .build()
     }
 
@@ -55,7 +74,32 @@ class NetworkModule {
     @Singleton
     fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = HttpLoggingInterceptor.Level.HEADERS
+        }
+
+    @Provides
+    @Singleton
+    fun providesOkhttpInterceptor(
+        dataStore: DataStoreManager
+    ): Interceptor =
+        Interceptor { chain: Interceptor.Chain ->
+            val original: Request = chain.request()
+            val requestBuilder = original.newBuilder()
+            if (original.url.encodedPath != "/api/login") {
+                val session = runBlocking {
+                    withContext(Dispatchers.IO) {
+                        runCatching {
+                            dataStore.session.first()
+                        }
+                    }
+                }
+                session.onSuccess {
+                    requestBuilder.addHeader("Cookie", it)
+                }
+
+            }
+            val request = requestBuilder.build()
+            chain.proceed(request)
         }
 
 }

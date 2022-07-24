@@ -1,4 +1,4 @@
-package team.nexters.domain
+package team.nexters.domain.moim
 
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
