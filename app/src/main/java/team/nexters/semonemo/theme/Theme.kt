@@ -18,10 +18,12 @@ import androidx.core.view.ViewCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Blue7,
+    primary = Primary,
     onPrimary = White,
-    secondary = Gray1,
-    onSecondary = Gray9,
+    secondary = Secondary,
+    onSecondary = White,
+    tertiary = Tertiary,
+    onTertiary = White,
     surface = White,
     onSurface = Gray9,
     background = White,
@@ -29,10 +31,12 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Blue7,
+    primary = Primary,
     onPrimary = White,
-    secondary = Gray1,
-    onSecondary = Gray9,
+    secondary = Secondary,
+    onSecondary = White,
+    tertiary = Tertiary,
+    onTertiary = White,
     surface = White,
     onSurface = Gray9,
     background = White,
