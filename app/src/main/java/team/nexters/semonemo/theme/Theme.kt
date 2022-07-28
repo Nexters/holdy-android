@@ -17,18 +17,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Primary,
-    onPrimary = White,
-    secondary = Secondary,
-    onSecondary = White,
-    tertiary = Tertiary,
-    onTertiary = White,
-    surface = White,
-    onSurface = Gray9,
-    background = White,
-    onBackground = Gray9
-)
+
 
 private val LightColorScheme = lightColorScheme(
     primary = Primary,
@@ -46,18 +35,9 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun SemoNemoTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+    val colorScheme = LightColorScheme
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
