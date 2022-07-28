@@ -30,7 +30,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.common.TexFieldState
-import team.nexters.semonemo.common.TextField
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.theme.Gray3
 import team.nexters.semonemo.theme.Gray5
