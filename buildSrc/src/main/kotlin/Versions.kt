@@ -23,7 +23,7 @@ object Versions {
 
     object Compose {
         const val Main = "1.1.1"
-        const val Material3 = "1.0.0-alpha13"
+        const val Material3 = "1.0.0-alpha14"
         const val Activity = "1.4.0"
         const val LifecycleViewModel = "2.5.0"
         const val Accompanist = "0.24.4-alpha"
