@@ -6,7 +6,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-abstract class ExceptionEmitter : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
     private val _exceptionChannel = Channel<Throwable>()
     val exceptionFlow = _exceptionChannel.receiveAsFlow()
 
