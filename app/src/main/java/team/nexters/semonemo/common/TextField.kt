@@ -71,7 +71,9 @@ internal fun TextField(
                         bottom = 14.dp
                     ),
                 text = placeHolderText,
-                color = color
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = Gray3
+                )
             )
         }
         BasicTextField(
@@ -92,6 +94,7 @@ internal fun TextField(
                     }
                 },
             value = value,
+            textStyle = MaterialTheme.typography.bodyMedium,
             onValueChange = onValueChanged,
             singleLine = true,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),

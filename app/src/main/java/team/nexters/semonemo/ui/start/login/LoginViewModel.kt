@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import team.nexters.domain.user.model.LoginRequestModel
 import team.nexters.domain.user.usecase.LoginUseCase
-import team.nexters.semonemo.base.ExceptionEmitter
+import team.nexters.semonemo.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase
-) : ExceptionEmitter() {
+) : BaseViewModel() {
     private val _eventFlow = MutableSharedFlow<LoginEvent>(extraBufferCapacity = 1)
     val eventFlow = _eventFlow.asSharedFlow()
 

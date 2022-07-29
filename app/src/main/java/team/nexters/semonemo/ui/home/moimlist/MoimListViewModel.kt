@@ -5,13 +5,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import team.nexters.domain.moim.usecase.FetchMoimListUseCase
-import team.nexters.semonemo.base.ExceptionEmitter
+import team.nexters.semonemo.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MoimListViewModel @Inject constructor(
     private val fetchMoimListUseCase: FetchMoimListUseCase
-) : ExceptionEmitter() {
+) : BaseViewModel() {
 
     suspend fun fetchMoimList() = viewModelScope.launch {
         fetchMoimListUseCase()

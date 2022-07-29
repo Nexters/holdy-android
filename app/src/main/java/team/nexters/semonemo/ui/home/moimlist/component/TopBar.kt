@@ -78,7 +78,8 @@ private fun CircleCheckbox(
     val tint = if (selected) MaterialTheme.colorScheme.primary else Gray3
     val background = White
     Icon(
-        imageVector = imageVector, tint = tint,
+        imageVector = imageVector,
+        tint = tint,
         modifier = Modifier.background(background, shape = CircleShape),
         contentDescription = stringResource(id = R.string.checkbox_content_description)
     )
