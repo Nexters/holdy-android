@@ -13,12 +13,13 @@
 
     //moim create
     <string name="moim_create">모임 만들기</string>
-    <string name="star"> *</string>
+    <string name="star">\u0020*</string>
     <string name="title_date">날짜</string>
-    <string name="placeholder_date">2022년 7월 12일(화요일)</string>
-    <string name="placeholder_time">오전 10 : 00\u0020:\u0020오전 12 : 00</string>
+    <string name="placeholder_date">모임 날짜</string>
+    <string name="placeholder_start_time">모임 시작 시간</string>
+    <string name="placeholder_end_time">모임 종료 시간</string>
     <string name="title_place">장소</string>
-    <string name="placeholder_address">주소</string>
+    <string name="placeholder_address">장소 이름</string>
     <string name="placeholder_detail_address">상세 주소</string>
     <string name="title_place_link">장소 링크</string>
     <string name="placeholder_address_link">네이버 지도, 카카오 지도 링크를 입력하세요</string>
@@ -30,4 +31,5 @@
 
     //content description
     <string name="checkbox_content_description">checkbox</string>
+    <string name="close_content_description">close</string>
 </resources>
