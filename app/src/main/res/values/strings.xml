@@ -32,4 +32,5 @@
     //content description
     <string name="checkbox_content_description">checkbox</string>
     <string name="close_content_description">close</string>
+    <string name="fab_content_description">fab</string>
 </resources>
