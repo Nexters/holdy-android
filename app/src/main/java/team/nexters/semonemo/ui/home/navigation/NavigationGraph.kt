@@ -14,7 +14,11 @@ internal fun NavigationGraph(navController: NavHostController) {
         startDestination = HomeScreens.List.route
     ) {
         composable(HomeScreens.List.route) {
-            MoimListScreen()
+            MoimListScreen(
+                navigateToMoimCreate = {
+                    navController.navigate(HomeScreens.Creating.route)
+                }
+            )
         }
         composable(HomeScreens.Creating.route) {
             MoimCreateScreen()
