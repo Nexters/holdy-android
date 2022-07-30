@@ -30,7 +30,12 @@
     <string name="hide_finished_moim">끝난 모임 숨기기</string>
 
     //content description
-    <string name="checkbox_content_description">checkbox</string>
-    <string name="close_content_description">close</string>
-    <string name="fab_content_description">fab</string>
+    <string name="checkbox">checkbox</string>
+    <string name="close">close</string>
+    <string name="fab">fab</string>
+    <string name="location">location</string>
+    <string name="calendar">calendar</string>
+    <string name="line">line</string>
+    <string name="check">check</string>
+    <string name="holdy1">holdy1</string>
 </resources>
