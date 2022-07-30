@@ -64,7 +64,7 @@ internal fun MoimCreateScreen() {
                     .align(Alignment.End)
                     .noRippleClickable { },
                 painter = painterResource(id = R.drawable.close),
-                contentDescription = stringResource(id = R.string.close_content_description)
+                contentDescription = stringResource(id = R.string.close)
             )
             Spacer(modifier = Modifier.height(20.dp))
             Text(
