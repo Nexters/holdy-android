@@ -2,8 +2,11 @@ package team.nexters.semonemo.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Blue7 = Color(0xFF5C78FF)
-val Orange6 = Color(0xFFF35916)
+val Primary = Color(0xFF5C78FF)
+val Secondary = Color(0xFF3C57D8)
+val Tertiary = Color(0xFFBDCCFF)
+val Danger1 = Color(0xFFF35916)
+val Success1 = Color(0xFF40AD8A)
 val White = Color(0xFFFFFFFF)
 
 val Gray0 = Color(0xFFF8F9FA)

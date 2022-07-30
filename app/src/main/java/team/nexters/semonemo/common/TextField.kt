@@ -20,14 +20,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.painter.BrushPainter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Gray3
 import team.nexters.semonemo.theme.Gray5
 
@@ -45,6 +46,7 @@ internal fun TextField(
     onValueChanged: (String) -> Unit,
     placeHolderText: String,
 ) {
+    val focusRequester = remember { FocusRequester() }
     var textFieldState by remember { mutableStateOf(TexFieldState.EMPTY) }
     val color = when (textFieldState) {
         TexFieldState.EMPTY -> Gray3
@@ -57,7 +59,8 @@ internal fun TextField(
             .fillMaxWidth()
             .height(48.dp)
             .border(BorderStroke(1.dp, color), RoundedCornerShape(8.dp))
-            .background(White),
+            .background(White)
+            .noRippleClickable { focusRequester.requestFocus() },
     ) {
         if (value.isEmpty()) {
             Text(
@@ -68,11 +71,14 @@ internal fun TextField(
                         bottom = 14.dp
                     ),
                 text = placeHolderText,
-                color = color
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = Gray3
+                )
             )
         }
         BasicTextField(
             modifier = Modifier
+                .focusRequester(focusRequester)
                 .padding(
                     start = 12.dp,
                     top = 14.dp,
@@ -88,6 +94,7 @@ internal fun TextField(
                     }
                 },
             value = value,
+            textStyle = MaterialTheme.typography.bodyMedium,
             onValueChange = onValueChanged,
             singleLine = true,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
