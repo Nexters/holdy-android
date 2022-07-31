@@ -31,6 +31,7 @@ import team.nexters.semonemo.theme.White
 import team.nexters.semonemo.ui.home.moimlist.component.EndMoimFilter
 import team.nexters.semonemo.ui.home.moimlist.component.FloatingActionButton
 import team.nexters.semonemo.ui.home.moimlist.component.MoimListColumn
+import team.nexters.semonemo.ui.home.moimlist.component.NoMoim
 import team.nexters.semonemo.ui.home.moimlist.component.TopBar
 
 @Composable
@@ -49,6 +50,7 @@ internal fun MoimListScreen(
 private fun MoimListScreen(
     navigateToMoimCreate: () -> Unit = {}
 ) {
+    val moimList = emptyList<MoimInfo>()
     var isHide by remember { mutableStateOf(false) }
     Surface(
         modifier = Modifier
@@ -68,17 +70,21 @@ private fun MoimListScreen(
                 contentDescription = stringResource(id = R.string.holdy1)
             )
             Spacer(modifier = Modifier.height(32.dp))
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.CenterEnd
-            ) {
-                EndMoimFilter(
-                    checked = isHide,
-                    onCheckedChanged = { isHide = !isHide },
-                    buttonText = stringResource(id = R.string.hide_finished_moim)
-                )
+            if (moimList.isEmpty()) {
+                NoMoim(navigateToMoimCreate)
+            } else {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    EndMoimFilter(
+                        checked = isHide,
+                        onCheckedChanged = { isHide = !isHide },
+                        buttonText = stringResource(id = R.string.hide_finished_moim)
+                    )
+                }
+                MoimListColumn(moimList)
             }
-            MoimListColumn()
         }
         Box(
             modifier = Modifier

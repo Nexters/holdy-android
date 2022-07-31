@@ -117,10 +117,7 @@ internal fun TrippleTextField(
                 BorderStroke(1.dp, color),
                 RoundedCornerShape(8.dp)
             )
-            .drawColoredShadow(
-                offsetY = 2.dp,
-                blurRadius = 4.dp
-            )
+            .drawColoredShadow()
     ) {
 
         InnerTextField(

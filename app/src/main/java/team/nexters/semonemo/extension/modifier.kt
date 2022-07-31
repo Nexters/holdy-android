@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.scale
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import team.nexters.semonemo.theme.Gray35
 
 internal inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) = composed {
     clickable(
@@ -23,12 +24,12 @@ internal inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) 
 }
 
 internal fun Modifier.drawColoredShadow(
-    color: Color = Color.Black,
-    alpha: Float = 0.07f,
+    color: Color = Gray35,
+    alpha: Float = 0.4f,
     borderRadius: Dp = 0.dp,
     offsetX: Dp = 0.dp,
-    offsetY: Dp = 0.dp,
-    blurRadius: Dp = 12.dp,
+    offsetY: Dp = 2.dp,
+    blurRadius: Dp = 4.dp,
     spread: Dp = 0.dp,
     enabled: Boolean = true,
 ) = if (enabled) {

@@ -1,75 +1,45 @@
 package team.nexters.semonemo.ui.home.moimlist.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.R
+import team.nexters.semonemo.common.Button
+import team.nexters.semonemo.extension.drawColoredShadow
+import team.nexters.semonemo.theme.Gray3
+import team.nexters.semonemo.theme.Gray5
+import team.nexters.semonemo.theme.Gray6
 import team.nexters.semonemo.theme.Gray7
-
-
-data class MoimInfo(
-    val title: String,
-    val place: String,
-    val date: String
-)
-
-val moimListDummy = listOf(
-    MoimInfo(
-        "종로문화체육센터 클라이밍장",
-        "서울 종로구 인왕산로1길 21 (사직동) 지하 1층",
-        "2022년 7월 22일 월요일 오후 2시"
-    ),
-    MoimInfo(
-        "종로문화체육센터 클라이밍장",
-        "서울 종로구 인왕산로1길 21 (사직동) 지하 1층",
-        "2022년 7월 22일 월요일 오후 2시"
-    ),
-    MoimInfo(
-        "종로문화체육센터 클라이밍장",
-        "서울 종로구 인왕산로1길 21 (사직동) 지하 1층",
-        "2022년 7월 22일 월요일 오후 2시"
-    ),
-    MoimInfo(
-        "종로문화체육센터 클라이밍장",
-        "서울 종로구 인왕산로1길 21 (사직동) 지하 1층",
-        "2022년 7월 22일 월요일 오후 2시"
-    ),
-    MoimInfo(
-        "종로문화체육센터 클라이밍장",
-        "서울 종로구 인왕산로1길 21 (사직동) 지하 1층",
-        "2022년 7월 22일 월요일 오후 2시"
-    ),
-    MoimInfo(
-        "종로문화체육센터 클라이밍장",
-        "서울 종로구 인왕산로1길 21 (사직동) 지하 1층",
-        "2022년 7월 22일 월요일 오후 2시"
-    ),
-)
+import team.nexters.semonemo.ui.home.moimlist.MoimInfo
 
 @Composable
 internal fun MoimListColumn(
-    moimList: List<MoimInfo> = moimListDummy,
+    moimList: List<MoimInfo>
 ) {
     val scrollState = rememberLazyListState()
     val size = moimList.size
@@ -158,22 +128,46 @@ private fun MoimListItem(
 
 
 @Composable
-internal fun TimeLine(
-    moimList: List<MoimInfo> = moimListDummy,
+internal fun NoMoim(
+    navigateToMoimCreate: () -> Unit
 ) {
-
-}
-
-
-/* 회의 후 결정
-@Composable
-internal fun NoMoim() {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        Text(
+            text = stringResource(id = R.string.not_yet_moim),
+            style = MaterialTheme.typography.titleLarge.copy(
+                fontWeight = FontWeight.Normal,
+                color = Gray5
+            )
+        )
+        Text(
+            text = stringResource(id = R.string.not_yet_moim2),
+            style = MaterialTheme.typography.titleLarge.copy(
+                fontWeight = FontWeight.Normal,
+                color = Gray5
+            )
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(
+            modifier = Modifier
+                .height(40.dp)
+                .width(120.dp)
+                .border(BorderStroke(1.dp, Gray3), RoundedCornerShape(100.dp))
+                .clip(RoundedCornerShape(100.dp))
+                .drawColoredShadow(alpha = 0.2f),
+            onClick = { /*TODO*/ },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            text = stringResource(id = R.string.moim_create),
+            shape = RoundedCornerShape(100.dp),
+            textStyle = MaterialTheme.typography.bodyMedium.copy(
+                color = Gray6
+            )
+        )
 
     }
 }
- */

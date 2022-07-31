@@ -129,10 +129,7 @@ internal fun MoimCreateScreen() {
             )
             Spacer(modifier = Modifier.height(12.dp))
             TextField(
-                modifier = Modifier.drawColoredShadow(
-                    offsetY = 2.dp,
-                    blurRadius = 4.dp
-                ),
+                modifier = Modifier.drawColoredShadow(),
                 value = placeLink,
                 onValueChanged = { placeLink = it },
                 placeHolderText = stringResource(id = R.string.placeholder_address_link)

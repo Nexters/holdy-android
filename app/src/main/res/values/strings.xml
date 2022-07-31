@@ -28,6 +28,8 @@
     //moim list
     <string name="moim_title">모임</string>
     <string name="hide_finished_moim">끝난 모임 숨기기</string>
+    <string name="not_yet_moim">아직 초대받은 모임이 없어요</string>
+    <string name="not_yet_moim2">직접 만들어 볼까요?</string>
 
     //content description
     <string name="checkbox">checkbox</string>
