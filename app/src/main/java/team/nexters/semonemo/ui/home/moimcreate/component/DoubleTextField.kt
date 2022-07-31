@@ -17,9 +17,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,7 +55,7 @@ internal fun DoubleTextField(
     var textFieldState by remember { mutableStateOf(TexFieldState.EMPTY) }
     val color = when (textFieldState) {
         TexFieldState.EMPTY -> Gray3
-        TexFieldState.FOCUSING -> MaterialTheme.colorScheme.primary
+        TexFieldState.FOCUSING -> MaterialTheme.colors.primary
         TexFieldState.Written -> Gray5
     }
     Column(
@@ -106,7 +106,7 @@ internal fun TrippleTextField(
     var textFieldState by remember { mutableStateOf(TexFieldState.EMPTY) }
     val color = when (textFieldState) {
         TexFieldState.EMPTY -> Gray3
-        TexFieldState.FOCUSING -> MaterialTheme.colorScheme.primary
+        TexFieldState.FOCUSING -> MaterialTheme.colors.primary
         TexFieldState.Written -> Gray5
     }
     Column(
@@ -212,7 +212,7 @@ private fun InnerTextField(
                         bottom = 14.dp
                     ),
                 text = placeHolderText,
-                style = MaterialTheme.typography.bodyMedium.copy(
+                style = MaterialTheme.typography.body2.copy(
                     color = Gray3
                 )
             )
@@ -238,9 +238,9 @@ private fun InnerTextField(
                 .focusRequester(focusRequester),
             value = value,
             singleLine = true,
-            textStyle = MaterialTheme.typography.bodyMedium,
+            textStyle = MaterialTheme.typography.body2,
             onValueChange = onValueChanged,
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+            cursorBrush = SolidColor(MaterialTheme.colors.primary),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(
                 onNext = {

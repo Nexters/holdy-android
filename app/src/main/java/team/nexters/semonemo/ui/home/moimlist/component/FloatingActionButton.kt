@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 internal fun FloatingActionButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    color: Color = MaterialTheme.colorScheme.primary,
+    color: Color = MaterialTheme.colors.primary,
     contents: @Composable BoxScope.() -> Unit
 ) {
     Box(

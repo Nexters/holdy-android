@@ -11,8 +11,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,7 +50,7 @@ internal fun TextField(
     var textFieldState by remember { mutableStateOf(TexFieldState.EMPTY) }
     val color = when (textFieldState) {
         TexFieldState.EMPTY -> Gray3
-        TexFieldState.FOCUSING -> MaterialTheme.colorScheme.primary
+        TexFieldState.FOCUSING -> MaterialTheme.colors.primary
         TexFieldState.Written -> Gray5
     }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -71,7 +71,7 @@ internal fun TextField(
                         bottom = 14.dp
                     ),
                 text = placeHolderText,
-                style = MaterialTheme.typography.bodyMedium.copy(
+                style = MaterialTheme.typography.body2.copy(
                     color = Gray3
                 )
             )
@@ -94,10 +94,10 @@ internal fun TextField(
                     }
                 },
             value = value,
-            textStyle = MaterialTheme.typography.bodyMedium,
+            textStyle = MaterialTheme.typography.body2,
             onValueChange = onValueChanged,
             singleLine = true,
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+            cursorBrush = SolidColor(MaterialTheme.colors.primary),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
         )
