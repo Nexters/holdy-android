@@ -158,7 +158,7 @@ internal fun NoMoim(
                 .border(BorderStroke(1.dp, Gray3), RoundedCornerShape(100.dp))
                 .clip(RoundedCornerShape(100.dp))
                 .drawColoredShadow(alpha = 0.2f),
-            onClick = { /*TODO*/ },
+            onClick = { navigateToMoimCreate() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.surface
             ),

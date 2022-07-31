@@ -50,7 +50,7 @@ internal fun MoimListScreen(
 private fun MoimListScreen(
     navigateToMoimCreate: () -> Unit = {}
 ) {
-    val moimList = emptyList<MoimInfo>()
+    val moimList = moimListDummy
     var isHide by remember { mutableStateOf(false) }
     Surface(
         modifier = Modifier

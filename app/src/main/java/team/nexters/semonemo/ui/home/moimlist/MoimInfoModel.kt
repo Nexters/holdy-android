@@ -1,11 +1,14 @@
 package team.nexters.semonemo.ui.home.moimlist
 
+import androidx.compose.runtime.Stable
+
 data class MoimInfo(
     val title: String,
     val place: String,
     val date: String
 )
 
+@Stable
 val moimListDummy = listOf(
     MoimInfo(
         "종로문화체육센터 클라이밍장",
