@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,9 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
@@ -108,7 +106,7 @@ private fun LoginScreen(
         Text(
             modifier = Modifier.noRippleClickable { },
             text = stringResource(id = R.string.no_code),
-            style = MaterialTheme.typography.labelLarge.copy(
+            style = MaterialTheme.typography.caption.copy(
                 color = Gray6
             ),
         )

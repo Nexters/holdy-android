@@ -1,12 +1,10 @@
 package team.nexters.semonemo.theme
 
-import androidx.compose.material3.Typography
+import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import team.nexters.semonemo.R
 
@@ -93,14 +91,14 @@ val Caption1Regular = TextStyle(
 )
 
 val Typography = Typography(
-    headlineLarge = Heading1Bold,
-    headlineMedium = Heading1SemiBold,
-    headlineSmall = Heading2SemiBold,
-    titleLarge = Heading3SemiBold,
-    titleSmall = Heading4SemiBold,
-    bodyLarge = Paragraph1Medium,
-    bodyMedium = Paragraph2Regular,
-    labelLarge = Caption1Regular
+    h1 = Heading1Bold,
+    h2 = Heading1SemiBold,
+    h3 = Heading2SemiBold,
+    h4 = Heading3SemiBold,
+    h5 = Heading4SemiBold,
+    body1 = Paragraph1Medium,
+    body2 = Paragraph2Regular,
+    caption = Caption1Regular
 )
 
 

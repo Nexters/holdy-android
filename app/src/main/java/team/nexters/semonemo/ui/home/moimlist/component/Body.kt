@@ -16,14 +16,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -92,8 +91,8 @@ private fun MoimListItem(
     Column {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleSmall.copy(
-                color = MaterialTheme.colorScheme.onBackground
+            style = MaterialTheme.typography.h5.copy(
+                color = MaterialTheme.colors.onBackground
             )
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -104,7 +103,7 @@ private fun MoimListItem(
             )
             Text(
                 text = place,
-                style = MaterialTheme.typography.bodyMedium.copy(
+                style = MaterialTheme.typography.body2.copy(
                     color = Gray7
                 )
             )
@@ -117,7 +116,7 @@ private fun MoimListItem(
             )
             Text(
                 text = date,
-                style = MaterialTheme.typography.bodyMedium.copy(
+                style = MaterialTheme.typography.body2.copy(
                     color = Gray7
                 )
             )
@@ -138,14 +137,14 @@ internal fun NoMoim(
     ) {
         Text(
             text = stringResource(id = R.string.not_yet_moim),
-            style = MaterialTheme.typography.titleLarge.copy(
+            style = MaterialTheme.typography.h4.copy(
                 fontWeight = FontWeight.Normal,
                 color = Gray5
             )
         )
         Text(
             text = stringResource(id = R.string.not_yet_moim2),
-            style = MaterialTheme.typography.titleLarge.copy(
+            style = MaterialTheme.typography.h4.copy(
                 fontWeight = FontWeight.Normal,
                 color = Gray5
             )
@@ -160,11 +159,11 @@ internal fun NoMoim(
                 .drawColoredShadow(alpha = 0.2f),
             onClick = { navigateToMoimCreate() },
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.surface
+                backgroundColor = MaterialTheme.colors.surface
             ),
             text = stringResource(id = R.string.moim_create),
             shape = RoundedCornerShape(100.dp),
-            textStyle = MaterialTheme.typography.bodyMedium.copy(
+            textStyle = MaterialTheme.typography.body2.copy(
                 color = Gray6
             )
         )

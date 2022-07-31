@@ -3,7 +3,6 @@ package team.nexters.semonemo.ui.home.moimlist.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,11 +11,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,8 +44,8 @@ internal fun TopBar(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.headlineMedium.copy(
-                color = MaterialTheme.colorScheme.onBackground
+            style = MaterialTheme.typography.h2.copy(
+                color = MaterialTheme.colors.onBackground
             )
         )
         Image(
@@ -73,7 +72,7 @@ internal fun EndMoimFilter(
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = buttonText,
-            style = MaterialTheme.typography.labelLarge.copy(
+            style = MaterialTheme.typography.caption.copy(
                 color = Gray6
             )
         )
@@ -88,7 +87,7 @@ private fun CircleCheckbox(
 ) {
 
     val imageVector = Icons.Filled.CheckCircle
-    val tint = if (selected) MaterialTheme.colorScheme.primary else Gray3
+    val tint = if (selected) MaterialTheme.colors.primary else Gray3
     val background = White
     Icon(
         imageVector = imageVector,

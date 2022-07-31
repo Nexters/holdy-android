@@ -9,10 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +35,7 @@ import team.nexters.semonemo.common.TextField
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Danger1
+import team.nexters.semonemo.theme.Tertiary
 import team.nexters.semonemo.ui.home.moimcreate.component.DoubleTextField
 import team.nexters.semonemo.ui.home.moimcreate.component.TrippleTextField
 
@@ -73,15 +74,15 @@ internal fun MoimCreateScreen() {
                     withStyle(
                         SpanStyle(
                             fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colors.primary
                         )
                     ) {
                         append(stringResource(id = R.string.star))
                     }
 
                 },
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onBackground
+                style = MaterialTheme.typography.h4,
+                color = MaterialTheme.colors.onBackground
             )
             Spacer(modifier = Modifier.height(12.dp))
             TrippleTextField(
@@ -103,14 +104,14 @@ internal fun MoimCreateScreen() {
                     withStyle(
                         SpanStyle(
                             fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colors.primary
                         )
                     ) {
                         append(stringResource(id = R.string.star))
                     }
                 },
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onBackground
+                style = MaterialTheme.typography.h4,
+                color = MaterialTheme.colors.onBackground
             )
             Spacer(modifier = Modifier.height(12.dp))
             DoubleTextField(
@@ -124,8 +125,8 @@ internal fun MoimCreateScreen() {
             Spacer(modifier = Modifier.height(30.dp))
             Text(
                 text = stringResource(id = R.string.title_place_link),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onBackground
+                style = MaterialTheme.typography.h4,
+                color = MaterialTheme.colors.onBackground
             )
             Spacer(modifier = Modifier.height(12.dp))
             TextField(
@@ -137,7 +138,7 @@ internal fun MoimCreateScreen() {
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = stringResource(id = R.string.link_is_correct),
-                style = MaterialTheme.typography.labelLarge.copy(color = Danger1)
+                style = MaterialTheme.typography.caption.copy(color = Danger1)
             )
             Spacer(modifier = Modifier.height(35.dp))
             Button(
@@ -146,8 +147,8 @@ internal fun MoimCreateScreen() {
                     .height(48.dp),
                 onClick = { /*TODO*/ },
                 colors = ButtonDefaults.buttonColors(
-                    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
-                    containerColor = MaterialTheme.colorScheme.primary
+                    disabledBackgroundColor = Tertiary,
+                    backgroundColor = MaterialTheme.colors.primary
                 ),
                 enabled = isMoimCreateAvailabe(date, startTime, endTime, address, detailAddress),
                 shape = RoundedCornerShape(8.dp),
