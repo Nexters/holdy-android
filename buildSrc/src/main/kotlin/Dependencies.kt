@@ -29,7 +29,7 @@ object Dependencies {
     )
 
     val Compose = listOf(
-        "androidx.compose.material3:material3:${Versions.Compose.Material3}",
+        "androidx.compose.material:material:${Versions.Compose.Material}",
         "androidx.activity:activity-compose:${Versions.Compose.Activity}",
         "com.google.accompanist:accompanist-placeholder:${Versions.Compose.Accompanist}",
         "com.google.accompanist:accompanist-swiperefresh:${Versions.Compose.Accompanist}",
