@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
 
 @Composable
 internal fun Button(
@@ -16,7 +17,10 @@ internal fun Button(
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     enabled: Boolean = true,
     shape: Shape,
-    text: String
+    text: String,
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge.copy(
+        color = MaterialTheme.colorScheme.onPrimary
+    )
 ) {
     Button(
         modifier = modifier,
@@ -27,9 +31,7 @@ internal fun Button(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyLarge.copy(
-                color = MaterialTheme.colorScheme.onPrimary
-            )
+            style = textStyle
         )
     }
 }
