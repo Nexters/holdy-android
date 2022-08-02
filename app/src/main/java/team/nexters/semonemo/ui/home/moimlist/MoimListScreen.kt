@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.theme.White
+import team.nexters.semonemo.ui.home.model.moimListDummy
 import team.nexters.semonemo.ui.home.moimlist.component.EndMoimFilter
 import team.nexters.semonemo.ui.home.moimlist.component.FloatingActionButton
 import team.nexters.semonemo.ui.home.moimlist.component.MoimListColumn
@@ -35,18 +36,20 @@ import team.nexters.semonemo.ui.home.moimlist.component.TopBar
 @Composable
 internal fun MoimListScreen(
     viewModel: MoimListViewModel = hiltViewModel(),
-    navigateToMoimCreate: () -> Unit
+    navigateToMoimCreate: () -> Unit,
+    navigateToMoimDetail: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.fetchMoimList()
     }
-    MoimListScreen(navigateToMoimCreate)
+    MoimListScreen(navigateToMoimCreate, navigateToMoimDetail)
 }
 
 @Preview
 @Composable
 private fun MoimListScreen(
-    navigateToMoimCreate: () -> Unit = {}
+    navigateToMoimCreate: () -> Unit = {},
+    navigateToMoimDetail: () -> Unit = {}
 ) {
     val moimList = moimListDummy
     var isHide by remember { mutableStateOf(false) }
@@ -65,7 +68,7 @@ private fun MoimListScreen(
             TopBar(
                 title = stringResource(id = R.string.moim_title),
                 painter = painterResource(id = R.drawable.holdy1),
-                contentDescription = stringResource(id = R.string.holdy1)
+                contentDescription = stringResource(id = R.string.holdy)
             )
             Spacer(modifier = Modifier.height(32.dp))
             if (moimList.isEmpty()) {
@@ -81,7 +84,7 @@ private fun MoimListScreen(
                         buttonText = stringResource(id = R.string.hide_finished_moim)
                     )
                 }
-                MoimListColumn(moimList)
+                MoimListColumn(moimList,navigateToMoimDetail)
             }
         }
         Box(
