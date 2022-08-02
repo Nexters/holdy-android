@@ -3,6 +3,7 @@ package team.nexters.semonemo.ui.home.moimlist.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,11 +35,12 @@ import team.nexters.semonemo.theme.Gray3
 import team.nexters.semonemo.theme.Gray5
 import team.nexters.semonemo.theme.Gray6
 import team.nexters.semonemo.theme.Gray7
-import team.nexters.semonemo.ui.home.moimlist.MoimInfo
+import team.nexters.semonemo.ui.home.model.MoimInfo
 
 @Composable
 internal fun MoimListColumn(
-    moimList: List<MoimInfo>
+    moimList: List<MoimInfo>,
+    navigateToMoimDetail: () -> Unit
 ) {
     val scrollState = rememberLazyListState()
     val size = moimList.size
@@ -54,7 +56,8 @@ internal fun MoimListColumn(
         ) { index, moimInfo ->
             Row {
                 Column(
-                    modifier = Modifier.offset(y = 35.dp),
+                    modifier = Modifier
+                        .offset(y = 35.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
@@ -64,8 +67,7 @@ internal fun MoimListColumn(
                     if (index != size - 1) {
                         Image(
                             modifier = Modifier
-                                .padding(vertical = 5.dp)
-                                .height(100.dp),
+                                .height(110.dp),
                             painter = painterResource(id = R.drawable.line),
                             contentDescription = stringResource(id = R.string.line)
                         )
@@ -73,9 +75,10 @@ internal fun MoimListColumn(
                 }
                 Spacer(modifier = Modifier.width(20.dp))
                 MoimListItem(
+                    navigateToMoimDetail,
                     title = moimInfo.title,
                     place = moimInfo.place,
-                    date = moimInfo.date
+                    date = moimInfo.date,
                 )
             }
         }
@@ -84,42 +87,47 @@ internal fun MoimListColumn(
 
 @Composable
 private fun MoimListItem(
+    navigateToMoimDetail: () -> Unit,
     title: String,
     place: String,
     date: String
 ) {
     Column {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.h5.copy(
-                color = MaterialTheme.colors.onBackground
-            )
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(id = R.drawable.location),
-                contentDescription = stringResource(R.string.location),
-            )
+        Column(
+            modifier = Modifier.clickable { navigateToMoimDetail() } //id가 인자로 넘어감
+        ) {
             Text(
-                text = place,
-                style = MaterialTheme.typography.body2.copy(
-                    color = Gray7
+                text = title,
+                style = MaterialTheme.typography.h5.copy(
+                    color = MaterialTheme.colors.onBackground
                 )
             )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(id = R.drawable.calendar),
-                contentDescription = stringResource(id = R.string.calendar)
-            )
-            Text(
-                text = date,
-                style = MaterialTheme.typography.body2.copy(
-                    color = Gray7
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    painter = painterResource(id = R.drawable.location),
+                    contentDescription = stringResource(R.string.location),
                 )
-            )
+                Text(
+                    text = place,
+                    style = MaterialTheme.typography.body2.copy(
+                        color = Gray7
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    painter = painterResource(id = R.drawable.calendar),
+                    contentDescription = stringResource(id = R.string.calendar)
+                )
+                Text(
+                    text = date,
+                    style = MaterialTheme.typography.body2.copy(
+                        color = Gray7
+                    )
+                )
+            }
         }
         Spacer(modifier = Modifier.height(40.dp))
     }
