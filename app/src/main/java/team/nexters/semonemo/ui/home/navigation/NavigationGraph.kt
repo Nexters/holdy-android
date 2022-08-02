@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import team.nexters.semonemo.ui.home.moimcreate.MoimCreateScreen
+import team.nexters.semonemo.ui.home.moimdetail.MoimDetailScreen
 import team.nexters.semonemo.ui.home.moimlist.MoimListScreen
 
 @Composable
@@ -17,6 +18,9 @@ internal fun NavigationGraph(navController: NavHostController) {
             MoimListScreen(
                 navigateToMoimCreate = {
                     navController.navigate(HomeScreens.Creating.route)
+                },
+                navigateToMoimDetail = {
+                    navController.navigate(HomeScreens.Reward.route)
                 }
             )
         }
@@ -24,6 +28,9 @@ internal fun NavigationGraph(navController: NavHostController) {
             MoimCreateScreen()
         }
         composable(HomeScreens.Reward.route) {
+            MoimDetailScreen {
+                navController.popBackStack()
+            }
         }
     }
 }
