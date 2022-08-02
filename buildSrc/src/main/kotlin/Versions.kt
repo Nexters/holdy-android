@@ -33,6 +33,7 @@ object Versions {
         const val Accompanist = "0.24.4-alpha"
         const val HiltNavigationCompose = "1.0.0"
         const val Coil = "2.1.0"
+        const val Tooltip = "0.2.0"
     }
 
     object Test {

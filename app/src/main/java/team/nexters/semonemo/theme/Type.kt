@@ -19,7 +19,7 @@ val Heading1Bold = TextStyle(
     fontFamily = Pretendard,
     fontSize = 32.sp,
     fontWeight = FontWeight.Bold,
-    lineHeight = 44.8.sp,
+    lineHeight = 45.sp,
 )
 
 val Heading1SemiBold = TextStyle(
