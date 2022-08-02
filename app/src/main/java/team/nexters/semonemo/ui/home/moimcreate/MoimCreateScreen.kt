@@ -29,6 +29,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.TextField
@@ -39,9 +40,17 @@ import team.nexters.semonemo.theme.Tertiary
 import team.nexters.semonemo.ui.home.moimcreate.component.DoubleTextField
 import team.nexters.semonemo.ui.home.moimcreate.component.TrippleTextField
 
+@Composable
+internal fun MoimCreateScreen(
+   viewModel: MoimCreateViewModel = hiltViewModel()
+) {
+
+    MoimCreateScreen()
+}
+
 @Preview
 @Composable
-internal fun MoimCreateScreen() {
+private fun MoimCreateScreen() {
     var date by remember { mutableStateOf("") }
     var startTime by remember { mutableStateOf("") }
     var endTime by remember { mutableStateOf("") }
