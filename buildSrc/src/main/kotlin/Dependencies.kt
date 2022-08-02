@@ -39,7 +39,8 @@ object Dependencies {
         "androidx.hilt:hilt-navigation-compose:${Versions.Compose.HiltNavigationCompose}",
         "androidx.compose.ui:ui-tooling:${Versions.Compose.Main}",
         "androidx.compose.ui:ui-tooling-preview:${Versions.Compose.Main}",
-        "io.coil-kt:coil-compose:${Versions.Compose.Coil}"
+        "io.coil-kt:coil-compose:${Versions.Compose.Coil}",
+        "com.github.skgmn:composetooltip:${Versions.Compose.Tooltip}"
     )
     val Test = listOf(
         "org.junit.jupiter:junit-jupiter-api:${Versions.Test.JUnit}",
