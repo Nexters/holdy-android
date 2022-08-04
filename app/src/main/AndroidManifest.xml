@@ -14,7 +14,7 @@
         android:theme="@style/Theme.SemoNemo"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="team.nexters.semonemo.ui.start.StartActivity"
+            android:name="team.nexters.semonemo.ui.start.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

@@ -10,7 +10,7 @@ import team.nexters.semonemo.ui.home.HomeActivity
 import team.nexters.semonemo.ui.start.login.LoginScreen
 
 @AndroidEntryPoint
-class StartActivity : ComponentActivity() {
+class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
