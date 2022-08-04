@@ -54,4 +54,7 @@ dependencies {
     Dependencies.Essential.forEach(::implementation)
     Dependencies.Compose.forEach(::implementation)
     Dependencies.Ktx.forEach(::implementation)
+
+    implementation(platform(Dependencies.Firebase.Bom))
+    Dependencies.Firebase.List.forEach(::implementation)
 }

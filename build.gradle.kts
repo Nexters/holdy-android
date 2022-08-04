@@ -9,6 +9,7 @@ buildscript {
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Jetpack.Hilt}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Essential.Kotlin}")
         classpath("de.mannodermaus.gradle.plugins:android-junit5:${Versions.Test.JUnitGradle}")
+        classpath ("com.google.gms:google-services:4.3.13")
     }
 }
 

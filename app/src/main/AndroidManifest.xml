@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
+
     <application
         android:name=".SemoNemo"
         android:allowBackup="true"
@@ -14,21 +18,31 @@
         android:theme="@style/Theme.SemoNemo"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="team.nexters.semonemo.ui.start.LoginActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:label="@string/title_activity_splash"
+            android:theme="@style/Theme.SemoNemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <data
+                    android:host="team.nexters.holdy"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="team.nexters.semonemo.ui.start.LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name="team.nexters.semonemo.ui.home.HomeActivity"
             android:exported="true">
+
         </activity>
-
     </application>
-
 
 </manifest>

@@ -48,4 +48,12 @@ object Dependencies {
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.Coroutine}",
         "io.mockk:mockk:${Versions.Test.Mockk}"
     )
+
+    object Firebase {
+        const val Bom = "com.google.firebase:firebase-bom:30.3.1"
+        val List = listOf(
+            "com.google.firebase:firebase-dynamic-links",
+            "com.google.firebase:firebase-analytics"
+        )
+    }
 }
