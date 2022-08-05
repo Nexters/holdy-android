@@ -19,6 +19,7 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import team.nexters.semonemo.theme.SemoNemoTheme
 import team.nexters.semonemo.theme.Tertiary
+import team.nexters.semonemo.ui.home.HomeActivity
 import team.nexters.semonemo.ui.start.OnBoardingActivity
 import timber.log.Timber
 
@@ -50,12 +51,18 @@ class SplashActivity() : ComponentActivity() {
                     startActivity(OnBoardingActivity.newIntent(this))
                 }
                 is Home -> {
-
+                    startActivity(HomeActivity.newIntent(this))
                 }
                 is Board -> {
-                    // TODO
+                    startActivities(
+                        arrayOf(
+                            HomeActivity.newIntent(this)
+                            //TODO  add BoardActivity
+                        )
+                    )
                 }
             }
+            finish()
         }
     }
 
