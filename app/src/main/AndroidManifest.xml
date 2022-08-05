@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".SemoNemo"
+        android:name=".SemoNemoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,20 +13,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SemoNemo"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name="team.nexters.semonemo.ui.start.LoginActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="teams.nexters.holdy"
+                    android:scheme="https" />
+
+            </intent-filter>
+
         </activity>
+
+        <activity
+            android:name="team.nexters.semonemo.ui.start.LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name="team.nexters.semonemo.ui.home.HomeActivity"
-            android:exported="true">
-        </activity>
+            android:exported="false" />
 
     </application>
 

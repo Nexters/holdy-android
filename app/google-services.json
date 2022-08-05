@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "726481553132",
+    "project_id": "semonemo-3f7d7",
+    "storage_bucket": "semonemo-3f7d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726481553132:android:a73db90782e81025f047c9",
+        "android_client_info": {
+          "package_name": "team.nexters.semonemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726481553132-kqhcmc5b6aj8ct3v1p6743uh3jold9lq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYFaKGm8DnqYnPSEODAcfJkd6hutgXaBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726481553132-kqhcmc5b6aj8ct3v1p6743uh3jold9lq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

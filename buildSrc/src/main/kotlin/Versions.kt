@@ -42,4 +42,10 @@ object Versions {
         const val Coroutine = "1.6.0"
         const val Mockk = "1.12.3"
     }
+
+    object RX {
+        const val RxJava = "3.0.0"
+        const val RxAndroid = "3.0.0"
+        const val RxKotlin = "3.0.1"
+    }
 }

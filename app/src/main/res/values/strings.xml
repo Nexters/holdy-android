@@ -60,4 +60,5 @@
     <string name="invite">invite</string>
     <string name="crown">crown</string>
     <string name="crown_badge">crown badge</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>
