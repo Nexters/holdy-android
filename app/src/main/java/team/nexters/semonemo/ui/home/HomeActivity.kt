@@ -1,5 +1,7 @@
 package team.nexters.semonemo.ui.home
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +12,12 @@ import team.nexters.semonemo.ui.home.navigation.NavigationGraph
 
 @AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, HomeActivity::class.java)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

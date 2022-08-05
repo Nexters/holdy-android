@@ -19,34 +19,60 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import team.nexters.semonemo.theme.SemoNemoTheme
 import team.nexters.semonemo.theme.Tertiary
+import team.nexters.semonemo.ui.home.HomeActivity
+import team.nexters.semonemo.ui.start.OnBoardingActivity
 import timber.log.Timber
-import javax.inject.Inject
 
+/**
+ * 앱의 진입점은 SplashActivity onCreate or onNewIntent
+ * navigation
+ */
 @AndroidEntryPoint
 class SplashActivity() : ComponentActivity() {
 
     private val vieWModel: SplashViewModel by viewModels()
 
-    // 앱의 진입점은 splashActivity의 onCreate or onNewIntent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("tag1 onCreate")
-        initDeepLink()
+        handleDeepLink()
         setContent {
             SemoNemoTheme {
                 SplashScreen()
             }
         }
+        observeViewModel()
+    }
 
+    private fun observeViewModel() {
+        vieWModel.navigate.observe(this) {
+            when (it) {
+                OnBoarding -> {
+                    startActivity(OnBoardingActivity.newIntent(this))
+                }
+                is Home -> {
+                    startActivity(HomeActivity.newIntent(this))
+                }
+                is Board -> {
+                    startActivities(
+                        arrayOf(
+                            HomeActivity.newIntent(this)
+                            //TODO  add BoardActivity
+                        )
+                    )
+                }
+            }
+            finish()
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
         Timber.d("tag1 onNewIntent")
         super.onNewIntent(intent)
-        initDeepLink()
+        handleDeepLink()
     }
 
-    private fun initDeepLink() {
+    private fun handleDeepLink() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData: PendingDynamicLinkData? ->
@@ -59,6 +85,7 @@ class SplashActivity() : ComponentActivity() {
                 //TODO 그냥 화면 넘겨야지
                 Timber.d(e, "getDynamicLink:onFailure")
             }
+
     }
 }
 

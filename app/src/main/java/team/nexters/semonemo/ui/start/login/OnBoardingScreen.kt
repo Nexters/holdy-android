@@ -33,21 +33,21 @@ import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Gray6
-import team.nexters.semonemo.ui.start.LoginActivity
+import team.nexters.semonemo.ui.start.OnBoardingActivity
 
 @Composable
 internal fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
-    val activity = (LocalContext.current as LoginActivity)
+    val activity = (LocalContext.current as OnBoardingActivity)
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
             when (event) {
-                LoginEvent.Success ->
+                OnBoardingEvent.Success ->
                     activity.startMain()
-                LoginEvent.Failed ->
+                OnBoardingEvent.Failed ->
                     Toast.makeText(
                         activity,
                         activity.getString(R.string.code_error),

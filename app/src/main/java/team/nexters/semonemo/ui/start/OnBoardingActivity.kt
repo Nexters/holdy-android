@@ -1,5 +1,6 @@
 package team.nexters.semonemo.ui.start
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +11,14 @@ import team.nexters.semonemo.ui.home.HomeActivity
 import team.nexters.semonemo.ui.start.login.LoginScreen
 
 @AndroidEntryPoint
-class LoginActivity : ComponentActivity() {
+class OnBoardingActivity : ComponentActivity() {
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, OnBoardingActivity::class.java)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -21,7 +29,7 @@ class LoginActivity : ComponentActivity() {
     }
 
     fun startMain() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(HomeActivity.newIntent(this))
         finish()
     }
 }
