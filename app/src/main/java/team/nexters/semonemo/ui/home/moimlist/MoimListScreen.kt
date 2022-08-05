@@ -13,6 +13,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import team.nexters.semonemo.R
 import team.nexters.semonemo.theme.White
 import team.nexters.semonemo.ui.home.model.moimListDummy
@@ -39,6 +41,13 @@ internal fun MoimListScreen(
     navigateToMoimCreate: () -> Unit,
     navigateToMoimDetail: () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(Unit) {
+        systemUiController.setStatusBarColor(
+            color = color
+        )
+    }
     LaunchedEffect(Unit) {
         viewModel.fetchMoimList()
     }
