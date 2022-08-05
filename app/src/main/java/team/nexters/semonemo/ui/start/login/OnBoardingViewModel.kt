@@ -11,19 +11,19 @@ import team.nexters.semonemo.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class OnBoardingViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase
 ) : BaseViewModel() {
-    private val _eventFlow = MutableSharedFlow<LoginEvent>(extraBufferCapacity = 1)
+    private val _eventFlow = MutableSharedFlow<OnBoardingEvent>(extraBufferCapacity = 1)
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun login(code: String) {
         viewModelScope.launch {
             loginUseCase(LoginRequestModel(code)).onSuccess {
                 if (it.loginUser != null) {
-                    _eventFlow.emit(LoginEvent.Success)
+                    _eventFlow.emit(OnBoardingEvent.Success)
                 } else {
-                    _eventFlow.emit(LoginEvent.Failed)
+                    _eventFlow.emit(OnBoardingEvent.Failed)
                 }
             }.onFailure {
                 it.printStackTrace()
