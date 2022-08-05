@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -48,6 +49,7 @@ android {
 dependencies {
     implementation(project(Modules.Data))
     implementation(project(Modules.Domain))
+    implementation("com.google.firebase:firebase-common-ktx:20.1.1")
     kapt(Dependencies.Hilt.Kapt)
     implementation(Dependencies.Hilt.Android)
     implementation(Dependencies.Jetpack.DataStore)
@@ -57,4 +59,6 @@ dependencies {
 
     implementation(platform(Dependencies.Firebase.Bom))
     Dependencies.Firebase.List.forEach(::implementation)
+
+    implementation(Dependencies.Timber)
 }

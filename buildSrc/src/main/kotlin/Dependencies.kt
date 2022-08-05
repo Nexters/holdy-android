@@ -52,8 +52,10 @@ object Dependencies {
     object Firebase {
         const val Bom = "com.google.firebase:firebase-bom:30.3.1"
         val List = listOf(
-            "com.google.firebase:firebase-dynamic-links",
-            "com.google.firebase:firebase-analytics"
+            "com.google.firebase:firebase-dynamic-links-ktx",
+            "com.google.firebase:firebase-analytics-ktx"
         )
     }
+
+    const val Timber = "com.jakewharton.timber:timber:5.0.1"
 }
