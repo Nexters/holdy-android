@@ -43,10 +43,10 @@
             android:name="team.nexters.semonemo.ui.start.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-        
+
         <activity
             android:name="team.nexters.semonemo.ui.home.HomeActivity"
-            android:exported="true" />
+            android:exported="false" />
 
     </application>
 
