@@ -1,5 +1,6 @@
 package team.nexters.semonemo.ui.home.moimcreate
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,39 +23,93 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import team.nexters.domain.moim.model.MoimCreateModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.TextField
+import team.nexters.semonemo.extension.basicExceptionHandler
+import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
+import team.nexters.semonemo.extension.showDatePicker
 import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Tertiary
+import team.nexters.semonemo.ui.home.HomeActivity
 import team.nexters.semonemo.ui.home.moimcreate.component.DoubleTextField
-import team.nexters.semonemo.ui.home.moimcreate.component.TrippleTextField
+import team.nexters.semonemo.extension.showTimePicker
+import team.nexters.semonemo.ui.home.moimcreate.component.DateTextField
 
 @Composable
 internal fun MoimCreateScreen(
-   viewModel: MoimCreateViewModel = hiltViewModel()
+    viewModel: MoimCreateViewModel = hiltViewModel(),
+    onBackPressed: () -> Unit
 ) {
-
-    MoimCreateScreen()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
+    val activity = (context as HomeActivity)
+    val (date, setDate) = remember { mutableStateOf("") }
+    val (startTime, setStartTime) = remember { mutableStateOf("") }
+    val (endTime, setEndTime) = remember { mutableStateOf("") }
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
+            when (event) {
+                MoimCreateEvent.NavigateToMoimList -> {
+                    onBackPressed()
+                }
+                MoimCreateEvent.OpenDatePicker -> {
+                    context.showDatePicker { setDate(it) }
+                }
+                MoimCreateEvent.OpenStartTimePicker -> {
+                    context.showTimePicker { setStartTime(it) }
+                }
+                MoimCreateEvent.OpenEndTimePicker -> {
+                    context.showTimePicker { setEndTime(it) }
+                }
+                is MoimCreateEvent.CreationFailed -> {
+                    Toast.makeText(activity, event.result, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+    LaunchedEffect(Unit) {
+        viewModel.exceptionFlow.collectWithLifecycle(lifecycleOwner) {
+            activity.basicExceptionHandler(it)
+        }
+    }
+    MoimCreateScreen(
+        date = date,
+        startTime = startTime,
+        endTime = endTime,
+        onCloseButtonClicked = { viewModel.postEvent(MoimCreateEvent.NavigateToMoimList) },
+        onDateFocused = { viewModel.postEvent(MoimCreateEvent.OpenDatePicker) },
+        onCreateButtonClicked = viewModel::onCreateButtonClicked,
+        onStartTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenStartTimePicker) },
+        onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) }
+    )
 }
 
-@Preview
 @Composable
-private fun MoimCreateScreen() {
-    var date by remember { mutableStateOf("") }
-    var startTime by remember { mutableStateOf("") }
-    var endTime by remember { mutableStateOf("") }
+private fun MoimCreateScreen(
+    date: String,
+    startTime: String,
+    endTime: String,
+    onCloseButtonClicked: () -> Unit,
+    onDateFocused: () -> Unit,
+    onStartTimeFocused: () -> Unit,
+    onEndTimeFocused: () -> Unit,
+    onCreateButtonClicked: (MoimCreateModel) -> Unit = {}
+) {
+
     var address by remember { mutableStateOf("") }
     var detailAddress by remember { mutableStateOf("") }
     var placeLink by remember { mutableStateOf("") }
@@ -72,7 +128,7 @@ private fun MoimCreateScreen() {
             Image(
                 modifier = Modifier
                     .align(Alignment.End)
-                    .noRippleClickable { },
+                    .noRippleClickable { onCloseButtonClicked() },
                 painter = painterResource(id = R.drawable.close),
                 contentDescription = stringResource(id = R.string.close)
             )
@@ -94,18 +150,17 @@ private fun MoimCreateScreen() {
                 color = MaterialTheme.colors.onBackground
             )
             Spacer(modifier = Modifier.height(12.dp))
-            TrippleTextField(
+            DateTextField(
                 firstText = date,
-                onFirstTextChanged = { date = it },
+                onFirstFocused = onDateFocused,
                 firstPlaceHolderText = stringResource(id = R.string.placeholder_date),
                 secondText = startTime,
-                onSecondTextChanged = { startTime = it },
+                onSecondFocused = onStartTimeFocused,
                 secondPlaceHolderText = stringResource(id = R.string.placeholder_start_time),
                 thirdText = endTime,
-                onThirdTextChanged = { endTime = it },
+                onThirdFocused = onEndTimeFocused,
                 thirdPlaceHolderText = stringResource(id = R.string.placeholder_end_time),
-
-                )
+            )
             Spacer(modifier = Modifier.height(30.dp))
             Text(
                 text = buildAnnotatedString {
@@ -154,12 +209,24 @@ private fun MoimCreateScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
-                onClick = { /*TODO*/ },
+                onClick = {
+                    onCreateButtonClicked(
+                        MoimCreateModel(
+                            startDate = parseDate(date, startTime),
+                            endDate = parseDate(date, endTime),
+                            MoimCreateModel.Place(
+                                address,
+                                detailAddress,
+                                placeLink
+                            )
+                        )
+                    )
+                },
                 colors = ButtonDefaults.buttonColors(
                     disabledBackgroundColor = Tertiary,
                     backgroundColor = MaterialTheme.colors.primary
                 ),
-                enabled = isMoimCreateAvailabe(date, startTime, endTime, address, detailAddress),
+                enabled = isMoimCreateAvailable(date, startTime, endTime, address, detailAddress),
                 shape = RoundedCornerShape(8.dp),
                 text = stringResource(id = R.string.moim_create),
             )
@@ -167,11 +234,3 @@ private fun MoimCreateScreen() {
     }
 }
 
-fun isMoimCreateAvailabe(
-    date: String,
-    startTime: String,
-    endTime: String,
-    address: String,
-    detailAddress: String
-) =
-    date.isNotEmpty() && startTime.isNotEmpty() && endTime.isNotEmpty() && address.isNotEmpty() && detailAddress.isNotEmpty()
