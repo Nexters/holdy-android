@@ -61,4 +61,6 @@ dependencies {
     Dependencies.Firebase.List.forEach(::implementation)
 
     implementation(Dependencies.Timber)
+
+    Dependencies.Rx.forEach(::implementation)
 }

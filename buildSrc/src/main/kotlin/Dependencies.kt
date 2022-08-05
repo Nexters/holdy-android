@@ -58,4 +58,11 @@ object Dependencies {
     }
 
     const val Timber = "com.jakewharton.timber:timber:5.0.1"
+
+
+    val Rx = listOf(
+        "io.reactivex.rxjava3:rxandroid:${Versions.RX.RxAndroid}",
+        "io.reactivex.rxjava3:rxjava:${Versions.RX.RxJava}",
+        "io.reactivex.rxjava3:rxkotlin:${Versions.RX.RxKotlin}"
+    )
 }
