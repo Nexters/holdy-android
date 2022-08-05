@@ -33,13 +33,13 @@ import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Gray6
-import team.nexters.semonemo.ui.start.StartActivity
+import team.nexters.semonemo.ui.start.LoginActivity
 
 @Composable
 internal fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val activity = (LocalContext.current as StartActivity)
+    val activity = (LocalContext.current as LoginActivity)
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(Unit) {

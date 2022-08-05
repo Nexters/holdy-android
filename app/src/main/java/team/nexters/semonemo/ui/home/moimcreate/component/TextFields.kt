@@ -75,7 +75,7 @@ internal fun DoubleTextField(
             value = firstText,
             onValueChanged = onFirstTextChanged,
             onSelectChanged = { textFieldState = it },
-            placeHolderText = firstPlaceHolderText
+            placeHolderText = firstPlaceHolderText,
         )
         Divider(
             thickness = 1.dp,
@@ -85,22 +85,25 @@ internal fun DoubleTextField(
             value = secondText,
             onValueChanged = onSecondTextChanged,
             onSelectChanged = { textFieldState = it },
-            placeHolderText = secondPlaceHolderText
+            placeHolderText = secondPlaceHolderText,
         )
     }
 }
 
 @Composable
-internal fun TrippleTextField(
+internal fun DateTextField(
     modifier: Modifier = Modifier,
     firstText: String,
-    onFirstTextChanged: (String) -> Unit,
+    onFirstTextChanged: (String) -> Unit = {},
+    onFirstFocused: () -> Unit,
     firstPlaceHolderText: String,
     secondText: String,
-    onSecondTextChanged: (String) -> Unit,
+    onSecondTextChanged: (String) -> Unit = {},
+    onSecondFocused: () -> Unit,
     secondPlaceHolderText: String,
     thirdText: String,
-    onThirdTextChanged: (String) -> Unit,
+    onThirdTextChanged: (String) -> Unit = {},
+    onThirdFocused: () -> Unit,
     thirdPlaceHolderText: String,
 ) {
     var textFieldState by remember { mutableStateOf(TexFieldState.EMPTY) }
@@ -119,12 +122,12 @@ internal fun TrippleTextField(
             )
             .drawColoredShadow()
     ) {
-
         InnerTextField(
             value = firstText,
             onValueChanged = onFirstTextChanged,
+            onFocused = onFirstFocused,
             onSelectChanged = { textFieldState = it },
-            placeHolderText = firstPlaceHolderText
+            placeHolderText = firstPlaceHolderText,
         )
         Divider(
             thickness = 1.dp,
@@ -134,8 +137,9 @@ internal fun TrippleTextField(
             InnerTextField(
                 value = secondText,
                 onValueChanged = onSecondTextChanged,
+                onFocused = onSecondFocused,
                 onSelectChanged = { textFieldState = it },
-                placeHolderText = secondPlaceHolderText
+                placeHolderText = secondPlaceHolderText,
             )
             Divider(
                 color = color,
@@ -146,8 +150,9 @@ internal fun TrippleTextField(
             InnerTextField(
                 value = thirdText,
                 onValueChanged = onThirdTextChanged,
+                onFocused = onThirdFocused,
                 onSelectChanged = { textFieldState = it },
-                placeHolderText = thirdPlaceHolderText
+                placeHolderText = thirdPlaceHolderText,
             )
         }
 
@@ -157,16 +162,18 @@ internal fun TrippleTextField(
 @Composable
 private fun ColumnScope.InnerTextField(
     value: String,
-    onValueChanged: (String) -> Unit,
+    onValueChanged: (String) -> Unit = {},
+    onFocused: () -> Unit = {},
     onSelectChanged: (TexFieldState) -> Unit,
-    placeHolderText: String
+    placeHolderText: String,
 ) {
     InnerTextField(
         modifier = Modifier.weight(1f),
         value = value,
         onValueChanged = onValueChanged,
+        onFocused = onFocused,
         onSelectChanged = onSelectChanged,
-        placeHolderText = placeHolderText
+        placeHolderText = placeHolderText,
     )
 }
 
@@ -174,16 +181,18 @@ private fun ColumnScope.InnerTextField(
 @Composable
 private fun RowScope.InnerTextField(
     value: String,
-    onValueChanged: (String) -> Unit,
+    onValueChanged: (String) -> Unit = {},
+    onFocused: () -> Unit = {},
     onSelectChanged: (TexFieldState) -> Unit,
-    placeHolderText: String
+    placeHolderText: String,
 ) {
     InnerTextField(
         modifier = Modifier.weight(1f),
         value = value,
         onValueChanged = onValueChanged,
+        onFocused = onFocused,
         onSelectChanged = onSelectChanged,
-        placeHolderText = placeHolderText
+        placeHolderText = placeHolderText,
     )
 }
 
@@ -192,8 +201,9 @@ private fun InnerTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChanged: (String) -> Unit,
+    onFocused: () -> Unit = {},
     onSelectChanged: (TexFieldState) -> Unit,
-    placeHolderText: String
+    placeHolderText: String,
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -234,6 +244,9 @@ private fun InnerTextField(
                             TexFieldState.Written
                         }
                     )
+                    if(focusState.isFocused){
+                        onFocused()
+                    }
                 }
                 .focusRequester(focusRequester),
             value = value,

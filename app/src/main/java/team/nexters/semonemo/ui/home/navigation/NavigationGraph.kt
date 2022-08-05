@@ -25,7 +25,7 @@ internal fun NavigationGraph(navController: NavHostController) {
             )
         }
         composable(HomeScreens.Creating.route) {
-            MoimCreateScreen()
+            MoimCreateScreen(onBackPressed = { navController.popBackStack() })
         }
         composable(HomeScreens.Reward.route) {
             MoimDetailScreen {
