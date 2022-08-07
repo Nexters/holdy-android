@@ -1,4 +1,4 @@
-package team.nexters.data.di
+package team.nexters.shared.di
 
 import dagger.Module
 import dagger.Provides

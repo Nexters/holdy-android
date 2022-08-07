@@ -2,7 +2,7 @@ package team.nexters.data.moim.repository
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import team.nexters.data.di.IoDispatcher
+import team.nexters.shared.di.IoDispatcher
 import team.nexters.data.extension.apiCall
 import team.nexters.data.moim.api.MoimApi
 import team.nexters.data.moim.mapper.toData

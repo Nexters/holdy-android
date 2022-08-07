@@ -19,7 +19,7 @@ class MoimListViewModel @Inject constructor(
                 Log.d("FetchMoimList","Success: ${moimList[0].id}")
             }.onFailure { throwable->
                 Log.d("FetchMoimList", "Fail: ${throwable.localizedMessage}")
-                emitException(throwable)
+                emitException(throwable.localizedMessage)
             }
     }
 

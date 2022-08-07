@@ -3,5 +3,5 @@ package team.nexters.semonemo.extension
 import android.app.Activity
 import android.widget.Toast
 
-fun Activity.basicExceptionHandler(exception: Throwable) =
-    Toast.makeText(this, exception.localizedMessage, Toast.LENGTH_SHORT).show()
+fun Activity.basicExceptionHandler(message: String) =
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
