@@ -10,6 +10,8 @@ android {
 }
 
 dependencies {
+    implementation(project(Modules.Shared))
+
     kapt(Dependencies.Hilt.Kapt)
     implementation(Dependencies.Hilt.Core)
     Dependencies.Essential.forEach(::implementation)
