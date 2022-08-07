@@ -3,7 +3,7 @@ package team.nexters.data.user.repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import team.nexters.data.datastore.DataStoreManager
-import team.nexters.data.di.IoDispatcher
+import team.nexters.shared.di.IoDispatcher
 import team.nexters.data.extension.apiCall
 import team.nexters.data.extension.headerIntercept
 import team.nexters.data.user.api.UserApi
@@ -26,5 +26,4 @@ class UserRepositoryImpl @Inject constructor(
                 .apiCall()
                 .toDomain()
         }
-
 }

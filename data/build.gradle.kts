@@ -16,6 +16,7 @@ android {
 
 dependencies {
     implementation(project(Modules.Domain))
+    implementation(project(Modules.Shared))
     kapt(Dependencies.Hilt.Kapt)
     implementation(Dependencies.Hilt.Android)
     implementation(Dependencies.Jetpack.DataStore)

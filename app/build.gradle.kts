@@ -49,6 +49,8 @@ android {
 dependencies {
     implementation(project(Modules.Data))
     implementation(project(Modules.Domain))
+    implementation(project(Modules.Shared))
+
     implementation("com.google.firebase:firebase-common-ktx:20.1.1")
     kapt(Dependencies.Hilt.Kapt)
     implementation(Dependencies.Hilt.Android)
@@ -59,8 +61,6 @@ dependencies {
 
     implementation(platform(Dependencies.Firebase.Bom))
     Dependencies.Firebase.List.forEach(::implementation)
-
-    implementation(Dependencies.Timber)
 
     Dependencies.Rx.forEach(::implementation)
 }

@@ -35,7 +35,7 @@ class MoimCreateViewModel @Inject constructor(
                 }
             }.onFailure { throwable ->
                 throwable.printStackTrace()
-                emitException(throwable)
+                emitException(throwable.localizedMessage)
             }
         }
     }

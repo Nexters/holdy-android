@@ -82,7 +82,7 @@ internal fun MoimCreateScreen(
         }
     }
     LaunchedEffect(Unit) {
-        viewModel.exceptionFlow.collectWithLifecycle(lifecycleOwner) {
+        viewModel.commonErrorChannel.collectWithLifecycle(lifecycleOwner) {
             activity.basicExceptionHandler(it)
         }
     }
