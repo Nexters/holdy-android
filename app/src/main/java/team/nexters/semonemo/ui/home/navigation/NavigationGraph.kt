@@ -3,9 +3,6 @@ package team.nexters.semonemo.ui.home.navigation
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -22,13 +19,22 @@ internal fun NavigationGraph(navController: NavHostController) {
             slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(700))
         },
         exitTransition = {
-            slideOutOfContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(700))
+            slideOutOfContainer(
+                AnimatedContentScope.SlideDirection.Left,
+                animationSpec = tween(700)
+            )
         },
         popEnterTransition = {
-            slideIntoContainer(AnimatedContentScope.SlideDirection.Right, animationSpec = tween(700))
+            slideIntoContainer(
+                AnimatedContentScope.SlideDirection.Right,
+                animationSpec = tween(700)
+            )
         },
         popExitTransition = {
-            slideOutOfContainer(AnimatedContentScope.SlideDirection.Right, animationSpec = tween(700))
+            slideOutOfContainer(
+                AnimatedContentScope.SlideDirection.Right,
+                animationSpec = tween(700)
+            )
         },
         navController = navController,
         startDestination = HomeScreens.List.route,

@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
+import team.nexters.semonemo.R
 import team.nexters.semonemo.theme.SemoNemoTheme
 import team.nexters.semonemo.ui.home.navigation.NavigationGraph
 
