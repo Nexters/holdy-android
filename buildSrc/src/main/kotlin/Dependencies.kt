@@ -56,9 +56,7 @@ object Dependencies {
             "com.google.firebase:firebase-analytics-ktx"
         )
     }
-
-    const val Timber = "com.jakewharton.timber:timber:5.0.1"
-
+    const val Timber = "com.jakewharton.timber:timber:${Versions.Log.Timber}"
 
     val Rx = listOf(
         "io.reactivex.rxjava3:rxandroid:${Versions.RX.RxAndroid}",
