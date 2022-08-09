@@ -1,14 +1,13 @@
 package team.nexters.semonemo.ui.home.moimcreate
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import team.nexters.domain.moim.model.MoimCreateModel
 import team.nexters.domain.moim.usecase.CreateMoimUseCase
 import team.nexters.semonemo.base.BaseViewModel
+import team.nexters.shared.ResultWrapper
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,17 +24,28 @@ class MoimCreateViewModel @Inject constructor(
         }
     }
 
-    fun onCreateButtonClicked(moimCreateModel: MoimCreateModel) {
+    fun onCreateButtonClicked(
+        startDate: String,
+        endDate: String,
+        summary: String,
+        address: String,
+        mapLink: String
+
+    ) {
         viewModelScope.launch {
-            createMoimUseCase(moimCreateModel).onSuccess { response ->
-                if (response.id == null) {
+            when (val result = createMoimUseCase(
+                CreateMoimUseCase.Param(
+                    startDate,
+                    endDate,
+                    place = CreateMoimUseCase.Place(summary, address, mapLink)
+                )
+            )) {
+                is ResultWrapper.Success -> {
                     _eventFlow.emit(MoimCreateEvent.NavigateToMoimList)
-                } else {
-                    _eventFlow.emit(MoimCreateEvent.CreationFailed(response.result))
                 }
-            }.onFailure { throwable ->
-                throwable.printStackTrace()
-                emitException(throwable.localizedMessage)
+                is ResultWrapper.Error -> {
+                    emitException(result.message)
+                }
             }
         }
     }
