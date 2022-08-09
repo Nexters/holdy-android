@@ -17,6 +17,7 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import team.nexters.semonemo.R
 import team.nexters.semonemo.theme.SemoNemoTheme
 import team.nexters.semonemo.theme.Tertiary
 import team.nexters.semonemo.ui.home.HomeActivity
@@ -62,6 +63,7 @@ class SplashActivity() : ComponentActivity() {
                     )
                 }
             }
+            overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_bottom)
             finish()
         }
     }

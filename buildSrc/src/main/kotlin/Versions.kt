@@ -48,4 +48,8 @@ object Versions {
         const val RxAndroid = "3.0.0"
         const val RxKotlin = "3.0.1"
     }
+
+    object Log{
+        const val Timber = "5.0.1"
+    }
 }
