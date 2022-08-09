@@ -1,6 +1,5 @@
 package team.nexters.semonemo.ui.home.moimcreate
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,8 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,18 +34,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import team.nexters.domain.moim.model.MoimCreateModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.TextField
-import team.nexters.semonemo.extension.basicExceptionHandler
 import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.extension.showDatePicker
 import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Tertiary
-import team.nexters.semonemo.ui.home.HomeActivity
 import team.nexters.semonemo.ui.home.moimcreate.component.DoubleTextField
 import team.nexters.semonemo.extension.showTimePicker
 import team.nexters.semonemo.ui.home.moimcreate.component.DateTextField
@@ -56,7 +54,8 @@ internal fun MoimCreateScreen(
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
-    val activity = (context as HomeActivity)
+    val scaffoldState = rememberScaffoldState()
+
     val (date, setDate) = remember { mutableStateOf("") }
     val (startTime, setStartTime) = remember { mutableStateOf("") }
     val (endTime, setEndTime) = remember { mutableStateOf("") }
@@ -76,26 +75,35 @@ internal fun MoimCreateScreen(
                     context.showTimePicker { setEndTime(it) }
                 }
                 is MoimCreateEvent.CreationFailed -> {
-                    Toast.makeText(activity, event.result, Toast.LENGTH_SHORT).show()
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.result,
+                    )
                 }
             }
         }
     }
     LaunchedEffect(Unit) {
-        viewModel.commonErrorChannel.collectWithLifecycle(lifecycleOwner) {
-            activity.basicExceptionHandler(it)
+        viewModel.commonErrorChannel.collectWithLifecycle(lifecycleOwner) { message ->
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = message,
+            )
         }
     }
-    MoimCreateScreen(
-        date = date,
-        startTime = startTime,
-        endTime = endTime,
-        onCloseButtonClicked = { viewModel.postEvent(MoimCreateEvent.NavigateToMoimList) },
-        onDateFocused = { viewModel.postEvent(MoimCreateEvent.OpenDatePicker) },
-        onCreateButtonClicked = viewModel::onCreateButtonClicked,
-        onStartTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenStartTimePicker) },
-        onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) }
-    )
+    Scaffold(
+        scaffoldState = scaffoldState,
+    ) { contentPadding ->
+        contentPadding
+        MoimCreateScreen(
+            date = date,
+            startTime = startTime,
+            endTime = endTime,
+            onCloseButtonClicked = { viewModel.postEvent(MoimCreateEvent.NavigateToMoimList) },
+            onDateFocused = { viewModel.postEvent(MoimCreateEvent.OpenDatePicker) },
+            onCreateButtonClicked = viewModel::onCreateButtonClicked,
+            onStartTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenStartTimePicker) },
+            onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) }
+        )
+    }
 }
 
 @Composable
@@ -107,7 +115,7 @@ private fun MoimCreateScreen(
     onDateFocused: () -> Unit,
     onStartTimeFocused: () -> Unit,
     onEndTimeFocused: () -> Unit,
-    onCreateButtonClicked: (MoimCreateModel) -> Unit = {}
+    onCreateButtonClicked: (String, String, String, String, String) -> Unit
 ) {
 
     var address by remember { mutableStateOf("") }
@@ -211,15 +219,11 @@ private fun MoimCreateScreen(
                     .height(48.dp),
                 onClick = {
                     onCreateButtonClicked(
-                        MoimCreateModel(
-                            startDate = parseDate(date, startTime),
-                            endDate = parseDate(date, endTime),
-                            MoimCreateModel.Place(
-                                address,
-                                detailAddress,
-                                placeLink
-                            )
-                        )
+                        parseDate(date, startTime),
+                        parseDate(date, endTime),
+                        address,
+                        detailAddress,
+                        placeLink
                     )
                 },
                 colors = ButtonDefaults.buttonColors(
