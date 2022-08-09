@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import team.nexters.domain.moim.usecase.FetchMoimListUseCase
+import team.nexters.shared.ResultWrapper
 
 @ExtendWith(MockKExtension::class)
 class FetchMoimListUseCaseTest {
@@ -19,14 +20,14 @@ class FetchMoimListUseCaseTest {
     @BeforeEach
     fun init() {
         coEvery {
-            fetchMoimListUseCase()
-        } returns Result.success(emptyList())
+            fetchMoimListUseCase(Unit)
+        } returns ResultWrapper.Success(emptyList())
     }
 
     @DisplayName("test success")
     @Test
     fun `Usecase return empty list`() = runTest {
-        val result = fetchMoimListUseCase()
-        assert(result.isSuccess)
+        val result = fetchMoimListUseCase(Unit)
+        assert(result is ResultWrapper.Success)
     }
 }

@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,7 +30,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.TextField
-import team.nexters.semonemo.extension.basicExceptionHandler
 import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
@@ -41,27 +42,29 @@ internal fun LoginScreen(
 ) {
     val activity = (LocalContext.current as OnBoardingActivity)
     val lifecycleOwner = LocalLifecycleOwner.current
-
+    val scaffoldState = rememberScaffoldState()
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
             when (event) {
                 OnBoardingEvent.Success ->
                     activity.startMain()
-                OnBoardingEvent.Failed ->
-                    Toast.makeText(
-                        activity,
-                        activity.getString(R.string.code_error),
-                        Toast.LENGTH_SHORT
-                    ).show()
             }
         }
     }
     LaunchedEffect(Unit) {
-        viewModel.commonErrorChannel.collectWithLifecycle(lifecycleOwner) {
-            activity.basicExceptionHandler(it)
+        viewModel.commonErrorChannel.collectWithLifecycle(lifecycleOwner) { message ->
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = message
+            )
         }
     }
-    LoginScreen(onLogin = viewModel::login)
+    Scaffold(
+        scaffoldState = scaffoldState,
+    ) { contentPadding ->
+        contentPadding
+        LoginScreen(onLogin = viewModel::login)
+    }
+
 }
 
 @Composable

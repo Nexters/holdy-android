@@ -1,7 +1,12 @@
 package team.nexters.data.moim.mapper
 
+import team.nexters.data.moim.model.HostResponse
 import team.nexters.data.moim.model.MoimResponse
+import team.nexters.data.moim.model.PlaceResponse
 import team.nexters.domain.moim.model.MoimModel
+import team.nexters.domain.moim.model.Place
+import team.nexters.domain.moim.model.Host
+
 
 internal fun MoimResponse.toDomain() = MoimModel(
     id = id,
@@ -12,11 +17,11 @@ internal fun MoimResponse.toDomain() = MoimModel(
 
 )
 
-private fun MoimResponse.Host.toDomain() = MoimModel.Host(
+private fun HostResponse.toDomain() = Host(
     nickname = nickname
 )
 
-private fun MoimResponse.Place.toDomain() = MoimModel.Place(
+private fun PlaceResponse.toDomain() = Place(
     summary = summary,
     address = address,
     mapLink = mapLink

@@ -1,11 +1,8 @@
 package team.nexters.domain.user.model
 
 data class LoginModel(
-    val result: String,
-    val loginUser: LoginUser?,
-) {
-    data class LoginUser(
-        val nickname: String
-    )
-}
+    val id: Int,
+    val nickname: String,
+    val group: String
+)
 

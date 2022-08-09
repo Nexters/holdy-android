@@ -9,8 +9,8 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import team.nexters.domain.user.model.LoginModel
-import team.nexters.domain.user.model.LoginRequestModel
 import team.nexters.domain.user.usecase.LoginUseCase
+import team.nexters.shared.ResultWrapper
 
 @ExtendWith(MockKExtension::class)
 class LoginUseCaseTest {
@@ -21,21 +21,21 @@ class LoginUseCaseTest {
     @BeforeEach
     fun init() {
         coEvery {
-            loginUseCase(LoginRequestModel("success_key"))
-        } returns Result.success(LoginModel("success", LoginModel.LoginUser("rok")))
+            loginUseCase(LoginUseCase.Param("success_key"))
+        } returns ResultWrapper.Success(LoginModel(10, "evergreen", "맥주값"))
     }
 
     @DisplayName("Success Test")
     @Test
     fun `Usecase return LoginModel`() = runTest {
-        val result = loginUseCase(LoginRequestModel("success_key"))
-        assert(result.isSuccess)
+        val result = loginUseCase(LoginUseCase.Param("success_key"))
+        assert(result is ResultWrapper.Success)
     }
 
     @DisplayName("Fail Test")
     @Test
     fun `Usecase return null user`() = runTest {
-        val result = loginUseCase(LoginRequestModel("failed_key"))
-        assert(result.isFailure)
+        val result = loginUseCase(LoginUseCase.Param("failed_key"))
+        assert(result is ResultWrapper.Error)
     }
 }
