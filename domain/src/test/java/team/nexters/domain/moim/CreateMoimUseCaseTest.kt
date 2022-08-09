@@ -8,9 +8,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import team.nexters.domain.moim.model.MoimCreateModel
 import team.nexters.domain.moim.model.MoimResponseModel
 import team.nexters.domain.moim.usecase.CreateMoimUseCase
+import team.nexters.shared.ResultWrapper
 
 @ExtendWith(MockKExtension::class)
 class CreateMoimUseCaseTest {
@@ -18,10 +18,10 @@ class CreateMoimUseCaseTest {
     @MockK
     private lateinit var createMoimUseCase: CreateMoimUseCase
 
-    private val moimCreateModel = MoimCreateModel(
+    private val moimCreateModel = CreateMoimUseCase.Param(
         "2022-07-29T15:00:00",
         "2022-07-29T18:00:00",
-        MoimCreateModel.Place(
+        CreateMoimUseCase.Place(
             "상록이집",
             "상록이집주소",
             "안알랴줌"
@@ -34,13 +34,13 @@ class CreateMoimUseCaseTest {
             createMoimUseCase(
                 moimCreateModel
             )
-        } returns Result.success(MoimResponseModel("성공", 101))
+        } returns ResultWrapper.Success(MoimResponseModel(101))
     }
 
     @DisplayName("test success")
     @Test
     fun `Usecase return MoimResponseModel`() = runTest {
         val result = createMoimUseCase(moimCreateModel)
-        assert(result.isSuccess)
+        assert(result is ResultWrapper.Success)
     }
 }
