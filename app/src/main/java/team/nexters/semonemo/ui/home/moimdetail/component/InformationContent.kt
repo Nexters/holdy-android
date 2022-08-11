@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.R
+import team.nexters.semonemo.extension.noRippleClickable
 
 @Composable
 internal fun InformationContent(
@@ -38,7 +39,7 @@ internal fun InformationContent(
             Image(
                 modifier = Modifier
                     .padding(end = 20.dp)
-                    .clickable { onBackPressed() },
+                    .noRippleClickable { onBackPressed() },
                 painter = painterResource(id = R.drawable.close_white),
                 contentDescription = stringResource(id = R.string.close)
             )

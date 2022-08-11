@@ -39,8 +39,7 @@ internal fun TopBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(horizontal = 20.dp),
+            .wrapContentHeight(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -61,12 +60,12 @@ internal fun TopBar(
 
 @Composable
 internal fun EndMoimFilter(
+    modifier: Modifier = Modifier,
     checked: Boolean,
-    onCheckedChanged: (Boolean) -> Unit,
     buttonText: String,
 ) {
     Row(
-        modifier = Modifier.noRippleClickable { onCheckedChanged(checked) },
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         CircleCheckbox(

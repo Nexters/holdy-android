@@ -72,7 +72,7 @@ private fun MoimDetailScreen(
         frontLayerShape = RoundedCornerShape(8),
         backLayerContent = {
             InformationContent(
-                modifier = Modifier.padding(start = 20.dp, top = 60.dp),
+                modifier = Modifier.padding(start = 20.dp, top = 16.dp),
                 title = moimInfo.title,
                 date = moimInfo.date,
                 place = moimInfo.place,

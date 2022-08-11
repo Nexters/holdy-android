@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import team.nexters.semonemo.R
+import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.White
 import team.nexters.semonemo.ui.home.model.moimListDummy
 import team.nexters.semonemo.ui.home.moimlist.component.EndMoimFilter
@@ -63,7 +64,7 @@ internal fun MoimListScreen(
             targetState = Unit
         ) { tab ->
             tab
-            MoimListScreen(navigateToMoimCreate, navigateToMoimDetail,navigateToHold)
+            MoimListScreen(navigateToMoimCreate, navigateToMoimDetail, navigateToHold)
         }
     }
 }
@@ -88,10 +89,10 @@ private fun MoimListScreen(
                 .padding(horizontal = 20.dp)
                 .background(MaterialTheme.colors.background)
         ) {
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(19.dp))
             TopBar(
                 title = stringResource(id = R.string.moim_title),
-                painter = painterResource(id = R.drawable.holdy1),
+                painter = painterResource(id = R.drawable.small_holdy1),
                 contentDescription = stringResource(id = R.string.holdy),
                 navigateToHold = navigateToHold
             )
@@ -104,8 +105,9 @@ private fun MoimListScreen(
                     contentAlignment = Alignment.CenterEnd
                 ) {
                     EndMoimFilter(
+                        modifier = Modifier
+                            .noRippleClickable { isHide = !isHide },
                         checked = isHide,
-                        onCheckedChanged = { isHide = !isHide },
                         buttonText = stringResource(id = R.string.hide_finished_moim)
                     )
                 }
