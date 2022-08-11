@@ -1,10 +1,10 @@
 package team.nexters.semonemo.ui.home.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import team.nexters.semonemo.ui.home.hold.HoldScreen
 import team.nexters.semonemo.ui.home.moimcreate.MoimCreateScreen
 import team.nexters.semonemo.ui.home.moimdetail.MoimDetailScreen
 import team.nexters.semonemo.ui.home.moimlist.MoimListScreen
@@ -24,6 +24,9 @@ internal fun NavigationGraph(navController: NavHostController) {
                 },
                 navigateToMoimDetail = {
                     navController.navigate(HomeScreens.Reward.route)
+                },
+                navigateToHold = {
+                    navController.navigate(HomeScreens.Hold.route)
                 }
             )
         }
@@ -34,6 +37,11 @@ internal fun NavigationGraph(navController: NavHostController) {
         }
         composable(HomeScreens.Reward.route) {
             MoimDetailScreen {
+                navController.popBackStack()
+            }
+        }
+        composable(HomeScreens.Hold.route) {
+            HoldScreen {
                 navController.popBackStack()
             }
         }

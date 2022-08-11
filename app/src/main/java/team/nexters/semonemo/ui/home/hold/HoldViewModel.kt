@@ -1,4 +1,6 @@
 package team.nexters.semonemo.ui.home.hold
 
-class HoldViewModel {
+import team.nexters.semonemo.base.BaseViewModel
+
+class HoldViewModel : BaseViewModel() {
 }
