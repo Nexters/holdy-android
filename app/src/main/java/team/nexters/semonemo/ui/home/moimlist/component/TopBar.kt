@@ -2,6 +2,7 @@ package team.nexters.semonemo.ui.home.moimlist.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,13 +33,13 @@ import team.nexters.semonemo.theme.White
 internal fun TopBar(
     title: String,
     painter: Painter,
-    contentDescription: String
+    contentDescription: String,
+    navigateToHold: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(horizontal = 20.dp),
+            .wrapContentHeight(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -49,6 +50,7 @@ internal fun TopBar(
             )
         )
         Image(
+            modifier = Modifier.noRippleClickable { navigateToHold() },
             painter = painter,
             contentDescription = contentDescription
         )
@@ -58,12 +60,12 @@ internal fun TopBar(
 
 @Composable
 internal fun EndMoimFilter(
+    modifier: Modifier = Modifier,
     checked: Boolean,
-    onCheckedChanged: (Boolean) -> Unit,
     buttonText: String,
 ) {
     Row(
-        modifier = Modifier.noRippleClickable { onCheckedChanged(checked) },
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         CircleCheckbox(

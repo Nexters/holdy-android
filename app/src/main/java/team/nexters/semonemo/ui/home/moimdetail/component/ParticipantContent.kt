@@ -55,6 +55,7 @@ import team.nexters.semonemo.ui.home.model.participantsDummy
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ParticipantContent(
+    modifier: Modifier = Modifier,
     isHostMode: Boolean = false,
     scaffoldState: BackdropScaffoldState
 ) {
@@ -62,9 +63,7 @@ internal fun ParticipantContent(
     val context = LocalContext.current
     val snackbarCoroutineScope = rememberCoroutineScope()
     Column(
-        modifier = Modifier
-            .padding(horizontal = 24.dp)
-            .padding(top = 32.dp)
+        modifier = modifier
     ) {
         InfoBox(isHostMode)
         Row(

@@ -139,7 +139,7 @@ private fun MoimCreateScreen(
                 .padding(horizontal = 20.dp)
                 .background(Color.White),
         ) {
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Image(
                 modifier = Modifier
                     .align(Alignment.End)

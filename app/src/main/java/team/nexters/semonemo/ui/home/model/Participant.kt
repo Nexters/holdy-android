@@ -12,43 +12,43 @@ data class Participant(
 
 val participantsDummy = listOf(
     Participant(
-        R.drawable.holdy1,
+        R.drawable.small_holdy1,
         "등산왕 마속",
         "고구마 클럽",
         true
     ),
     Participant(
-        R.drawable.holdy1,
+        R.drawable.small_holdy1,
         "탑동 엄홍길",
         "고구마 클럽",
     ),
     Participant(
-        R.drawable.holdy1,
+        R.drawable.small_holdy1,
         "수내역 황금허벅지 김민철",
         "고구마 클럽",
     ),
     Participant(
-        R.drawable.holdy1,
+        R.drawable.small_holdy1,
         "Im혜지",
         "고구마 클럽",
     ),
     Participant(
-        R.drawable.holdy1,
+        R.drawable.small_holdy1,
         "수내역 황금허벅지 김민철",
         "고구마 클럽",
     ),
     Participant(
-        R.drawable.holdy1,
+        R.drawable.small_holdy1,
         "Im혜지",
         "고구마 클럽",
     ),
     Participant(
-        R.drawable.holdy1,
+        R.drawable.small_holdy1,
         "탑동 엄홍길",
         "고구마 클럽",
     ),
     Participant(
-        R.drawable.holdy1,
+        R.drawable.small_holdy1,
         "탑동 엄홍길",
         "고구마 클럽",
     ),

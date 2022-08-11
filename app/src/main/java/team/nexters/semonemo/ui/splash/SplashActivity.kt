@@ -63,7 +63,7 @@ class SplashActivity() : ComponentActivity() {
                     )
                 }
             }
-            overridePendingTransition(R.anim.slide_in_bottom,R.anim.none)
+            overridePendingTransition(R.anim.slide_in_bottom, R.anim.none)
             finish()
         }
     }

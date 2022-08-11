@@ -48,6 +48,9 @@
     <string name="check_info2">홀드를 확인할 수\u0020</string>
     <string name="check_info3">있어요</string>
 
+    //hold
+    <string name="collect_hold">홀드를 모았어요</string>
+
     //content description
     <string name="checkbox">checkbox</string>
     <string name="close">close</string>
@@ -60,5 +63,7 @@
     <string name="invite">invite</string>
     <string name="crown">crown</string>
     <string name="crown_badge">crown badge</string>
+    <string name="profile">profile</string>
+    <string name="hold">hold</string>
     <string name="title_activity_splash">SplashActivity</string>
 </resources>

@@ -61,6 +61,9 @@ private fun MoimDetailScreen(
         scaffoldState = scaffoldState,
         frontLayerContent = {
             ParticipantContent(
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 32.dp),
                 isHostMode = isHostMode,
                 scaffoldState
             )
@@ -69,6 +72,7 @@ private fun MoimDetailScreen(
         frontLayerShape = RoundedCornerShape(8),
         backLayerContent = {
             InformationContent(
+                modifier = Modifier.padding(start = 20.dp, top = 16.dp),
                 title = moimInfo.title,
                 date = moimInfo.date,
                 place = moimInfo.place,
