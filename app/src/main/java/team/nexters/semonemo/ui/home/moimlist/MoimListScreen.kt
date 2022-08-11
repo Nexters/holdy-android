@@ -1,5 +1,6 @@
 package team.nexters.semonemo.ui.home.moimlist
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,6 +45,7 @@ internal fun MoimListScreen(
 ) {
     val systemUiController = rememberSystemUiController()
     val color = MaterialTheme.colors.background
+    val scaffoldState = rememberScaffoldState()
     LaunchedEffect(Unit) {
         systemUiController.setStatusBarColor(
             color = color
@@ -50,7 +54,17 @@ internal fun MoimListScreen(
     LaunchedEffect(Unit) {
         viewModel.fetchMoimList()
     }
-    MoimListScreen(navigateToMoimCreate, navigateToMoimDetail)
+    Scaffold(
+        scaffoldState = scaffoldState,
+    ) { contentPadding ->
+        Crossfade(
+            modifier = Modifier.padding(contentPadding),
+            targetState = Unit
+        ) { tab ->
+            tab
+            MoimListScreen(navigateToMoimCreate, navigateToMoimDetail)
+        }
+    }
 }
 
 @Preview
@@ -92,7 +106,7 @@ private fun MoimListScreen(
                         buttonText = stringResource(id = R.string.hide_finished_moim)
                     )
                 }
-                MoimListColumn(moimList,navigateToMoimDetail)
+                MoimListColumn(moimList, navigateToMoimDetail)
             }
         }
         Box(
