@@ -31,7 +31,7 @@ class OnBoardingActivity : ComponentActivity() {
 
     fun startMain() {
         startActivity(HomeActivity.newIntent(this))
-        overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_bottom)
+        overridePendingTransition(R.anim.slide_in_bottom,R.anim.none)
         finish()
     }
 }
