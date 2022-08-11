@@ -46,6 +46,9 @@ class MoimCreateViewModel @Inject constructor(
                 is ResultWrapper.Error -> {
                     emitException(result.message)
                 }
+                is ResultWrapper.Exception -> {
+                    result.e.message?.let { emitException(it) }
+                }
             }
         }
     }
