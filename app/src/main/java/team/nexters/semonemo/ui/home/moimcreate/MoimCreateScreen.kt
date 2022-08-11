@@ -1,5 +1,6 @@
 package team.nexters.semonemo.ui.home.moimcreate
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -92,17 +93,23 @@ internal fun MoimCreateScreen(
     Scaffold(
         scaffoldState = scaffoldState,
     ) { contentPadding ->
-        contentPadding
-        MoimCreateScreen(
-            date = date,
-            startTime = startTime,
-            endTime = endTime,
-            onCloseButtonClicked = { viewModel.postEvent(MoimCreateEvent.NavigateToMoimList) },
-            onDateFocused = { viewModel.postEvent(MoimCreateEvent.OpenDatePicker) },
-            onCreateButtonClicked = viewModel::onCreateButtonClicked,
-            onStartTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenStartTimePicker) },
-            onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) }
-        )
+        Crossfade(
+            modifier = Modifier.padding(contentPadding),
+            targetState = Unit
+        ) { tab ->
+            tab
+            MoimCreateScreen(
+                date = date,
+                startTime = startTime,
+                endTime = endTime,
+                onCloseButtonClicked = { viewModel.postEvent(MoimCreateEvent.NavigateToMoimList) },
+                onDateFocused = { viewModel.postEvent(MoimCreateEvent.OpenDatePicker) },
+                onCreateButtonClicked = viewModel::onCreateButtonClicked,
+                onStartTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenStartTimePicker) },
+                onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) }
+            )
+        }
+
     }
 }
 
