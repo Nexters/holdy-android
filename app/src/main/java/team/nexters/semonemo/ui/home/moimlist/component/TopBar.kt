@@ -2,6 +2,7 @@ package team.nexters.semonemo.ui.home.moimlist.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +33,8 @@ import team.nexters.semonemo.theme.White
 internal fun TopBar(
     title: String,
     painter: Painter,
-    contentDescription: String
+    contentDescription: String,
+    navigateToHold: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -49,6 +51,7 @@ internal fun TopBar(
             )
         )
         Image(
+            modifier = Modifier.noRippleClickable { navigateToHold() },
             painter = painter,
             contentDescription = contentDescription
         )

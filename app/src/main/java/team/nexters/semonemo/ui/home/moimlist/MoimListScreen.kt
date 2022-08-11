@@ -41,7 +41,8 @@ import team.nexters.semonemo.ui.home.moimlist.component.TopBar
 internal fun MoimListScreen(
     viewModel: MoimListViewModel = hiltViewModel(),
     navigateToMoimCreate: () -> Unit,
-    navigateToMoimDetail: () -> Unit
+    navigateToMoimDetail: () -> Unit,
+    navigateToHold: () -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
     val color = MaterialTheme.colors.background
@@ -62,7 +63,7 @@ internal fun MoimListScreen(
             targetState = Unit
         ) { tab ->
             tab
-            MoimListScreen(navigateToMoimCreate, navigateToMoimDetail)
+            MoimListScreen(navigateToMoimCreate, navigateToMoimDetail,navigateToHold)
         }
     }
 }
@@ -71,7 +72,8 @@ internal fun MoimListScreen(
 @Composable
 private fun MoimListScreen(
     navigateToMoimCreate: () -> Unit = {},
-    navigateToMoimDetail: () -> Unit = {}
+    navigateToMoimDetail: () -> Unit = {},
+    navigateToHold: () -> Unit = {}
 ) {
     val moimList = moimListDummy
     var isHide by remember { mutableStateOf(false) }
@@ -90,7 +92,8 @@ private fun MoimListScreen(
             TopBar(
                 title = stringResource(id = R.string.moim_title),
                 painter = painterResource(id = R.drawable.holdy1),
-                contentDescription = stringResource(id = R.string.holdy)
+                contentDescription = stringResource(id = R.string.holdy),
+                navigateToHold = navigateToHold
             )
             Spacer(modifier = Modifier.height(32.dp))
             if (moimList.isEmpty()) {

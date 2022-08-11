@@ -30,7 +30,6 @@ internal fun InformationContent(
 ) {
     Column(
         modifier = modifier
-            .padding(start = 20.dp, top = 60.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
@@ -39,7 +38,7 @@ internal fun InformationContent(
             Image(
                 modifier = Modifier
                     .padding(end = 20.dp)
-                    .clickable { onBackPressed() }, //TODO 뷰모델로 이벤트 이전할 때 상태바 색도 생각
+                    .clickable { onBackPressed() },
                 painter = painterResource(id = R.drawable.close_white),
                 contentDescription = stringResource(id = R.string.close)
             )
