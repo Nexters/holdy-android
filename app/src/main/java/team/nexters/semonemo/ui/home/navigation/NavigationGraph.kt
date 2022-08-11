@@ -4,12 +4,11 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 import team.nexters.semonemo.ui.home.moimcreate.MoimCreateScreen
 import team.nexters.semonemo.ui.home.moimdetail.MoimDetailScreen
 import team.nexters.semonemo.ui.home.moimlist.MoimListScreen
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun NavigationGraph(navController: NavHostController) {
     NavHost(
