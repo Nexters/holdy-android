@@ -1,20 +1,24 @@
 package team.nexters.semonemo.ui.home.navigation
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
 import team.nexters.semonemo.ui.home.hold.HoldScreen
 import team.nexters.semonemo.ui.home.moimcreate.MoimCreateScreen
 import team.nexters.semonemo.ui.home.moimdetail.MoimDetailScreen
 import team.nexters.semonemo.ui.home.moimlist.MoimListScreen
 import team.nexters.semonemo.ui.home.sns.ShareSnsScreen
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun NavigationGraph(navController: NavHostController) {
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
-        startDestination = HomeScreens.ShareSNS.route,
+        startDestination = HomeScreens.List.route,
     ) {
         composable(
             route = HomeScreens.List.route,

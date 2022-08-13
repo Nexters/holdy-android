@@ -93,23 +93,17 @@ internal fun MoimCreateScreen(
     Scaffold(
         scaffoldState = scaffoldState,
     ) { contentPadding ->
-        Crossfade(
-            modifier = Modifier.padding(contentPadding),
-            targetState = Unit
-        ) { tab ->
-            tab
-            MoimCreateScreen(
-                date = date,
-                startTime = startTime,
-                endTime = endTime,
-                onCloseButtonClicked = { viewModel.postEvent(MoimCreateEvent.NavigateToMoimList) },
-                onDateFocused = { viewModel.postEvent(MoimCreateEvent.OpenDatePicker) },
-                onCreateButtonClicked = viewModel::onCreateButtonClicked,
-                onStartTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenStartTimePicker) },
-                onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) }
-            )
-        }
-
+        contentPadding
+        MoimCreateScreen(
+            date = date,
+            startTime = startTime,
+            endTime = endTime,
+            onCloseButtonClicked = { viewModel.postEvent(MoimCreateEvent.NavigateToMoimList) },
+            onDateFocused = { viewModel.postEvent(MoimCreateEvent.OpenDatePicker) },
+            onCreateButtonClicked = viewModel::onCreateButtonClicked,
+            onStartTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenStartTimePicker) },
+            onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) }
+        )
     }
 }
 
