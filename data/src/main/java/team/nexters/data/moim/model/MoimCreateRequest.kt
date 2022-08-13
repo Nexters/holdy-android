@@ -8,14 +8,5 @@ data class MoimCreateRequest(
     @SerializedName("endDate")
     val endDate: String,
     @SerializedName("place")
-    val place: Place
-)
-
-data class Place(
-    @SerializedName("summary")
-    val summary: String,
-    @SerializedName("address")
-    val address: String,
-    @SerializedName("mapLink")
-    val mapLink: String
+    val place: PlaceResponse
 )
