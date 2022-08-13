@@ -43,6 +43,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.github.skgmn.composetooltip.AnchorEdge
 import kotlinx.coroutines.launch
+import team.nexters.domain.moim.model.Participant
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.Tooltip
@@ -57,7 +58,9 @@ import team.nexters.semonemo.ui.home.model.participantsDummy
 internal fun ParticipantContent(
     modifier: Modifier = Modifier,
     isHostMode: Boolean = false,
-    scaffoldState: BackdropScaffoldState
+    scaffoldState: BackdropScaffoldState,
+    participant: List<Participant>,
+    onInvite: () -> Unit
 ) {
     val scrollState = rememberLazyListState()
     val context = LocalContext.current
@@ -91,6 +94,7 @@ internal fun ParticipantContent(
                 if (isHostMode) {
                     Image(
                         modifier = Modifier.clickable {
+                            onInvite()
                             snackbarCoroutineScope.launch {
                                 scaffoldState.snackbarHostState.showSnackbar(context.getString(R.string.link_copy))
                             }
@@ -104,12 +108,12 @@ internal fun ParticipantContent(
         LazyColumn(
             state = scrollState
         ) {
-            items(participantsDummy) { participant ->
+            items(participant) { participant ->
                 ParticipantItem(
-                    profile = participant.profile,
+                    profile = R.drawable.holdy3,
                     nickname = participant.nickname,
-                    team = participant.team,
-                    isLeader = participant.isLeader,
+                    team = participant.group,
+                    isLeader = participant.attend,
                     isHostMode = isHostMode
                 )
             }

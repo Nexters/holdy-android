@@ -33,7 +33,7 @@ class MoimRepositoryImpl @Inject constructor(
 
     override suspend fun getMoimDetail(moimDetailRequest: GetMoimDetailUseCase.Param): ResultWrapper<MoimDetailModel> =
         handleApi {
-            moimApi.getMoimDetail(moimDetailRequest.toData())
+            moimApi.getMoimDetail(moimDetailRequest.toData().id)
         }.flatMap { it.toDomain() }
 
 }

@@ -9,7 +9,9 @@ data class MoimDetailModel(
     val host: Host,
     val loginUser: LoginUser,
     val participants: List<Participant>
-)
+) {
+
+}
 
 data class LoginUser(
     val isHost: Boolean,

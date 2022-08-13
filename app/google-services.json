@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "726481553132",
-    "project_id": "semonemo-3f7d7",
-    "storage_bucket": "semonemo-3f7d7.appspot.com"
+    "project_number": "1008005748612",
+    "project_id": "holdy-3eaa4",
+    "storage_bucket": "holdy-3eaa4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:726481553132:android:a73db90782e81025f047c9",
+        "mobilesdk_app_id": "1:1008005748612:android:0f9aa14fbad260bb2defd1",
         "android_client_info": {
           "package_name": "team.nexters.semonemo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "726481553132-kqhcmc5b6aj8ct3v1p6743uh3jold9lq.apps.googleusercontent.com",
+          "client_id": "1008005748612-ig6qgq2jo4nu9hj4f7s9f2k6kqd9bdkg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAYFaKGm8DnqYnPSEODAcfJkd6hutgXaBU"
+          "current_key": "AIzaSyBKjV8C7bQlQrGkeJ_FVxHuthQFlKgaDYw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "726481553132-kqhcmc5b6aj8ct3v1p6743uh3jold9lq.apps.googleusercontent.com",
+              "client_id": "1008005748612-ig6qgq2jo4nu9hj4f7s9f2k6kqd9bdkg.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -17,8 +17,8 @@ interface MoimApi {
         @Body moimCreateRequest: MoimCreateRequest
     ): Response<BaseResponse<MoimCreateResponse>>
 
-    @POST("/api/meetings/{id}")
+    @GET("/api/meetings/{id}")
     suspend fun getMoimDetail(
-        @Path("id") moimDetailRequest: MoimDetailRequest
+        @Path("id") moimDetailRequest: Int
     ): Response<BaseResponse<MoimDetailResponse>>
 }
