@@ -10,10 +10,10 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class OnBoardingViewModel @Inject constructor(
+class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase
 ) : BaseViewModel() {
-    private val _eventFlow = MutableSharedFlow<OnBoardingEvent>(extraBufferCapacity = 1)
+    private val _eventFlow = MutableSharedFlow<LoginEvent>(extraBufferCapacity = 1)
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun login(code: String) {
@@ -21,7 +21,7 @@ class OnBoardingViewModel @Inject constructor(
             when (val result = loginUseCase(LoginUseCase.Param(code))) {
                 is ResultWrapper.Success -> {
                     Timber.e("성공")
-                    _eventFlow.emit(OnBoardingEvent.Success)
+                    _eventFlow.emit(LoginEvent.Success)
                 }
                 is ResultWrapper.Error -> {
                     Timber.e("실패")

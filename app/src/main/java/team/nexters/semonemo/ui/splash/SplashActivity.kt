@@ -22,7 +22,7 @@ import team.nexters.semonemo.R
 import team.nexters.semonemo.theme.SemoNemoTheme
 import team.nexters.semonemo.theme.Tertiary
 import team.nexters.semonemo.ui.home.HomeActivity
-import team.nexters.semonemo.ui.start.OnBoardingActivity
+import team.nexters.semonemo.ui.start.LoginActivity
 import timber.log.Timber
 
 /**
@@ -51,7 +51,7 @@ class SplashActivity() : ComponentActivity() {
         vieWModel.navigate.observe(this) {
             when (it) {
                 OnBoarding -> {
-                    startActivity(OnBoardingActivity.newIntent(this))
+                    startActivity(LoginActivity.newIntent(this))
                 }
                 is Home -> {
                     startActivity(HomeActivity.newIntent(this))
