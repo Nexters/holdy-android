@@ -65,7 +65,7 @@ private fun MoimDetailScreen(
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
     val isHostMode by remember { mutableStateOf(true) } // 호스트 판단 추후 변경
     var isCome by remember { mutableStateOf(false) } // 갈게요 Button
-    val args = mapOf("moim_id" to "1") // moim id 넣어줘 상록
+    val args = mapOf("moim_id" to "${moimInfo.id}", "title" to moimInfo.title, "content" to moimInfo.date) // moim id 넣어줘 상록
     BackdropScaffold(
         appBar = { },
         scaffoldState = scaffoldState,
