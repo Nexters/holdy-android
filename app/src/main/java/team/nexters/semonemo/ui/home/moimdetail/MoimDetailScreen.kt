@@ -12,12 +12,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.rememberBackdropScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,21 +25,36 @@ import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.theme.Primary
 import team.nexters.semonemo.ui.home.model.MoimInfo
 import team.nexters.semonemo.ui.home.model.MoimInfoDummy
+import team.nexters.semonemo.ui.home.model.moimListDummy
 import team.nexters.semonemo.ui.home.moimdetail.component.InformationContent
 import team.nexters.semonemo.ui.home.moimdetail.component.ParticipantContent
 
 @Composable
 internal fun MoimDetailScreen(
     viewModel: MoimDetailViewModel = hiltViewModel(),
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    id: Int = 12
 ) {
     val systemUiController = rememberSystemUiController()
+    val state = viewModel.uiState.collectAsState().value
     LaunchedEffect(Unit) {
         systemUiController.setStatusBarColor(
             color = Primary
         )
     }
-    MoimDetailScreen(onBackPressed)
+    LaunchedEffect(Unit){
+        viewModel.getMoimDetail(id)
+    }
+    when(state){
+        is MoimDetailState.Success ->{
+            MoimDetailScreen(
+                onBackPressed = onBackPressed,
+            )
+        }
+        else->{
+
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
