@@ -51,6 +51,12 @@
     //hold
     <string name="collect_hold">홀드를 모았어요</string>
 
+    //sns
+    <string name="showing_hold1">모임에 참여하고 받은\n</string>
+    <string name="showing_hold2">홀드</string>
+    <string name="showing_hold3">를 자랑해보세요!</string>
+    <string name="share_instagram">인스타그램에 공유하기</string>
+
     //content description
     <string name="checkbox">checkbox</string>
     <string name="close">close</string>
@@ -62,8 +68,10 @@
     <string name="holdy">holdy</string>
     <string name="invite">invite</string>
     <string name="crown">crown</string>
-    <string name="crown_badge">crown badge</string>
+    <string name="crown_badge">crownBadge</string>
     <string name="profile">profile</string>
     <string name="hold">hold</string>
+    <string name="hold_background">holdBackground</string>
+    <string name="sns_background">snsBackground</string>
     <string name="title_activity_splash">SplashActivity</string>
 </resources>
