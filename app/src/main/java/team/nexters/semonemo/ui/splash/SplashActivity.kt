@@ -50,13 +50,13 @@ class SplashActivity() : ComponentActivity() {
     private fun observeViewModel() {
         vieWModel.navigate.observe(this) {
             when (it) {
-                OnBoarding -> {
+                Navigation.Login -> {
                     startActivity(LoginActivity.newIntent(this))
                 }
-                is Home -> {
+                is Navigation.Home -> {
                     startActivity(HomeActivity.newIntent(this))
                 }
-                is Board -> {
+                is Navigation.MoimDetail -> {
                     startActivities(
                         arrayOf(
                             HomeActivity.newIntent(this)

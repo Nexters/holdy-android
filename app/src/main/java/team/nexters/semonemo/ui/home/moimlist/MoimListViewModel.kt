@@ -17,7 +17,7 @@ class MoimListViewModel @Inject constructor(
     suspend fun fetchMoimList() = viewModelScope.launch {
         when (val result = fetchMoimListUseCase(Unit)) {
             is ResultWrapper.Success -> {
-                Timber.tag("FetchMoimList").d("Success: %s", result.value[0].id)
+//                Timber.tag("FetchMoimList").d("Success: %s", result.value[0].id)
             }
             is ResultWrapper.Error -> {
                 emitException(result.message)
