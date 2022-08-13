@@ -17,6 +17,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
         get() = _navigate
 
     private val _deepLink = MutableLiveData<Uri>()
+    private val _kakaoShare = MutableLiveData<Uri>()
 
     init {
         viewModelScope.launch {
@@ -28,6 +29,10 @@ class SplashViewModel @Inject constructor() : ViewModel() {
 
     fun updateDeepLink(deepLink: Uri) {
         this._deepLink.value = deepLink
+    }
+
+    fun updateKakaoShare(kakaoShare: Uri){
+        this._kakaoShare.value = kakaoShare
     }
 
     // TODO

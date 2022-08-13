@@ -17,6 +17,7 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import team.nexters.semonemo.BuildConfig
 import team.nexters.semonemo.R
 import team.nexters.semonemo.theme.SemoNemoTheme
 import team.nexters.semonemo.theme.Tertiary
@@ -37,7 +38,7 @@ class SplashActivity() : ComponentActivity() {
         super.onCreate(savedInstanceState)
         Timber.d("tag1 onCreate")
         handleDeepLink()
-        handleKakaoLink()
+        handleKakaoShare()
         setContent {
             SemoNemoTheme {
                 SplashScreen()
@@ -73,11 +74,19 @@ class SplashActivity() : ComponentActivity() {
         Timber.d("tag1 onNewIntent", intent)
         super.onNewIntent(intent)
         handleDeepLink()
-        handleKakaoLink()
+        handleKakaoShare()
     }
 
-    private fun handleKakaoLink() {
-        intent
+    // 카카오 공유하기 핸들링
+    private fun handleKakaoShare() {
+        if (isViaKakaoShare()) {
+            intent.data?.let { vieWModel.updateKakaoShare(it) }
+        }
+    }
+
+    // 카카오 공유하기를 통해서 들어온 경우
+    private fun isViaKakaoShare(): Boolean {
+        return intent.scheme != null && intent.scheme == "kakao${BuildConfig.KAKAO_NATIVE_APP_KEY}"
     }
 
     private fun handleDeepLink() {
