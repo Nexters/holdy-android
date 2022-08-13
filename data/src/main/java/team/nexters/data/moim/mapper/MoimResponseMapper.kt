@@ -17,11 +17,11 @@ internal fun MoimResponse.toDomain() = MoimModel(
 
 )
 
-private fun HostResponse.toDomain() = Host(
+fun HostResponse.toDomain() = Host(
     nickname = nickname
 )
 
-private fun PlaceResponse.toDomain() = Place(
+fun PlaceResponse.toDomain() = Place(
     summary = summary,
     address = address,
     mapLink = mapLink

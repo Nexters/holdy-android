@@ -43,6 +43,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.github.skgmn.composetooltip.AnchorEdge
 import kotlinx.coroutines.launch
+import team.nexters.domain.moim.model.Participant
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.Tooltip
@@ -50,7 +51,6 @@ import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Gray0
 import team.nexters.semonemo.theme.Gray1
 import team.nexters.semonemo.theme.Gray6
-import team.nexters.semonemo.ui.home.model.Participant
 import team.nexters.semonemo.ui.home.model.participantsDummy
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -110,10 +110,10 @@ internal fun ParticipantContent(
         ) {
             items(participant) { participant ->
                 ParticipantItem(
-                    profile = participant.profile,
+                    profile = R.drawable.holdy3,
                     nickname = participant.nickname,
-                    team = participant.team,
-                    isLeader = participant.isLeader,
+                    team = participant.group,
+                    isLeader = participant.attend,
                     isHostMode = isHostMode
                 )
             }

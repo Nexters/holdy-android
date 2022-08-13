@@ -10,11 +10,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,20 +34,21 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.share.ShareClient
 import com.kakao.sdk.share.WebSharerClient
+import team.nexters.domain.moim.model.MoimDetailModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
+import team.nexters.semonemo.common.ProgressIndicator
 import team.nexters.semonemo.theme.Primary
-import team.nexters.semonemo.ui.home.model.MoimInfo
-import team.nexters.semonemo.ui.home.model.MoimInfoDummy
-import team.nexters.semonemo.ui.home.model.participantsDummy
 import team.nexters.semonemo.ui.home.moimdetail.component.InformationContent
 import team.nexters.semonemo.ui.home.moimdetail.component.ParticipantContent
+import team.nexters.semonemo.util.DateParser
 import timber.log.Timber
 
 @Composable
 internal fun MoimDetailScreen(
     viewModel: MoimDetailViewModel = hiltViewModel(),
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    id: Int = 52
 ) {
     val systemUiController = rememberSystemUiController()
     LaunchedEffect(Unit) {
@@ -52,20 +56,37 @@ internal fun MoimDetailScreen(
             color = Primary
         )
     }
-    MoimDetailScreen(onBackPressed)
+    LaunchedEffect(Unit) {
+        viewModel.getMoimDetail(id)
+    }
+    when (val state = viewModel.uiState.collectAsState().value) {
+        is MoimDetailState.Success -> {
+            MoimDetailScreen(
+                onBackPressed = onBackPressed,
+                moimDetail = state.moimDetailModel
+            )
+        }
+        else -> {
+            ProgressIndicator()
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MoimDetailScreen(
     onBackPressed: () -> Unit = {},
-    moimInfo: MoimInfo = MoimInfoDummy
+    moimDetail: MoimDetailModel
 ) {
     val context = LocalContext.current
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
-    val isHostMode by remember { mutableStateOf(true) } // 호스트 판단 추후 변경
     var isCome by remember { mutableStateOf(false) } // 갈게요 Button
-    val args = mapOf("moim_id" to "${moimInfo.id}", "title" to moimInfo.title, "content" to moimInfo.date) // moim id 넣어줘 상록
+    val parsedDate = DateParser.toTemplateArgs(moimDetail.startDate, moimDetail.endDate)
+    val args = mapOf(
+        "moim_id" to "${moimDetail.id}",
+        "title" to moimDetail.place.summary,
+        "content" to parsedDate
+    )
     BackdropScaffold(
         appBar = { },
         scaffoldState = scaffoldState,
@@ -74,10 +95,10 @@ private fun MoimDetailScreen(
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
                     .padding(top = 32.dp),
-                isHostMode = isHostMode,
+                isHostMode = moimDetail.loginUser.isHost,
                 scaffoldState = scaffoldState,
-                participant = participantsDummy,
-                onInvite = { kakaoShare(context, templateArgs = args ) },
+                participant = moimDetail.participants,
+                onInvite = { kakaoShare(context, templateArgs = args) },
             )
         },
         frontLayerScrimColor = Color.Unspecified,
@@ -85,15 +106,15 @@ private fun MoimDetailScreen(
         backLayerContent = {
             InformationContent(
                 modifier = Modifier.padding(start = 20.dp, top = 16.dp),
-                title = moimInfo.title,
-                date = moimInfo.date,
-                place = moimInfo.place,
+                title = moimDetail.place.summary,
+                date = parsedDate,
+                place = moimDetail.place.address,
                 onBackPressed = onBackPressed
             )
         },
         backLayerBackgroundColor = colors.primary
     )
-    if (!isHostMode) {
+    if (!moimDetail.loginUser.isHost) {
         val buttonColor = if (isCome) {
             colors.background
         } else {
@@ -141,11 +162,14 @@ private fun kakaoShare(
 ) {
     if (ShareClient.instance.isKakaoTalkSharingAvailable(context)) {
         // 카카오톡으로 카카오톡 공유 가능
-        ShareClient.instance.shareCustom(context, templateId, templateArgs) { sharingResult, error ->
+        ShareClient.instance.shareCustom(
+            context,
+            templateId,
+            templateArgs
+        ) { sharingResult, error ->
             if (error != null) {
                 Timber.e("카카오톡 공유 실패", error)
-            }
-            else if (sharingResult != null) {
+            } else if (sharingResult != null) {
                 Timber.d("카카오톡 공유 성공 ${sharingResult.intent}")
                 ContextCompat.startActivity(context, sharingResult.intent, null)
 
@@ -154,8 +178,7 @@ private fun kakaoShare(
                 Timber.w("Argument Msg: ${sharingResult.argumentMsg}")
             }
         }
-    }
-    else {
+    } else {
         // 카카오톡 미설치: 웹 공유 사용 권장
         // 웹 공유 예시 코드
         val sharerUrl = WebSharerClient.instance.makeCustomUrl(templateId)
@@ -164,7 +187,7 @@ private fun kakaoShare(
         // ex) Chrome, 삼성 인터넷, FireFox, 웨일 등
         try {
             KakaoCustomTabsClient.openWithDefault(context, sharerUrl)
-        } catch(e: UnsupportedOperationException) {
+        } catch (e: UnsupportedOperationException) {
             // CustomTabsServiceConnection 지원 브라우저가 없을 때 예외처리
         }
     }
