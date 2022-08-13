@@ -7,4 +7,5 @@ sealed class HomeScreens(
     object Creating : HomeScreens("CREATING")
     object Reward : HomeScreens("REWARD")
     object Hold: HomeScreens("HOLD")
+    object ShareSNS: HomeScreens("SHARE_SNS")
 }

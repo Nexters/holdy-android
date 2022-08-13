@@ -8,12 +8,13 @@ import team.nexters.semonemo.ui.home.hold.HoldScreen
 import team.nexters.semonemo.ui.home.moimcreate.MoimCreateScreen
 import team.nexters.semonemo.ui.home.moimdetail.MoimDetailScreen
 import team.nexters.semonemo.ui.home.moimlist.MoimListScreen
+import team.nexters.semonemo.ui.home.sns.ShareSnsScreen
 
 @Composable
 internal fun NavigationGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = HomeScreens.List.route,
+        startDestination = HomeScreens.ShareSNS.route,
     ) {
         composable(
             route = HomeScreens.List.route,
@@ -33,17 +34,24 @@ internal fun NavigationGraph(navController: NavHostController) {
         composable(
             route = HomeScreens.Creating.route,
         ) {
-            MoimCreateScreen(onBackPressed = { navController.popBackStack() })
+            MoimCreateScreen(
+                onBackPressed = { navController.popBackStack() }
+            )
         }
         composable(HomeScreens.Reward.route) {
-            MoimDetailScreen {
-                navController.popBackStack()
-            }
+            MoimDetailScreen(
+                onBackPressed = { navController.popBackStack() }
+            )
         }
         composable(HomeScreens.Hold.route) {
-            HoldScreen {
-                navController.popBackStack()
-            }
+            HoldScreen(
+                onBackPressed = { navController.popBackStack() }
+            )
+        }
+        composable(HomeScreens.ShareSNS.route) {
+            ShareSnsScreen(
+                onBackPressed = { navController.popBackStack() }
+            )
         }
     }
 }
