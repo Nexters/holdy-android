@@ -37,6 +37,7 @@ class SplashActivity() : ComponentActivity() {
         super.onCreate(savedInstanceState)
         Timber.d("tag1 onCreate")
         handleDeepLink()
+        handleKakaoLink()
         setContent {
             SemoNemoTheme {
                 SplashScreen()
@@ -69,9 +70,14 @@ class SplashActivity() : ComponentActivity() {
     }
 
     override fun onNewIntent(intent: Intent?) {
-        Timber.d("tag1 onNewIntent")
+        Timber.d("tag1 onNewIntent", intent)
         super.onNewIntent(intent)
         handleDeepLink()
+        handleKakaoLink()
+    }
+
+    private fun handleKakaoLink() {
+        intent
     }
 
     private fun handleDeepLink() {

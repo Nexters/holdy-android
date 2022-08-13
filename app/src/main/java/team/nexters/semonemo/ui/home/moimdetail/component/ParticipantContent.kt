@@ -50,6 +50,7 @@ import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Gray0
 import team.nexters.semonemo.theme.Gray1
 import team.nexters.semonemo.theme.Gray6
+import team.nexters.semonemo.ui.home.model.Participant
 import team.nexters.semonemo.ui.home.model.participantsDummy
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -58,6 +59,7 @@ internal fun ParticipantContent(
     modifier: Modifier = Modifier,
     isHostMode: Boolean = false,
     scaffoldState: BackdropScaffoldState,
+    participant: List<Participant>,
     onInvite: () -> Unit
 ) {
     val scrollState = rememberLazyListState()
@@ -106,7 +108,7 @@ internal fun ParticipantContent(
         LazyColumn(
             state = scrollState
         ) {
-            items(participantsDummy) { participant ->
+            items(participant) { participant ->
                 ParticipantItem(
                     profile = participant.profile,
                     nickname = participant.nickname,

@@ -36,6 +36,7 @@ import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.theme.Primary
 import team.nexters.semonemo.ui.home.model.MoimInfo
 import team.nexters.semonemo.ui.home.model.MoimInfoDummy
+import team.nexters.semonemo.ui.home.model.participantsDummy
 import team.nexters.semonemo.ui.home.moimdetail.component.InformationContent
 import team.nexters.semonemo.ui.home.moimdetail.component.ParticipantContent
 import timber.log.Timber
@@ -64,6 +65,7 @@ private fun MoimDetailScreen(
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
     val isHostMode by remember { mutableStateOf(true) } // 호스트 판단 추후 변경
     var isCome by remember { mutableStateOf(false) } // 갈게요 Button
+    val args = mapOf("moim_id" to "1") // moim id 넣어줘 상록
     BackdropScaffold(
         appBar = { },
         scaffoldState = scaffoldState,
@@ -73,8 +75,9 @@ private fun MoimDetailScreen(
                     .padding(horizontal = 24.dp)
                     .padding(top = 32.dp),
                 isHostMode = isHostMode,
-                scaffoldState,
-                onInvite = { kakaoShare(context) },
+                scaffoldState = scaffoldState,
+                participant = participantsDummy,
+                onInvite = { kakaoShare(context, templateArgs = args ) },
             )
         },
         frontLayerScrimColor = Color.Unspecified,
@@ -134,7 +137,7 @@ private fun MoimDetailScreen(
 private fun kakaoShare(
     context: Context,
     templateId: Long = 81345,
-    templateArgs: Map<String, String>? = null
+    templateArgs: Map<String, String>? = null,
 ) {
     if (ShareClient.instance.isKakaoTalkSharingAvailable(context)) {
         // 카카오톡으로 카카오톡 공유 가능
