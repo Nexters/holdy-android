@@ -20,6 +20,7 @@ allprojects {
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
         maven { url = uri("https://oss.jfrog.org/libs-snapshot") }
+        maven { url = uri("https://devrepo.kakao.com/nexus/content/groups/public/") }
     }
 }
 
