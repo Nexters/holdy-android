@@ -56,6 +56,13 @@ object Dependencies {
             "com.google.firebase:firebase-analytics-ktx"
         )
     }
+
+    object Kakao {
+        val List = listOf(
+            "com.kakao.sdk:v2-share:${Versions.Kakao.SDK}"
+        )
+    }
+
     const val Timber = "com.jakewharton.timber:timber:${Versions.Log.Timber}"
 
     val Rx = listOf(

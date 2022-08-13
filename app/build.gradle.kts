@@ -9,11 +9,14 @@ plugins {
 android {
     compileSdk = Apps.compileSdk
     namespace = "team.nexters.semonemo"
+    val kakaoNativeAppkey = "bce48acc93854a13f254a2c429f23856"
     defaultConfig {
         minSdk = Apps.minSdk
         targetSdk = Apps.targetSdk
         versionCode = Apps.versionCode
         versionName = Apps.versionName
+        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", "\"$kakaoNativeAppkey\"")
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = kakaoNativeAppkey
     }
 
     buildTypes {
@@ -21,6 +24,9 @@ android {
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
+        }
+        debug {
+
         }
     }
 
@@ -61,6 +67,7 @@ dependencies {
 
     implementation(platform(Dependencies.Firebase.Bom))
     Dependencies.Firebase.List.forEach(::implementation)
+    Dependencies.Kakao.List.forEach(::implementation)
 
     Dependencies.Rx.forEach(::implementation)
 }

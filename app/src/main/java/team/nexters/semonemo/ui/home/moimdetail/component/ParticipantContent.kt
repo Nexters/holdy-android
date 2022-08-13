@@ -1,5 +1,7 @@
 package team.nexters.semonemo.ui.home.moimdetail.component
 
+import android.content.ActivityNotFoundException
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,7 +43,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import com.github.skgmn.composetooltip.AnchorEdge
+import com.kakao.sdk.common.util.KakaoCustomTabsClient
+import com.kakao.sdk.share.ShareClient
+import com.kakao.sdk.share.WebSharerClient
 import kotlinx.coroutines.launch
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
@@ -51,6 +57,7 @@ import team.nexters.semonemo.theme.Gray0
 import team.nexters.semonemo.theme.Gray1
 import team.nexters.semonemo.theme.Gray6
 import team.nexters.semonemo.ui.home.model.participantsDummy
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -94,6 +101,7 @@ internal fun ParticipantContent(
                             snackbarCoroutineScope.launch {
                                 scaffoldState.snackbarHostState.showSnackbar(context.getString(R.string.link_copy))
                             }
+                            kakaoShare(context, 81345)
                         },
                         painter = painterResource(id = R.drawable.invite),
                         contentDescription = stringResource(id = R.string.invite)
@@ -113,6 +121,38 @@ internal fun ParticipantContent(
                     isHostMode = isHostMode
                 )
             }
+        }
+    }
+}
+
+private fun kakaoShare(context: Context, templateId: Long) {
+    if (ShareClient.instance.isKakaoTalkSharingAvailable(context)) {
+        // 카카오톡으로 카카오톡 공유 가능
+        ShareClient.instance.shareCustom(context, templateId) { sharingResult, error ->
+            if (error != null) {
+                Timber.e("카카오톡 공유 실패", error)
+            }
+            else if (sharingResult != null) {
+                Timber.d("카카오톡 공유 성공 ${sharingResult.intent}")
+                startActivity(context, sharingResult.intent, null)
+
+                // 카카오톡 공유에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
+                Timber.w("Warning Msg: ${sharingResult.warningMsg}")
+                Timber.w("Argument Msg: ${sharingResult.argumentMsg}")
+            }
+        }
+    }
+    else {
+        // 카카오톡 미설치: 웹 공유 사용 권장
+        // 웹 공유 예시 코드
+        val sharerUrl = WebSharerClient.instance.makeCustomUrl(templateId)
+
+        // CustomTabsServiceConnection 지원 브라우저 열기
+        // ex) Chrome, 삼성 인터넷, FireFox, 웨일 등
+        try {
+            KakaoCustomTabsClient.openWithDefault(context, sharerUrl)
+        } catch(e: UnsupportedOperationException) {
+            // CustomTabsServiceConnection 지원 브라우저가 없을 때 예외처리
         }
     }
 }

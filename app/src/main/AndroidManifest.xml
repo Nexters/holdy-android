@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="team.nexters.semonemo">
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -35,8 +38,11 @@
                     android:host="teams.nexters.holdy"
                     android:scheme="https" />
 
-            </intent-filter>
+                <!-- "kakao${YOUR_NATIVE_APP_KEY}://kakaolink" 형식의 앱 실행 스킴을 설정하는데 사용 -->
+                <data android:host="kakaolink"
+                    android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" />
 
+            </intent-filter>
         </activity>
 
         <activity
@@ -49,6 +55,4 @@
             android:exported="false" />
 
     </application>
-
-
 </manifest>
