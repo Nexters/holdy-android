@@ -3,6 +3,7 @@ package team.nexters.data.moim.repository
 import team.nexters.data.moim.api.MoimApi
 import team.nexters.data.moim.mapper.toData
 import team.nexters.data.moim.mapper.toDomain
+import team.nexters.data.moim.model.request.Attendance
 import team.nexters.data.util.ResponseHandler.handleApi
 import team.nexters.domain.moim.model.MoimModel
 import team.nexters.domain.moim.model.MoimResponseModel
@@ -37,7 +38,7 @@ class MoimRepositoryImpl @Inject constructor(
 
     override suspend fun putAttendance(param: PutAttendanceUseCase.Param): ResultWrapper<MoimResponseModel> =
         handleApi {
-            moimApi.putAttendance(param.id, param.wantToAttend)
+            moimApi.putAttendance(param.id, Attendance(param.wantToAttend))
         }.flatMap { it.toDomain() }
 
 }

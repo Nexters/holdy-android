@@ -7,6 +7,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import team.nexters.data.base.BaseResponse
+import team.nexters.data.moim.model.request.Attendance
 import team.nexters.data.moim.model.request.MoimCreateRequest
 import team.nexters.data.moim.model.response.MoimId
 import team.nexters.data.moim.model.response.MoimResponse
@@ -28,6 +29,6 @@ interface MoimApi {
     @PUT("/api/meetings/{id}/attendance")
     suspend fun putAttendance(
         @Path("id") id: Int,
-        @Body wantToAttend: Boolean
+        @Body attendance: Attendance
     ): Response<BaseResponse<MoimId>>
 }
