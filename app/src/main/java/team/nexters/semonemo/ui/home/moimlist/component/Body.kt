@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import team.nexters.domain.moim.model.MoimModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.extension.drawColoredShadow
@@ -35,25 +36,25 @@ import team.nexters.semonemo.theme.Gray3
 import team.nexters.semonemo.theme.Gray5
 import team.nexters.semonemo.theme.Gray6
 import team.nexters.semonemo.theme.Gray7
-import team.nexters.semonemo.ui.home.model.MoimInfo
+import team.nexters.semonemo.util.DateParser
 
 @Composable
 internal fun MoimListColumn(
-    moimList: List<MoimInfo>,
-    navigateToMoimDetail: () -> Unit
+    moims: List<MoimModel>,
+    navigateToMoimDetail: (Int) -> Unit
 ) {
     val scrollState = rememberLazyListState()
-    val size = moimList.size
+    val size = moims.size
     LazyColumn(
         modifier = Modifier.padding(top = 40.dp),
         state = scrollState
     ) {
         itemsIndexed(
-            items = moimList,
+            items = moims,
             key = { index, _ ->
                 index
             }
-        ) { index, moimInfo ->
+        ) { index, moim ->
             Row {
                 Column(
                     modifier = Modifier
@@ -76,9 +77,10 @@ internal fun MoimListColumn(
                 Spacer(modifier = Modifier.width(20.dp))
                 MoimListItem(
                     navigateToMoimDetail,
-                    title = moimInfo.title,
-                    place = moimInfo.place,
-                    date = moimInfo.date,
+                    id = moim.id,
+                    title = moim.place.summary,
+                    place = moim.place.address,
+                    date = DateParser.toStartDate(moim.startDate),
                 )
             }
         }
@@ -87,14 +89,15 @@ internal fun MoimListColumn(
 
 @Composable
 private fun MoimListItem(
-    navigateToMoimDetail: () -> Unit,
+    navigateToMoimDetail: (Int) -> Unit,
+    id: Int,
     title: String,
     place: String,
     date: String
 ) {
     Column {
         Column(
-            modifier = Modifier.clickable { navigateToMoimDetail() } //id가 인자로 넘어감
+            modifier = Modifier.clickable { navigateToMoimDetail(id) } //id가 인자로 넘어감
         ) {
             Text(
                 text = title,
@@ -143,6 +146,11 @@ internal fun NoMoim(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.lying_holdy),
+            contentDescription = stringResource(id = R.string.lying_holdy)
+        )
+        Spacer(modifier = Modifier.height(30.dp))
         Text(
             text = stringResource(id = R.string.not_yet_moim),
             style = MaterialTheme.typography.h4.copy(
@@ -157,24 +165,5 @@ internal fun NoMoim(
                 color = Gray5
             )
         )
-        Spacer(modifier = Modifier.height(20.dp))
-        Button(
-            modifier = Modifier
-                .height(40.dp)
-                .width(120.dp)
-                .border(BorderStroke(1.dp, Gray3), RoundedCornerShape(100.dp))
-                .clip(RoundedCornerShape(100.dp))
-                .drawColoredShadow(alpha = 0.2f),
-            onClick = { navigateToMoimCreate() },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.surface
-            ),
-            text = stringResource(id = R.string.moim_create),
-            shape = RoundedCornerShape(100.dp),
-            textStyle = MaterialTheme.typography.body2.copy(
-                color = Gray6
-            )
-        )
-
     }
 }

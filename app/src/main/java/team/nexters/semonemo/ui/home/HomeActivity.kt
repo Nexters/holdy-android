@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import team.nexters.semonemo.theme.SemoNemoTheme
 import team.nexters.semonemo.ui.home.navigation.NavigationGraph
@@ -20,12 +20,11 @@ class HomeActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SemoNemoTheme {
-                NavigationGraph(navController = rememberAnimatedNavController())
+                NavigationGraph(navController = rememberNavController())
             }
         }
     }

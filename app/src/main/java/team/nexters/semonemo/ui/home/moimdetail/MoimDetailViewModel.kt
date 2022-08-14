@@ -2,11 +2,14 @@ package team.nexters.semonemo.ui.home.moimdetail
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import team.nexters.domain.moim.usecase.GetMoimDetailUseCase
 import team.nexters.semonemo.base.BaseViewModel
+import team.nexters.semonemo.ui.home.moimcreate.MoimCreateEvent
 import team.nexters.shared.ResultWrapper
 import javax.inject.Inject
 
@@ -15,9 +18,18 @@ class MoimDetailViewModel @Inject constructor(
     private val moimDetailUseCase: GetMoimDetailUseCase
 ) : BaseViewModel() {
 
+    private val _eventFlow = MutableSharedFlow<MoimDetailEvent>(extraBufferCapacity = 1)
+    val eventFlow = _eventFlow.asSharedFlow()
+
     private val _uiState = MutableStateFlow<MoimDetailState>(MoimDetailState.Empty)
     val uiState: StateFlow<MoimDetailState>
         get() = _uiState
+
+    fun postEvent(event: MoimDetailEvent) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
 
     fun getMoimDetail(id: Int) {
         viewModelScope.launch {

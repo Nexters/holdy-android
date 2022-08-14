@@ -74,4 +74,5 @@
     <string name="hold_background">holdBackground</string>
     <string name="sns_background">snsBackground</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="lying_holdy">lyingHoldy</string>
 </resources>

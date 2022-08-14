@@ -51,15 +51,15 @@ import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Gray0
 import team.nexters.semonemo.theme.Gray1
 import team.nexters.semonemo.theme.Gray6
-import team.nexters.semonemo.ui.home.model.participantsDummy
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ParticipantContent(
     modifier: Modifier = Modifier,
-    isHostMode: Boolean = false,
+    isHostMode: Boolean,
+    hostNickname: String,
     scaffoldState: BackdropScaffoldState,
-    participant: List<Participant>,
+    participants: List<Participant>,
     onInvite: () -> Unit
 ) {
     val scrollState = rememberLazyListState()
@@ -84,7 +84,7 @@ internal fun ParticipantContent(
                 )
             )
             Row {
-                if (participantsDummy.size == 1) {
+                if (participants.size == 1) {
                     Tooltip(
                         text = stringResource(id = R.string.send_link_moim_invite),
                         maxLines = 1,
@@ -103,17 +103,18 @@ internal fun ParticipantContent(
                         contentDescription = stringResource(id = R.string.invite)
                     )
                 }
+
             }
         }
         LazyColumn(
             state = scrollState
         ) {
-            items(participant) { participant ->
+            items(participants) { participant ->
                 ParticipantItem(
                     profile = R.drawable.holdy3,
                     nickname = participant.nickname,
                     team = participant.group,
-                    isLeader = participant.attend,
+                    hostNickname = hostNickname,
                     isHostMode = isHostMode
                 )
             }
@@ -126,7 +127,7 @@ private fun ParticipantItem(
     profile: Int,
     nickname: String,
     team: String,
-    isLeader: Boolean,
+    hostNickname: String,
     isHostMode: Boolean
 ) {
     var isCome by remember { mutableStateOf(false) }
@@ -157,7 +158,7 @@ private fun ParticipantItem(
                                 color = MaterialTheme.colors.onBackground
                             )
                         )
-                        if (isLeader) {
+                        if (hostNickname == nickname) {
                             Spacer(modifier = Modifier.width(8.dp))
                             Image(
                                 painter = painterResource(id = R.drawable.crown_badge),
@@ -174,27 +175,47 @@ private fun ParticipantItem(
                     )
                 }
             }
-            if (isHostMode && !isLeader) {
-                Button(
-                    modifier = Modifier.height(24.dp),
-                    onClick = { isCome = !isCome },
-                    shape = RoundedCornerShape(4.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = buttonColor
-                    ),
-                    text = if (isCome) {
-                        stringResource(id = R.string.not_come)
-                    } else {
-                        stringResource(id = R.string.come)
-                    },
-                    textStyle = MaterialTheme.typography.caption,
-                    contentPadding = PaddingValues(
-                        start = 8.dp,
-                        end = 8.dp,
-                        top = 3.dp,
-                        bottom = 4.dp
+            if (isHostMode) {
+                if (hostNickname == nickname) {
+                    Button(
+                        modifier = Modifier.height(24.dp),
+                        onClick = { },
+                        shape = RoundedCornerShape(4.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background
+                        ),
+                        text = stringResource(id = R.string.not_come),
+                        textStyle = MaterialTheme.typography.caption,
+                        contentPadding = PaddingValues(
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 3.dp,
+                            bottom = 4.dp
+                        ),
+                        enabled = false
                     )
-                )
+                } else {
+                    Button(
+                        modifier = Modifier.height(24.dp),
+                        onClick = { isCome = !isCome },
+                        shape = RoundedCornerShape(4.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = buttonColor
+                        ),
+                        text = if (isCome) {
+                            stringResource(id = R.string.not_come)
+                        } else {
+                            stringResource(id = R.string.come)
+                        },
+                        textStyle = MaterialTheme.typography.caption,
+                        contentPadding = PaddingValues(
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 3.dp,
+                            bottom = 4.dp
+                        ),
+                    )
+                }
             }
         }
         Divider(

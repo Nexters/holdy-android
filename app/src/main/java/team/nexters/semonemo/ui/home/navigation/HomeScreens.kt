@@ -5,7 +5,7 @@ sealed class HomeScreens(
 ) {
     object List : HomeScreens("LIST")
     object Creating : HomeScreens("CREATING")
-    object Reward : HomeScreens("REWARD")
+    object Detail : HomeScreens("DETAIL")
     object Hold: HomeScreens("HOLD")
     object ShareSNS: HomeScreens("SHARE_SNS")
 }

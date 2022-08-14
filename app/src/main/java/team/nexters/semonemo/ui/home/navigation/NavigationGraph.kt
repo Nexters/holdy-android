@@ -1,22 +1,20 @@
 package team.nexters.semonemo.ui.home.navigation
 
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import team.nexters.semonemo.ui.home.hold.HoldScreen
 import team.nexters.semonemo.ui.home.moimcreate.MoimCreateScreen
 import team.nexters.semonemo.ui.home.moimdetail.MoimDetailScreen
 import team.nexters.semonemo.ui.home.moimlist.MoimListScreen
 import team.nexters.semonemo.ui.home.sns.ShareSnsScreen
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun NavigationGraph(navController: NavHostController) {
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = HomeScreens.List.route,
     ) {
@@ -27,8 +25,8 @@ internal fun NavigationGraph(navController: NavHostController) {
                 navigateToMoimCreate = {
                     navController.navigate(HomeScreens.Creating.route)
                 },
-                navigateToMoimDetail = {
-                    navController.navigate(HomeScreens.Reward.route)
+                navigateToMoimDetail = { id ->
+                    navController.navigate("${HomeScreens.Detail.route}/$id")
                 },
                 navigateToHold = {
                     navController.navigate(HomeScreens.Hold.route)
@@ -42,17 +40,30 @@ internal fun NavigationGraph(navController: NavHostController) {
                 onBackPressed = { navController.popBackStack() }
             )
         }
-        composable(HomeScreens.Reward.route) {
+        composable(
+            route = HomeScreens.Detail.route + "/{id}",
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.IntType
+                }
+            )
+        ) { entry ->
+            val id = entry.arguments?.getInt("id") ?: 0
             MoimDetailScreen(
-                onBackPressed = { navController.popBackStack() }
+                onBackPressed = { navController.popBackStack() },
+                id = id
             )
         }
-        composable(HomeScreens.Hold.route) {
+        composable(
+            route = HomeScreens.Hold.route
+        ) {
             HoldScreen(
                 onBackPressed = { navController.popBackStack() }
             )
         }
-        composable(HomeScreens.ShareSNS.route) {
+        composable(
+            route = HomeScreens.ShareSNS.route
+        ) {
             ShareSnsScreen(
                 onBackPressed = { navController.popBackStack() }
             )

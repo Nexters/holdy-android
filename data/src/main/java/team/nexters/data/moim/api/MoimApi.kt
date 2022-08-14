@@ -20,5 +20,5 @@ interface MoimApi {
     @GET("/api/meetings/{id}")
     suspend fun getMoimDetail(
         @Path("id") moimDetailRequest: Int
-    ): Response<BaseResponse<MoimDetailResponse>>
+    ): Response<BaseResponse<MoimResponse>>
 }

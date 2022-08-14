@@ -3,9 +3,7 @@ package team.nexters.data.moim.repository
 import team.nexters.data.moim.api.MoimApi
 import team.nexters.data.moim.mapper.toData
 import team.nexters.data.moim.mapper.toDomain
-import team.nexters.data.moim.model.MoimDetailRequest
 import team.nexters.data.util.ResponseHandler.handleApi
-import team.nexters.domain.moim.model.MoimDetailModel
 import team.nexters.domain.moim.model.MoimModel
 import team.nexters.domain.moim.model.MoimResponseModel
 import team.nexters.domain.moim.repository.MoimRepository
@@ -26,14 +24,14 @@ class MoimRepositoryImpl @Inject constructor(
         }.toList()
     }
 
-    override suspend fun createMoim(moimCreateModel: CreateMoimUseCase.Param): ResultWrapper<MoimResponseModel> =
+    override suspend fun createMoim(param: CreateMoimUseCase.Param): ResultWrapper<MoimResponseModel> =
         handleApi {
-            moimApi.createMoim(moimCreateModel.toData())
+            moimApi.createMoim(param.toData())
         }.flatMap { it.toDomain() }
 
-    override suspend fun getMoimDetail(moimDetailRequest: GetMoimDetailUseCase.Param): ResultWrapper<MoimDetailModel> =
+    override suspend fun getMoimDetail(param: GetMoimDetailUseCase.Param): ResultWrapper<MoimModel> =
         handleApi {
-            moimApi.getMoimDetail(moimDetailRequest.toData().id)
+            moimApi.getMoimDetail(param.toData().id)
         }.flatMap { it.toDomain() }
 
 }

@@ -5,14 +5,20 @@ import com.google.gson.annotations.SerializedName
 data class MoimResponse(
     @SerializedName("id")
     val id: Int,
-    @SerializedName("host")
-    val host: HostResponse,
-    @SerializedName("place")
-    val place: PlaceResponse,
     @SerializedName("startDate")
     val startDate: String,
     @SerializedName("endDate")
     val endDate: String,
+    @SerializedName("isEnd")
+    val isEnd: Boolean,
+    @SerializedName("place")
+    val place: PlaceResponse,
+    @SerializedName("host")
+    val host: HostResponse,
+    @SerializedName("loginUser")
+    val loginUser: LoginUserResponse,
+    @SerializedName("participants")
+    val participants: List<ParticipantResponse>
 )
 
 data class HostResponse(
@@ -27,4 +33,22 @@ data class PlaceResponse(
     val address: String,
     @SerializedName("mapLink")
     val mapLink: String,
+)
+
+data class LoginUserResponse(
+    @SerializedName("isHost")
+    val isHost: Boolean,
+    @SerializedName("wantToAttend")
+    val wantToAttend: Boolean
+)
+
+data class ParticipantResponse(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("nickname")
+    val nickname: String,
+    @SerializedName("group")
+    val group: String,
+    @SerializedName("attend")
+    val attend: Boolean
 )
