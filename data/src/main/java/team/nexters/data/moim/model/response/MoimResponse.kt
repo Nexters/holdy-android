@@ -1,4 +1,4 @@
-package team.nexters.data.moim.model
+package team.nexters.data.moim.model.response
 
 import com.google.gson.annotations.SerializedName
 

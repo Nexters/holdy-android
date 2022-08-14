@@ -9,6 +9,7 @@ import team.nexters.domain.moim.model.MoimResponseModel
 import team.nexters.domain.moim.repository.MoimRepository
 import team.nexters.domain.moim.usecase.CreateMoimUseCase
 import team.nexters.domain.moim.usecase.GetMoimDetailUseCase
+import team.nexters.domain.moim.usecase.PutAttendanceUseCase
 import team.nexters.shared.ResultWrapper
 import team.nexters.shared.flatMap
 import javax.inject.Inject
@@ -32,6 +33,11 @@ class MoimRepositoryImpl @Inject constructor(
     override suspend fun getMoimDetail(param: GetMoimDetailUseCase.Param): ResultWrapper<MoimModel> =
         handleApi {
             moimApi.getMoimDetail(param.toData().id)
+        }.flatMap { it.toDomain() }
+
+    override suspend fun putAttendance(param: PutAttendanceUseCase.Param): ResultWrapper<MoimResponseModel> =
+        handleApi {
+            moimApi.putAttendance(param.id, param.wantToAttend)
         }.flatMap { it.toDomain() }
 
 }

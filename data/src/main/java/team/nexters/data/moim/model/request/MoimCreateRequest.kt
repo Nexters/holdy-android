@@ -1,6 +1,7 @@
-package team.nexters.data.moim.model
+package team.nexters.data.moim.model.request
 
 import com.google.gson.annotations.SerializedName
+import team.nexters.data.moim.model.response.PlaceResponse
 
 data class MoimCreateRequest(
     @SerializedName("startDate")

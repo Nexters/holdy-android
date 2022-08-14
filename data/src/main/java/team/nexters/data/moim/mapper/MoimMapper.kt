@@ -1,11 +1,11 @@
 package team.nexters.data.moim.mapper
 
-import team.nexters.data.moim.model.HostResponse
-import team.nexters.data.moim.model.LoginUserResponse
-import team.nexters.data.moim.model.MoimRequest
-import team.nexters.data.moim.model.MoimResponse
-import team.nexters.data.moim.model.ParticipantResponse
-import team.nexters.data.moim.model.PlaceResponse
+import team.nexters.data.moim.model.response.HostResponse
+import team.nexters.data.moim.model.response.LoginUserResponse
+import team.nexters.data.moim.model.request.MoimRequest
+import team.nexters.data.moim.model.response.MoimResponse
+import team.nexters.data.moim.model.response.ParticipantResponse
+import team.nexters.data.moim.model.response.PlaceResponse
 import team.nexters.domain.moim.model.Host
 import team.nexters.domain.moim.model.LoginUser
 import team.nexters.domain.moim.model.MoimModel
