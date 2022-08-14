@@ -19,9 +19,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import team.nexters.data.BuildConfig
+import team.nexters.data.base.HeaderInterceptor
 import team.nexters.data.datastore.DataStoreManager
 import team.nexters.data.moim.api.MoimApi
 import team.nexters.data.user.api.UserApi
+import timber.log.Timber
 
 import javax.inject.Singleton
 
@@ -81,25 +83,6 @@ internal class NetworkModule {
     @Singleton
     fun providesOkhttpInterceptor(
         dataStore: DataStoreManager
-    ): Interceptor =
-        Interceptor { chain: Interceptor.Chain ->
-            val original: Request = chain.request()
-            val requestBuilder = original.newBuilder()
-            if (original.url.encodedPath != "/api/login") {
-                val session = runBlocking {
-                    withContext(Dispatchers.IO) {
-                        runCatching {
-                            dataStore.session.first()
-                        }
-                    }
-                }
-                session.onSuccess {
-                    requestBuilder.addHeader("Cookie", it)
-                }
-
-            }
-            val request = requestBuilder.build()
-            chain.proceed(request)
-        }
+    ): Interceptor = HeaderInterceptor(dataStore)
 
 }

@@ -7,10 +7,15 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import team.nexters.domain.user.usecase.GetSessionUseCase
+import team.nexters.shared.ResultWrapper
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor() : ViewModel() {
+class SplashViewModel @Inject constructor(
+    private val getSessionUseCase: GetSessionUseCase
+) : ViewModel() {
 
     private val _navigate = MutableLiveData<Navigation>()
     val navigate
@@ -21,9 +26,8 @@ class SplashViewModel @Inject constructor() : ViewModel() {
 
     init {
         viewModelScope.launch {
-            // TODO 유저데이터와 딥링크와 짬뽕해서 처리한다음에 navigate 해야함, 일단은 딜레이로 온보딩으로 넘기기만 함
-            delay(800)
-            _navigate.value = OnBoarding
+            delay(300)
+            checkSessionExist()
         }
     }
 
@@ -31,13 +35,23 @@ class SplashViewModel @Inject constructor() : ViewModel() {
         this._deepLink.value = deepLink
     }
 
-    fun updateKakaoShare(kakaoShare: Uri){
+    fun updateKakaoShare(kakaoShare: Uri) {
         this._kakaoShare.value = kakaoShare
     }
 
-    // TODO
-    private fun fetchUser() {
 
+    private fun checkSessionExist() {
+        viewModelScope.launch {
+            (getSessionUseCase(Unit) as? ResultWrapper.Success)?.let { sessionResultWrapper ->
+//                Timber.d("tag1 ${sessionResultWrapper.value}")
+                if (sessionResultWrapper.value.isBlank()) {
+                    // 유저정보가 없으면 딥링크가 있던 말던 로그인 화면으로 이동한다.
+                    _navigate.postValue(Navigation.Login)
+                } else {
+                    // TODO deeplink
+                    _navigate.postValue(Navigation.Home)
+                }
+            }
+        }
     }
-
 }

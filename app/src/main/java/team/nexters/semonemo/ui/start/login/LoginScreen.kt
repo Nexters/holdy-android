@@ -1,6 +1,5 @@
 package team.nexters.semonemo.ui.start.login
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,19 +33,19 @@ import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Gray6
-import team.nexters.semonemo.ui.start.OnBoardingActivity
+import team.nexters.semonemo.ui.start.LoginActivity
 
 @Composable
 internal fun LoginScreen(
-    viewModel: OnBoardingViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val activity = (LocalContext.current as OnBoardingActivity)
+    val activity = (LocalContext.current as LoginActivity)
     val lifecycleOwner = LocalLifecycleOwner.current
     val scaffoldState = rememberScaffoldState()
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
             when (event) {
-                OnBoardingEvent.Success ->
+                LoginEvent.Success ->
                     activity.startMain()
             }
         }

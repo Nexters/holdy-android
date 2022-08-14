@@ -46,7 +46,7 @@
         </activity>
 
         <activity
-            android:name="team.nexters.semonemo.ui.start.OnBoardingActivity"
+            android:name="team.nexters.semonemo.ui.start.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
