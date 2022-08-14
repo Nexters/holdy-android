@@ -8,14 +8,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import team.nexters.domain.moim.usecase.GetMoimDetailUseCase
+import team.nexters.domain.moim.usecase.PutAttendanceUseCase
 import team.nexters.semonemo.base.BaseViewModel
-import team.nexters.semonemo.ui.home.moimcreate.MoimCreateEvent
 import team.nexters.shared.ResultWrapper
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MoimDetailViewModel @Inject constructor(
-    private val moimDetailUseCase: GetMoimDetailUseCase
+    private val moimDetailUseCase: GetMoimDetailUseCase,
+    private val putAttendanceUseCase: PutAttendanceUseCase,
 ) : BaseViewModel() {
 
     private val _eventFlow = MutableSharedFlow<MoimDetailEvent>(extraBufferCapacity = 1)
@@ -34,16 +36,33 @@ class MoimDetailViewModel @Inject constructor(
     fun getMoimDetail(id: Int) {
         viewModelScope.launch {
             when (val result = moimDetailUseCase(GetMoimDetailUseCase.Param(id))) {
-                is ResultWrapper.Success ->{
+                is ResultWrapper.Success -> {
                     _uiState.value = MoimDetailState.Success(result.value)
                 }
                 is ResultWrapper.Error -> {
                     emitException(result.message)
                 }
-                is ResultWrapper.Exception ->{
+                is ResultWrapper.Exception -> {
                     result.e.message?.let { emitException(it) }
                 }
             }
         }
     }
+
+    fun onAttendanceButtonClicked(moimId: Int, isCome: Boolean) {
+        viewModelScope.launch {
+            when (val result = putAttendanceUseCase(PutAttendanceUseCase.Param(moimId, isCome))) {
+                is ResultWrapper.Success -> {
+                    Timber.e("갈게요 성공")
+                }
+                is ResultWrapper.Error -> {
+                    Timber.e("갈게요 실패${result.message}")
+                }
+                else -> {
+
+                }
+            }
+        }
+    }
+
 }

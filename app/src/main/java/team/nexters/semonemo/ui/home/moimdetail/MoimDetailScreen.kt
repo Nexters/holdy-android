@@ -82,6 +82,7 @@ internal fun MoimDetailScreen(
             MoimDetailScreen(
                 onBackPressed = { viewModel.postEvent(MoimDetailEvent.NavigateToMoimList) },
                 onInvite = { viewModel.postEvent(MoimDetailEvent.ShareKaKao(it)) },
+                onAttendanceButtonClicked = viewModel::onAttendanceButtonClicked,
                 moimDetail = state.moimDetailModel
             )
         }
@@ -96,6 +97,7 @@ internal fun MoimDetailScreen(
 private fun MoimDetailScreen(
     onBackPressed: () -> Unit,
     onInvite: (Map<String, String>) -> Unit,
+    onAttendanceButtonClicked: (Int, Boolean) -> Unit,
     moimDetail: MoimModel
 ) {
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
@@ -156,7 +158,10 @@ private fun MoimDetailScreen(
                     .padding(horizontal = 20.dp)
                     .height(48.dp)
                     .fillMaxWidth(),
-                onClick = { isCome = !isCome },
+                onClick = {
+                    isCome = !isCome
+                    onAttendanceButtonClicked(moimDetail.id, isCome)
+                },
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = buttonColor

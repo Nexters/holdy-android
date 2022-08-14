@@ -37,7 +37,7 @@ internal fun NavigationGraph(navController: NavHostController) {
             route = HomeScreens.Creating.route,
         ) {
             MoimCreateScreen(
-                onBackPressed = { navController.popBackStack() }
+                onBackPressed = { navController.navigate(HomeScreens.List.route) }
             )
         }
         composable(
@@ -50,7 +50,7 @@ internal fun NavigationGraph(navController: NavHostController) {
         ) { entry ->
             val id = entry.arguments?.getInt("id") ?: 0
             MoimDetailScreen(
-                onBackPressed = { navController.popBackStack() },
+                onBackPressed = { navController.navigate(HomeScreens.List.route) },
                 id = id
             )
         }
@@ -58,7 +58,7 @@ internal fun NavigationGraph(navController: NavHostController) {
             route = HomeScreens.Hold.route
         ) {
             HoldScreen(
-                onBackPressed = { navController.popBackStack() }
+                onBackPressed = { navController.navigate(HomeScreens.List.route) }
             )
         }
         composable(
