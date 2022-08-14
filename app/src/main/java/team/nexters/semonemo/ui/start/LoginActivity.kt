@@ -12,11 +12,11 @@ import team.nexters.semonemo.ui.home.HomeActivity
 import team.nexters.semonemo.ui.start.login.LoginScreen
 
 @AndroidEntryPoint
-class OnBoardingActivity : ComponentActivity() {
+class LoginActivity : ComponentActivity() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            return Intent(context, OnBoardingActivity::class.java)
+            return Intent(context, LoginActivity::class.java)
         }
     }
 

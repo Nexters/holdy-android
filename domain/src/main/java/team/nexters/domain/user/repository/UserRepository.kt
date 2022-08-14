@@ -6,4 +6,5 @@ import team.nexters.shared.ResultWrapper
 
 interface UserRepository {
     suspend fun login(loginRequestModel: LoginUseCase.Param): ResultWrapper<LoginModel>
+    suspend fun getSession(): ResultWrapper<String>
 }

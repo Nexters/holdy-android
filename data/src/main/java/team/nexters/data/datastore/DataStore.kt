@@ -24,7 +24,7 @@ class DataStoreManager @Inject constructor(
 ) {
     private val datastore = appContext.dataStore
 
-    private val sessionKey = stringPreferencesKey("session_key")
+    private val sessionKey = stringPreferencesKey("sessionKey")
 
     suspend fun setSession(session: String) {
         datastore.edit { preferences ->
