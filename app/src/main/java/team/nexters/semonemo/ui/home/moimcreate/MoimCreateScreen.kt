@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
@@ -41,11 +42,11 @@ import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.extension.showDatePicker
+import team.nexters.semonemo.extension.showTimePicker
 import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Tertiary
-import team.nexters.semonemo.ui.home.moimcreate.component.DoubleTextField
-import team.nexters.semonemo.extension.showTimePicker
 import team.nexters.semonemo.ui.home.moimcreate.component.DateTextField
+import team.nexters.semonemo.ui.home.moimcreate.component.DoubleTextField
 
 @Composable
 internal fun MoimCreateScreen(
@@ -59,6 +60,7 @@ internal fun MoimCreateScreen(
     val (date, setDate) = remember { mutableStateOf("") }
     val (startTime, setStartTime) = remember { mutableStateOf("") }
     val (endTime, setEndTime) = remember { mutableStateOf("") }
+
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
             when (event) {
@@ -106,6 +108,10 @@ internal fun MoimCreateScreen(
     }
 }
 
+private fun handleClipboard(){
+
+}
+
 @Composable
 private fun MoimCreateScreen(
     date: String,
@@ -121,6 +127,38 @@ private fun MoimCreateScreen(
     var address by remember { mutableStateOf("") }
     var detailAddress by remember { mutableStateOf("") }
     var placeLink by remember { mutableStateOf("") }
+
+    LocalClipboardManager.current.getText()?.text?.let{
+        when{
+            it.startsWith("[네이버 지도]") -> {
+                // ex)
+                // [네이버 지도]
+                // 더클라임 클라이밍 짐앤샵 양재점
+                // 서울 강남구 남부순환로 2615
+                // http://naver.me/Fcje76Jl
+                val lines = it.split("\n")
+                if (lines.size == 4) {
+                    address = lines[1]
+                    detailAddress = lines[2]
+                    placeLink = lines[3]
+                }
+            }
+            //
+            it.startsWith("[카카오맵]") ->{
+                // ex)
+                // [카카오맵] 더클라임짐 연남점
+                // 서울 마포구 양화로 186 3층 (동교동)
+                //
+                // http://kko.to/Y7FWstNi3
+                val lines = it.split("\n")
+                if (lines.size == 4) {
+                    address = lines[0].removePrefix("[카카오맵] ")
+                    detailAddress = lines[1]
+                    placeLink = lines[3]
+                }
+            }
+        }
+    }
     Surface(
         modifier = Modifier
             .fillMaxSize()
