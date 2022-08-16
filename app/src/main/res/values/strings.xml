@@ -24,6 +24,7 @@
     <string name="title_place_link">장소 링크</string>
     <string name="placeholder_address_link">네이버 지도, 카카오 지도 링크를 입력하세요</string>
     <string name="link_is_correct">링크가 잘못되지 않았는지 확인해주세요</string>
+    <string name="copy_clipboard">주소를 가져왔어요!</string>
 
     //moim list
     <string name="moim_title">모임</string>
