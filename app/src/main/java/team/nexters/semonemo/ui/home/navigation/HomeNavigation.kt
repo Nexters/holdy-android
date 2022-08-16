@@ -65,7 +65,7 @@ internal fun HomeNavigation(navController: NavHostController) {
             route = HomeScreens.ShareSNS.route
         ) {
             ShareSnsScreen(
-                onBackPressed = { navController.popBackStack() }
+                onBackPressed = { navController.navigate(HomeScreens.List.route) }
             )
         }
     }
