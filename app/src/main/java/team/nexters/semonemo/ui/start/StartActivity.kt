@@ -1,4 +1,4 @@
-package team.nexters.semonemo.ui.home
+package team.nexters.semonemo.ui.start
 
 import android.content.Context
 import android.content.Intent
@@ -8,14 +8,15 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import team.nexters.semonemo.theme.SemoNemoTheme
-import team.nexters.semonemo.ui.home.navigation.HomeNavigation
+import team.nexters.semonemo.ui.home.HomeActivity
+import team.nexters.semonemo.ui.start.navigation.StartNavigation
 
 @AndroidEntryPoint
-class HomeActivity : ComponentActivity() {
+class StartActivity : ComponentActivity() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            return Intent(context, HomeActivity::class.java)
+            return Intent(context, StartActivity::class.java)
         }
     }
 
@@ -23,8 +24,13 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SemoNemoTheme {
-                HomeNavigation(navController = rememberNavController())
+                StartNavigation(navController = rememberNavController())
             }
         }
+    }
+
+    fun startMain() {
+        startActivity(HomeActivity.newIntent(this))
+        finish()
     }
 }

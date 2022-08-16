@@ -6,11 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -27,9 +24,8 @@ import team.nexters.semonemo.BuildConfig
 import team.nexters.semonemo.R
 import team.nexters.semonemo.theme.Primary
 import team.nexters.semonemo.theme.SemoNemoTheme
-import team.nexters.semonemo.theme.Tertiary
 import team.nexters.semonemo.ui.home.HomeActivity
-import team.nexters.semonemo.ui.start.LoginActivity
+import team.nexters.semonemo.ui.start.StartActivity
 import timber.log.Timber
 
 /**
@@ -58,7 +54,7 @@ class SplashActivity() : ComponentActivity() {
         vieWModel.navigate.observe(this) {
             when (it) {
                 Navigation.Login -> {
-                    startActivity(LoginActivity.newIntent(this))
+                    startActivity(StartActivity.newIntent(this))
                 }
                 is Navigation.Home -> {
                     startActivity(HomeActivity.newIntent(this))
@@ -72,7 +68,6 @@ class SplashActivity() : ComponentActivity() {
                     )
                 }
             }
-            overridePendingTransition(R.anim.slide_in_bottom, R.anim.none)
             finish()
         }
     }
