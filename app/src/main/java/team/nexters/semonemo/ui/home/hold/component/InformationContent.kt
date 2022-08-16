@@ -45,8 +45,6 @@ internal fun InformationContent(
         }
         Spacer(modifier = Modifier.height(24.dp))
         Image(
-            modifier = Modifier
-                .clickable { onBackPressed() },
             painter = painterResource(id = R.drawable.holdy3),
             contentDescription = stringResource(id = R.string.holdy)
         )
