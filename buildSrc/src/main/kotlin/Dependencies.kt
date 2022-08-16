@@ -40,7 +40,9 @@ object Dependencies {
         "androidx.compose.ui:ui-tooling:${Versions.Compose.Main}",
         "androidx.compose.ui:ui-tooling-preview:${Versions.Compose.Main}",
         "io.coil-kt:coil-compose:${Versions.Compose.Coil}",
-        "com.github.skgmn:composetooltip:${Versions.Compose.Tooltip}"
+        "com.github.skgmn:composetooltip:${Versions.Compose.Tooltip}",
+        "com.google.accompanist:accompanist-pager:${Versions.Compose.Pager}",
+        "com.google.accompanist:accompanist-pager-indicators:${Versions.Compose.Pager}"
     )
     val Test = listOf(
         "org.junit.jupiter:junit-jupiter-api:${Versions.Test.JUnit}",
