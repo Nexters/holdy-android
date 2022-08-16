@@ -81,6 +81,11 @@ internal fun MoimCreateScreen(
                         message = event.result,
                     )
                 }
+                is MoimCreateEvent.CopyClipBoard -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.result
+                    )
+                }
             }
         }
     }
@@ -103,13 +108,10 @@ internal fun MoimCreateScreen(
             onDateFocused = { viewModel.postEvent(MoimCreateEvent.OpenDatePicker) },
             onCreateButtonClicked = viewModel::onCreateButtonClicked,
             onStartTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenStartTimePicker) },
-            onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) }
+            onEndTimeFocused = { viewModel.postEvent(MoimCreateEvent.OpenEndTimePicker) },
+            onClipBoardCopy = { viewModel.postEvent(MoimCreateEvent.CopyClipBoard(it)) }
         )
     }
-}
-
-private fun handleClipboard(){
-
 }
 
 @Composable
@@ -121,44 +123,21 @@ private fun MoimCreateScreen(
     onDateFocused: () -> Unit,
     onStartTimeFocused: () -> Unit,
     onEndTimeFocused: () -> Unit,
-    onCreateButtonClicked: (String, String, String, String, String) -> Unit
+    onCreateButtonClicked: (String, String, String, String, String) -> Unit,
+    onClipBoardCopy: (String) -> Unit
 ) {
 
     var address by remember { mutableStateOf("") }
     var detailAddress by remember { mutableStateOf("") }
     var placeLink by remember { mutableStateOf("") }
 
-    LocalClipboardManager.current.getText()?.text?.let{
-        when{
-            it.startsWith("[네이버 지도]") -> {
-                // ex)
-                // [네이버 지도]
-                // 더클라임 클라이밍 짐앤샵 양재점
-                // 서울 강남구 남부순환로 2615
-                // http://naver.me/Fcje76Jl
-                val lines = it.split("\n")
-                if (lines.size == 4) {
-                    address = lines[1]
-                    detailAddress = lines[2]
-                    placeLink = lines[3]
-                }
-            }
-            //
-            it.startsWith("[카카오맵]") ->{
-                // ex)
-                // [카카오맵] 더클라임짐 연남점
-                // 서울 마포구 양화로 186 3층 (동교동)
-                //
-                // http://kko.to/Y7FWstNi3
-                val lines = it.split("\n")
-                if (lines.size == 4) {
-                    address = lines[0].removePrefix("[카카오맵] ")
-                    detailAddress = lines[1]
-                    placeLink = lines[3]
-                }
-            }
-        }
-    }
+    handleClipboard(
+        setAddress = { address = it },
+        setDetailAddress = { detailAddress = it },
+        setPlaceLink = { placeLink = it },
+        onClipBoardCopy = onClipBoardCopy
+    )
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -246,10 +225,12 @@ private fun MoimCreateScreen(
                 placeHolderText = stringResource(id = R.string.placeholder_address_link)
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = stringResource(id = R.string.link_is_correct),
-                style = MaterialTheme.typography.caption.copy(color = Danger1)
-            )
+            if(placeLink.isNotEmpty()){
+                Text(
+                    text = stringResource(id = R.string.link_is_correct),
+                    style = MaterialTheme.typography.caption.copy(color = Danger1)
+                )
+            }
             Spacer(modifier = Modifier.height(35.dp))
             Button(
                 modifier = Modifier
@@ -272,6 +253,48 @@ private fun MoimCreateScreen(
                 shape = RoundedCornerShape(8.dp),
                 text = stringResource(id = R.string.moim_create),
             )
+        }
+    }
+}
+
+@Composable
+private fun handleClipboard(
+    setAddress: (String) -> Unit,
+    setDetailAddress: (String) -> Unit,
+    setPlaceLink: (String) -> Unit,
+    onClipBoardCopy: (String) -> Unit,
+) {
+    LocalClipboardManager.current.getText()?.text?.let {
+        when {
+            it.startsWith("[네이버 지도]") -> {
+                // ex)
+                // [네이버 지도]
+                // 더클라임 클라이밍 짐앤샵 양재점
+                // 서울 강남구 남부순환로 2615
+                // http://naver.me/Fcje76Jl
+                val lines = it.split("\n")
+                if (lines.size == 4) {
+                    setAddress(lines[1])
+                    setDetailAddress(lines[2])
+                    setPlaceLink(lines[3])
+                }
+                onClipBoardCopy(stringResource(id = R.string.copy_clipboard))
+            }
+            //
+            it.startsWith("[카카오맵]") -> {
+                // ex)
+                // [카카오맵] 더클라임짐 연남점
+                // 서울 마포구 양화로 186 3층 (동교동)
+                //
+                // http://kko.to/Y7FWstNi3
+                val lines = it.split("\n")
+                if (lines.size == 4) {
+                    setAddress(lines[0].removePrefix("[카카오맵] "))
+                    setDetailAddress(lines[1])
+                    setPlaceLink(lines[3])
+                }
+                onClipBoardCopy(stringResource(id = R.string.copy_clipboard))
+            }
         }
     }
 }
