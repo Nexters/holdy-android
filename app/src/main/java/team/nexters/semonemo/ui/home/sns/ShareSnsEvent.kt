@@ -1,4 +1,8 @@
 package team.nexters.semonemo.ui.home.sns
 
-class ShareSnsEvent {
+import androidx.compose.ui.graphics.ImageBitmap
+
+sealed class ShareSnsEvent {
+    object NavigateToHome : ShareSnsEvent()
+    data class ShareInstagram(val bitmap: ImageBitmap) : ShareSnsEvent()
 }
