@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="team.nexters.semonemo">
+
     <queries>
         <package android:name="com.kakao.talk" />
     </queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".SemoNemoApplication"
@@ -39,7 +42,8 @@
                     android:scheme="https" />
 
                 <!-- "kakao${YOUR_NATIVE_APP_KEY}://kakaolink" 형식의 앱 실행 스킴을 설정하는데 사용 -->
-                <data android:host="kakaolink"
+                <data
+                    android:host="kakaolink"
                     android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" />
 
             </intent-filter>
@@ -54,5 +58,16 @@
             android:name="team.nexters.semonemo.ui.home.HomeActivity"
             android:exported="false" />
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="team.nexters.semonemo.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/path">
+
+            </meta-data>
+        </provider>
     </application>
 </manifest>
