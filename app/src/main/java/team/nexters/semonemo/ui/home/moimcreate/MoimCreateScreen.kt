@@ -1,5 +1,6 @@
 package team.nexters.semonemo.ui.home.moimcreate
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -20,10 +21,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -57,9 +60,9 @@ internal fun MoimCreateScreen(
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
 
-    val (date, setDate) = remember { mutableStateOf("") }
-    val (startTime, setStartTime) = remember { mutableStateOf("") }
-    val (endTime, setEndTime) = remember { mutableStateOf("") }
+    val (date, setDate) = rememberSaveable { mutableStateOf("") }
+    val (startTime, setStartTime) = rememberSaveable { mutableStateOf("") }
+    val (endTime, setEndTime) = rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
@@ -130,13 +133,20 @@ private fun MoimCreateScreen(
     var address by remember { mutableStateOf("") }
     var detailAddress by remember { mutableStateOf("") }
     var placeLink by remember { mutableStateOf("") }
+    val localClipBoardManager = LocalClipboardManager.current
+    val context = LocalContext.current
 
-    handleClipboard(
-        setAddress = { address = it },
-        setDetailAddress = { detailAddress = it },
-        setPlaceLink = { placeLink = it },
-        onClipBoardCopy = onClipBoardCopy
-    )
+    LaunchedEffect(Unit) {
+        handleClipboard(
+            context,
+            localClipBoardManager,
+            setAddress = { address = it },
+            setDetailAddress = { detailAddress = it },
+            setPlaceLink = { placeLink = it },
+            onClipBoardCopy = onClipBoardCopy
+        )
+    }
+
 
     Surface(
         modifier = Modifier
@@ -225,7 +235,7 @@ private fun MoimCreateScreen(
                 placeHolderText = stringResource(id = R.string.placeholder_address_link)
             )
             Spacer(modifier = Modifier.height(12.dp))
-            if(placeLink.isNotEmpty()){
+            if (placeLink.isNotEmpty()) {
                 Text(
                     text = stringResource(id = R.string.link_is_correct),
                     style = MaterialTheme.typography.caption.copy(color = Danger1)
@@ -257,14 +267,15 @@ private fun MoimCreateScreen(
     }
 }
 
-@Composable
 private fun handleClipboard(
+    context: Context,
+    localClipBoardManager: ClipboardManager,
     setAddress: (String) -> Unit,
     setDetailAddress: (String) -> Unit,
     setPlaceLink: (String) -> Unit,
     onClipBoardCopy: (String) -> Unit,
 ) {
-    LocalClipboardManager.current.getText()?.text?.let {
+    localClipBoardManager.getText()?.text?.let {
         when {
             it.startsWith("[네이버 지도]") -> {
                 // ex)
@@ -278,7 +289,7 @@ private fun handleClipboard(
                     setDetailAddress(lines[2])
                     setPlaceLink(lines[3])
                 }
-                onClipBoardCopy(stringResource(id = R.string.copy_clipboard))
+                onClipBoardCopy(context.getString(R.string.copy_clipboard))
             }
             //
             it.startsWith("[카카오맵]") -> {
@@ -293,9 +304,8 @@ private fun handleClipboard(
                     setDetailAddress(lines[1])
                     setPlaceLink(lines[3])
                 }
-                onClipBoardCopy(stringResource(id = R.string.copy_clipboard))
+                onClipBoardCopy(context.getString(R.string.copy_clipboard))
             }
         }
     }
 }
-

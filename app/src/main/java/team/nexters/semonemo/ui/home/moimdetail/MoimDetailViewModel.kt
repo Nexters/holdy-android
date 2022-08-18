@@ -93,6 +93,7 @@ class MoimDetailViewModel @Inject constructor(
     }
 
     fun onCameButtonClicked(moimId: Int, userId: Int, isCome: Boolean) {
+        Timber.e(isCome.toString())
         _uiState.value = _uiState.value.copy(contentLoading = true)
         viewModelScope.launch {
             when (val result =
