@@ -34,7 +34,6 @@ import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.share.ShareClient
 import com.kakao.sdk.share.WebSharerClient
 import team.nexters.domain.moim.model.MoimModel
-import team.nexters.domain.moim.model.Participant
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.ProgressIndicator
@@ -86,6 +85,7 @@ internal fun MoimDetailScreen(
             onInvite = { viewModel.postEvent(MoimDetailEvent.ShareKaKao(it)) },
             onAttendanceButtonClicked = viewModel::onAttendanceButtonClicked,
             onCameButtonClicked = viewModel::onCameButtonClicked,
+            onRefresh = { viewModel.onRefresh(it) },
             moimDetail = state.moimDetailModel!!,
             contentLoading = state.contentLoading
         )
@@ -99,6 +99,7 @@ private fun MoimDetailScreen(
     onInvite: (Map<String, String>) -> Unit,
     onAttendanceButtonClicked: (Int, Boolean) -> Unit,
     onCameButtonClicked: (Int, Int, Boolean) -> Unit,
+    onRefresh: (Int) -> Unit,
     moimDetail: MoimModel,
     contentLoading: Boolean
 ) {
@@ -122,6 +123,7 @@ private fun MoimDetailScreen(
                 scaffoldState = scaffoldState,
                 contentLoading = contentLoading,
                 onInvite = { onInvite(args) },
+                onRefresh = onRefresh,
                 onCameButtonClicked = onCameButtonClicked
             )
         },

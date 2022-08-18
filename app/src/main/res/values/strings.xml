@@ -86,4 +86,5 @@
     <string name="holdy_logo">holdyLogo</string>
     <string name="on_boarding_holdy">onBoardingHoldy</string>
     <string name="hold_crown">holdCrown</string>
+    <string name="refresh">refresh</string>
 </resources>

@@ -49,6 +49,7 @@ import team.nexters.domain.moim.model.MoimModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.ProgressIndicator
+import team.nexters.semonemo.common.Refresh
 import team.nexters.semonemo.common.Tooltip
 import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Gray0
@@ -64,6 +65,7 @@ internal fun ParticipantContent(
     scaffoldState: BackdropScaffoldState,
     contentLoading: Boolean,
     onInvite: () -> Unit,
+    onRefresh: (Int) -> Unit,
     onCameButtonClicked: (Int, Int, Boolean) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
@@ -83,12 +85,16 @@ internal fun ParticipantContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = stringResource(id = R.string.moim_participant),
-                style = MaterialTheme.typography.h4.copy(
-                    color = MaterialTheme.colors.onSurface
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = stringResource(id = R.string.moim_participant),
+                    style = MaterialTheme.typography.h4.copy(
+                        color = MaterialTheme.colors.onSurface
+                    )
                 )
-            )
+                Spacer(modifier = Modifier.width(4.dp))
+                Refresh(onClick = { onRefresh(moim.id) })
+            }
             Row {
                 if (participants.size == 1 && isHostMode) {
                     Tooltip(

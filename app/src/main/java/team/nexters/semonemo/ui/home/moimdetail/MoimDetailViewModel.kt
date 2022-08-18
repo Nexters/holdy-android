@@ -66,6 +66,10 @@ class MoimDetailViewModel @Inject constructor(
         }.join()
     }
 
+    fun onRefresh(id: Int) = viewModelScope.launch {
+        getMoimDetail(id, true)
+    }
+
     fun onAttendanceButtonClicked(moimId: Int, isCome: Boolean) {
         _uiState.value = _uiState.value.copy(contentLoading = true)
         viewModelScope.launch {

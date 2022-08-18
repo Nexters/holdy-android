@@ -15,8 +15,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.theme.Gray35
 
-internal inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) = composed {
+internal inline fun Modifier.noRippleClickable(
+    enabled: Boolean = true,
+    crossinline onClick: () -> Unit
+) = composed {
     clickable(
+        enabled = enabled,
         indication = null,
         interactionSource = remember { MutableInteractionSource() },
         onClick = { onClick() },
