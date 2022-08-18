@@ -27,10 +27,8 @@ class HoldViewModel @Inject constructor(
 
     fun init() = viewModelScope.launch {
         _uiState.value = _uiState.value.copy(loading = true)
-        val deferred1 = async { getHoldList() }
-        val deferred2 = async { getMyInfo() }
-        deferred1.await()
-        deferred2.await()
+        getHoldList()
+        getMyInfo()
         _uiState.value = _uiState.value.copy(loading = false)
     }
 
