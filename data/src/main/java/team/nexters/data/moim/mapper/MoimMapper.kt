@@ -45,7 +45,7 @@ internal fun ParticipantResponse.toDomain() = Participant(
     id = id,
     nickname = nickname,
     group = group,
-    attend = attend,
+    attended = attended,
     profileImageUrl = profileImageUrl
 )
 

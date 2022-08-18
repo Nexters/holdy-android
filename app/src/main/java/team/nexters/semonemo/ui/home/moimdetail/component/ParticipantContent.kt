@@ -54,6 +54,7 @@ import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Gray0
 import team.nexters.semonemo.theme.Gray1
 import team.nexters.semonemo.theme.Gray6
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -127,7 +128,7 @@ internal fun ParticipantContent(
                         moimId = moim.id,
                         userId = participant.id,
                         isEnd = moim.isEnd,
-                        attend = participant.attend,
+                        attend = participant.attended,
                         onCameButtonClicked = onCameButtonClicked
                     )
                 }
@@ -151,6 +152,7 @@ private fun ParticipantItem(
     onCameButtonClicked: (Int, Int, Boolean) -> Unit,
 ) {
     var isCome by remember { mutableStateOf(attend) }
+    Timber.e(isCome.toString())
     val buttonColor = if (isCome) {
         MaterialTheme.colors.background
     } else {

@@ -20,7 +20,7 @@ data class Participant(
     val id: Int,
     val nickname: String,
     val group: String,
-    val attend: Boolean,
+    val attended: Boolean,
     val profileImageUrl: String
 )
 data class Host(
