@@ -1,8 +1,8 @@
-package team.nexters.data.moim.model
+package team.nexters.data.moim.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MoimDetailResponse(
+data class MoimResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("startDate")
@@ -19,6 +19,20 @@ data class MoimDetailResponse(
     val loginUser: LoginUserResponse,
     @SerializedName("participants")
     val participants: List<ParticipantResponse>
+)
+
+data class HostResponse(
+    @SerializedName("nickname")
+    val nickname: String
+)
+
+data class PlaceResponse(
+    @SerializedName("summary")
+    val summary: String,
+    @SerializedName("address")
+    val address: String,
+    @SerializedName("mapLink")
+    val mapLink: String,
 )
 
 data class LoginUserResponse(

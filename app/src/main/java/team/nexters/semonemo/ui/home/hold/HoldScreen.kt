@@ -48,8 +48,7 @@ private fun HoldScreen(
         scaffoldState = scaffoldState,
         frontLayerContent = {
             HoldContent(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             )
         },
         frontLayerScrimColor = Color.Unspecified,

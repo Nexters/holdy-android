@@ -1,7 +1,6 @@
 package team.nexters.semonemo.ui.home.sns
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,49 +9,87 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dev.shreyaspatil.capturable.controller.rememberCaptureController
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
+import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Black1
 import team.nexters.semonemo.theme.Gray5
-import team.nexters.semonemo.theme.Primary
+import team.nexters.semonemo.ui.home.HomeActivity
+import team.nexters.semonemo.ui.home.sns.component.StickerContent
 
 @Composable
 internal fun ShareSnsScreen(
+    viewModel: ShareSnsViewModel = hiltViewModel(),
     onBackPressed: () -> Unit
 ) {
+    val place by remember { mutableStateOf("인왕산 클라이밍장") }
+    val date by remember { mutableStateOf("2022년 7월 11일") }
+    val activity = LocalContext.current as HomeActivity
+    val lifecycleOwner = LocalLifecycleOwner.current
     val systemUiController = rememberSystemUiController()
     val backgroundColor = Black1
-    LaunchedEffect(key1 = Unit) {
+    val captureController = rememberCaptureController()
+    LaunchedEffect(Unit) {
         systemUiController.setStatusBarColor(
             color = backgroundColor
         )
     }
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
+            when (event) {
+                is ShareSnsEvent.ShareInstagram -> {
+                    activity.onShareButtonClicked(event.bitmap.asAndroidBitmap())
+                }
+                ShareSnsEvent.NavigateToHome -> {
+                    onBackPressed()
+                }
+            }
+        }
+    }
+    StickerContent(
+        captureController = captureController,
+        onCaptured = { bitmap, _ ->
+            bitmap?.let {
+                viewModel.postEvent(ShareSnsEvent.ShareInstagram(bitmap))
+            }
+        },
+        place = place,
+        date = date,
+        hold = R.drawable.hold1
+    )
     ShareSnsScreen(
-        modifier = Modifier
-            .fillMaxSize(),
-        backgroundColor = backgroundColor
+        modifier = Modifier.fillMaxSize(),
+        backgroundColor = backgroundColor,
+        onBackPressed = { onBackPressed() },
+        onShareButtonClicked = { captureController.capture() },
+        place,
+        date
     )
 }
 
@@ -60,9 +97,10 @@ internal fun ShareSnsScreen(
 private fun ShareSnsScreen(
     modifier: Modifier = Modifier,
     backgroundColor: Color,
-    onBackPressed: () -> Unit = {},
-    place: String = "인왕산 클라이밍장",
-    date: String = "2022년 7월 11일"
+    onBackPressed: () -> Unit,
+    onShareButtonClicked: () -> Unit,
+    place: String,
+    date: String
 ) {
     Surface(
         modifier = modifier,
@@ -124,7 +162,7 @@ private fun ShareSnsScreen(
                     .height(50.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
-                onClick = { /*TODO*/ },
+                onClick = { onShareButtonClicked() },
                 shape = RoundedCornerShape(8.dp),
                 text = stringResource(id = R.string.share_instagram)
             )
@@ -143,4 +181,3 @@ private fun ShareSnsScreen(
         }
     }
 }
-

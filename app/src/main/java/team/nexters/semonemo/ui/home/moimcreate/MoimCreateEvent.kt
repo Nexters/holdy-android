@@ -5,5 +5,6 @@ sealed class MoimCreateEvent {
     object OpenDatePicker : MoimCreateEvent()
     object OpenStartTimePicker : MoimCreateEvent()
     object OpenEndTimePicker : MoimCreateEvent()
+    data class CopyClipBoard(val result: String) : MoimCreateEvent()
     data class CreationFailed(val result: String) : MoimCreateEvent()
 }

@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.TextField
@@ -33,20 +32,26 @@ import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Gray6
-import team.nexters.semonemo.ui.start.LoginActivity
+import team.nexters.semonemo.ui.start.StartActivity
+import team.nexters.semonemo.ui.start.StartEvent
+import team.nexters.semonemo.ui.start.StartViewModel
 
 @Composable
 internal fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: StartViewModel,
+    navigateToOnBoarding: () -> Unit
 ) {
-    val activity = (LocalContext.current as LoginActivity)
+    val activity = (LocalContext.current as StartActivity)
     val lifecycleOwner = LocalLifecycleOwner.current
     val scaffoldState = rememberScaffoldState()
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
             when (event) {
-                LoginEvent.Success ->
-                    activity.startMain()
+                StartEvent.LoginSuccess ->
+                    navigateToOnBoarding()
+                else -> {
+
+                }
             }
         }
     }

@@ -10,9 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
@@ -26,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -34,10 +33,11 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.share.ShareClient
 import com.kakao.sdk.share.WebSharerClient
-import team.nexters.domain.moim.model.MoimDetailModel
+import team.nexters.domain.moim.model.MoimModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.ProgressIndicator
+import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.theme.Primary
 import team.nexters.semonemo.ui.home.moimdetail.component.InformationContent
 import team.nexters.semonemo.ui.home.moimdetail.component.ParticipantContent
@@ -48,8 +48,10 @@ import timber.log.Timber
 internal fun MoimDetailScreen(
     viewModel: MoimDetailViewModel = hiltViewModel(),
     onBackPressed: () -> Unit,
-    id: Int = 52
+    id: Int
 ) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val systemUiController = rememberSystemUiController()
     LaunchedEffect(Unit) {
         systemUiController.setStatusBarColor(
@@ -59,10 +61,28 @@ internal fun MoimDetailScreen(
     LaunchedEffect(Unit) {
         viewModel.getMoimDetail(id)
     }
+    LaunchedEffect(viewModel.eventFlow) {
+        viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
+            when (event) {
+                MoimDetailEvent.NavigateToMoimList -> {
+                    onBackPressed()
+                }
+                is MoimDetailEvent.ShareKaKao -> {
+                    kakaoShare(
+                        context = context,
+                        templateArgs = event.templeteArgs
+                    )
+                }
+            }
+        }
+        viewModel.getMoimDetail(id)
+    }
     when (val state = viewModel.uiState.collectAsState().value) {
         is MoimDetailState.Success -> {
             MoimDetailScreen(
-                onBackPressed = onBackPressed,
+                onBackPressed = { viewModel.postEvent(MoimDetailEvent.NavigateToMoimList) },
+                onInvite = { viewModel.postEvent(MoimDetailEvent.ShareKaKao(it)) },
+                onAttendanceButtonClicked = viewModel::onAttendanceButtonClicked,
                 moimDetail = state.moimDetailModel
             )
         }
@@ -75,10 +95,11 @@ internal fun MoimDetailScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MoimDetailScreen(
-    onBackPressed: () -> Unit = {},
-    moimDetail: MoimDetailModel
+    onBackPressed: () -> Unit,
+    onInvite: (Map<String, String>) -> Unit,
+    onAttendanceButtonClicked: (Int, Boolean) -> Unit,
+    moimDetail: MoimModel
 ) {
-    val context = LocalContext.current
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
     var isCome by remember { mutableStateOf(false) } // 갈게요 Button
     val parsedDate = DateParser.toTemplateArgs(moimDetail.startDate, moimDetail.endDate)
@@ -97,8 +118,9 @@ private fun MoimDetailScreen(
                     .padding(top = 32.dp),
                 isHostMode = moimDetail.loginUser.isHost,
                 scaffoldState = scaffoldState,
-                participant = moimDetail.participants,
-                onInvite = { kakaoShare(context, templateArgs = args) },
+                hostNickname = moimDetail.host.nickname,
+                participants = moimDetail.participants,
+                onInvite = { onInvite(args) },
             )
         },
         frontLayerScrimColor = Color.Unspecified,
@@ -114,7 +136,7 @@ private fun MoimDetailScreen(
         },
         backLayerBackgroundColor = colors.primary
     )
-    if (!moimDetail.loginUser.isHost) {
+    if (moimDetail.loginUser.isHost.not()) {
         val buttonColor = if (isCome) {
             colors.background
         } else {
@@ -136,7 +158,10 @@ private fun MoimDetailScreen(
                     .padding(horizontal = 20.dp)
                     .height(48.dp)
                     .fillMaxWidth(),
-                onClick = { isCome = !isCome },
+                onClick = {
+                    isCome = !isCome
+                    onAttendanceButtonClicked(moimDetail.id, isCome)
+                },
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = buttonColor

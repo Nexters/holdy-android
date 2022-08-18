@@ -40,4 +40,13 @@ object ResponseHandler {
         return this
     }
 
+    internal suspend fun Response<BaseResponse<LoginResponse>>.idIntercept(
+        dataStoreManager: DataStoreManager,
+    ): Response<BaseResponse<LoginResponse>> {
+        val body = checkNotNull(body())
+        if (body.data != null) {
+            dataStoreManager.setUid(body.data.id)
+        }
+        return this
+    }
 }

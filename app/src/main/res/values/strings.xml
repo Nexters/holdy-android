@@ -6,6 +6,12 @@
     <string name="no_code">코드가 없나요?</string>
     <string name="code_error">코드를 확인해 주세요</string>
 
+    //onboarding
+    <string name="on_Boarding1">클라이머를 위한\n출첵 서비스 홀디를 소개해요</string>
+    <string name="on_Boarding2">모임을 만들고\n게스트를 초대할 수 있어요</string>
+    <string name="on_Boarding3">초대 받은 모임에\n참여 의사를 밝힐 수 있어요</string>
+    <string name="on_Boarding4">참여한 모임이 끝나면\n홀드를 얻고 자랑할 수 있어요</string>
+
     //home
     <string name="description_home">home</string>
     <string name="description_creating">creating</string>
@@ -24,6 +30,7 @@
     <string name="title_place_link">장소 링크</string>
     <string name="placeholder_address_link">네이버 지도, 카카오 지도 링크를 입력하세요</string>
     <string name="link_is_correct">링크가 잘못되지 않았는지 확인해주세요</string>
+    <string name="copy_clipboard">지도에서 주소를 가져왔어요!</string>
 
     //moim list
     <string name="moim_title">모임</string>
@@ -74,4 +81,8 @@
     <string name="hold_background">holdBackground</string>
     <string name="sns_background">snsBackground</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="lying_holdy">lyingHoldy</string>
+    <string name="splash">splash</string>
+    <string name="holdy_logo">holdyLogo</string>
+    <string name="on_boarding_holdy">onboardingHoldy</string>
 </resources>

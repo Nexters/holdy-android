@@ -1,7 +1,6 @@
 package team.nexters.semonemo.ui.home.hold.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -45,8 +44,6 @@ internal fun InformationContent(
         }
         Spacer(modifier = Modifier.height(24.dp))
         Image(
-            modifier = Modifier
-                .clickable { onBackPressed() },
             painter = painterResource(id = R.drawable.holdy3),
             contentDescription = stringResource(id = R.string.holdy)
         )

@@ -3,6 +3,7 @@ package team.nexters.data.datastore
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,6 +26,7 @@ class DataStoreManager @Inject constructor(
     private val datastore = appContext.dataStore
 
     private val sessionKey = stringPreferencesKey("sessionKey")
+    private val uidKey = intPreferencesKey("uidKey")
 
     suspend fun setSession(session: String) {
         datastore.edit { preferences ->
@@ -42,6 +44,24 @@ class DataStoreManager @Inject constructor(
         }
         .map { preferences ->
             preferences[sessionKey] ?: ""
+        }
+
+    suspend fun setUid(uid: Int) {
+        datastore.edit { preferences ->
+            preferences[uidKey] = uid
+        }
+    }
+
+    val uid = datastore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map { preferences ->
+            preferences[uidKey] ?: 0
         }
 }
 

@@ -34,6 +34,7 @@ object Versions {
         const val HiltNavigationCompose = "1.0.0"
         const val Coil = "2.1.0"
         const val Tooltip = "0.2.0"
+        const val Pager = "0.20.1"
     }
 
     object Test {

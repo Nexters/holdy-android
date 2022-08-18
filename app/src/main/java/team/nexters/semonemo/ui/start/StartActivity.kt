@@ -5,18 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import team.nexters.semonemo.R
 import team.nexters.semonemo.theme.SemoNemoTheme
 import team.nexters.semonemo.ui.home.HomeActivity
-import team.nexters.semonemo.ui.start.login.LoginScreen
+import team.nexters.semonemo.ui.start.navigation.StartNavigation
 
 @AndroidEntryPoint
-class LoginActivity : ComponentActivity() {
+class StartActivity : ComponentActivity() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            return Intent(context, LoginActivity::class.java)
+            return Intent(context, StartActivity::class.java)
         }
     }
 
@@ -24,14 +24,13 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SemoNemoTheme {
-                LoginScreen()
+                StartNavigation(navController = rememberNavController())
             }
         }
     }
 
     fun startMain() {
         startActivity(HomeActivity.newIntent(this))
-        overridePendingTransition(R.anim.slide_in_bottom,R.anim.none)
         finish()
     }
 }
