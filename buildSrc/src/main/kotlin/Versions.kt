@@ -32,9 +32,10 @@ object Versions {
         const val LifecycleViewModel = "2.5.0"
         const val Accompanist = "0.24.4-alpha"
         const val HiltNavigationCompose = "1.0.0"
-        const val Coil = "2.1.0"
+        const val Coil = "2.2.0"
         const val Tooltip = "0.2.0"
         const val Pager = "0.20.1"
+        const val Capturable = "1.0.3"
     }
 
     object Test {

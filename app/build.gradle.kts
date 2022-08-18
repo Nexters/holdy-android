@@ -64,7 +64,6 @@ dependencies {
     Dependencies.Essential.forEach(::implementation)
     Dependencies.Compose.forEach(::implementation)
     Dependencies.Ktx.forEach(::implementation)
-    implementation("dev.shreyaspatil:capturable:1.0.3")
     implementation(platform(Dependencies.Firebase.Bom))
     Dependencies.Firebase.List.forEach(::implementation)
     Dependencies.Kakao.List.forEach(::implementation)
