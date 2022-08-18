@@ -60,6 +60,9 @@ internal fun ShareSnsScreen(
             color = backgroundColor
         )
     }
+    LaunchedEffect(Unit){
+        viewModel.getNewHoldList()
+    }
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
             when (event) {
