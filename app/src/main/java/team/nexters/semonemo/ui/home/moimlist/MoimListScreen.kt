@@ -121,11 +121,8 @@ private fun MoimListScreen(
                 .padding(horizontal = 20.dp)
                 .background(MaterialTheme.colors.background)
         ) {
-            Spacer(modifier = Modifier.height(19.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             TopBar(
-                title = stringResource(id = R.string.moim_title),
-                painter = painterResource(id = R.drawable.small_holdy1),
-                contentDescription = stringResource(id = R.string.holdy),
                 navigateToHold = navigateToHold
             )
             Spacer(modifier = Modifier.height(32.dp))
@@ -143,7 +140,7 @@ private fun MoimListScreen(
                         buttonText = stringResource(id = R.string.hide_finished_moim)
                     )
                 }
-                MoimListColumn(moims, navigateToMoimDetail,isClosedMoimHide)
+                MoimListColumn(moims, navigateToMoimDetail, isClosedMoimHide)
             }
         }
         Box(
@@ -153,6 +150,7 @@ private fun MoimListScreen(
             contentAlignment = Alignment.BottomEnd
         ) {
             FloatingActionButton(
+                modifier = Modifier,
                 onClick = { navigateToMoimCreate() }) {
                 Icon(
                     modifier = Modifier.align(Alignment.Center),

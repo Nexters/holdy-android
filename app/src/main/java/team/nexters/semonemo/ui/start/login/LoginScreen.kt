@@ -1,5 +1,6 @@
 package team.nexters.semonemo.ui.start.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,8 +22,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.R
@@ -32,7 +33,6 @@ import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
 import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Gray6
-import team.nexters.semonemo.ui.start.StartActivity
 import team.nexters.semonemo.ui.start.StartEvent
 import team.nexters.semonemo.ui.start.StartViewModel
 
@@ -41,7 +41,6 @@ internal fun LoginScreen(
     viewModel: StartViewModel,
     navigateToOnBoarding: () -> Unit
 ) {
-    val activity = (LocalContext.current as StartActivity)
     val lifecycleOwner = LocalLifecycleOwner.current
     val scaffoldState = rememberScaffoldState()
     LaunchedEffect(Unit) {
@@ -83,7 +82,10 @@ private fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(84.dp))
-        Text("logo") //TODO
+        Image(
+            painter = painterResource(id = R.drawable.holdy_logo_title),
+            contentDescription = stringResource(id = R.string.holdy_logo)
+        )
         Spacer(modifier = Modifier.height(157.dp))
         TextField(
             modifier = Modifier
