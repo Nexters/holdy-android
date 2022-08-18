@@ -4,6 +4,7 @@ import team.nexters.data.hold.api.HoldApi
 import team.nexters.data.hold.mapper.toDomain
 import team.nexters.data.util.ResponseHandler
 import team.nexters.domain.hold.model.Hold
+import team.nexters.domain.hold.model.NewHold
 import team.nexters.domain.hold.repository.HoldRepository
 import team.nexters.shared.ResultWrapper
 import team.nexters.shared.flatMap
@@ -19,4 +20,12 @@ class HoldRepositoryImpl @Inject constructor(private val holdApi: HoldApi) : Hol
             }.toList()
         }
 
+    override suspend fun getNewHoldList(): ResultWrapper<List<NewHold>> =
+        ResponseHandler.handleApi {
+            holdApi.getNewStamps()
+        }.flatMap { stampList ->
+            stampList.map { stamp ->
+                stamp.toDomain()
+            }
+        }
 }
