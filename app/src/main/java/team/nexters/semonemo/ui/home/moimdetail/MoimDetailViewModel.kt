@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import team.nexters.domain.moim.usecase.GetMoimDetailUseCase
 import team.nexters.domain.moim.usecase.PutAttendanceUseCase
+import team.nexters.domain.moim.usecase.PutHostAttendanceUseCase
 import team.nexters.semonemo.base.BaseViewModel
 import team.nexters.shared.ResultWrapper
 import timber.log.Timber
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class MoimDetailViewModel @Inject constructor(
     private val moimDetailUseCase: GetMoimDetailUseCase,
     private val putAttendanceUseCase: PutAttendanceUseCase,
+    private val putHostAttendanceUseCase: PutHostAttendanceUseCase
 ) : BaseViewModel() {
 
     private val _eventFlow = MutableSharedFlow<MoimDetailEvent>(extraBufferCapacity = 1)
@@ -57,6 +59,23 @@ class MoimDetailViewModel @Inject constructor(
                 }
                 is ResultWrapper.Error -> {
                     Timber.e("갈게요 실패${result.message}")
+                }
+                else -> {
+
+                }
+            }
+        }
+    }
+
+    fun onCameButtonClicked(moimId: Int, userId: Int, isCome: Boolean) {
+        viewModelScope.launch {
+            when (val result =
+                putHostAttendanceUseCase(PutHostAttendanceUseCase.Param(moimId, userId, isCome))) {
+                is ResultWrapper.Success -> {
+                    Timber.e("왔어요 성공")
+                }
+                is ResultWrapper.Error -> {
+                    Timber.e("왔어요 실패${result.message}")
                 }
                 else -> {
 

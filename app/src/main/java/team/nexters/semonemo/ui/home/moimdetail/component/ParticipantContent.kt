@@ -60,7 +60,10 @@ internal fun ParticipantContent(
     hostNickname: String,
     scaffoldState: BackdropScaffoldState,
     participants: List<Participant>,
-    onInvite: () -> Unit
+    moimId: Int,
+    isLoginUserHost: Boolean,
+    onInvite: () -> Unit,
+    onCameButtonClicked: (Int, Int, Boolean) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
     val context = LocalContext.current
@@ -84,14 +87,14 @@ internal fun ParticipantContent(
                 )
             )
             Row {
-                if (participants.size == 1) {
+                if (participants.size == 1 && isLoginUserHost) {
                     Tooltip(
                         text = stringResource(id = R.string.send_link_moim_invite),
                         maxLines = 1,
                         anchorEdge = AnchorEdge.Start
                     )
                 }
-                if (isHostMode) {
+                if (isLoginUserHost) {
                     Image(
                         modifier = Modifier.clickable {
                             onInvite()
@@ -115,7 +118,10 @@ internal fun ParticipantContent(
                     nickname = participant.nickname,
                     team = participant.group,
                     hostNickname = hostNickname,
-                    isHostMode = isHostMode
+                    isHostMode = isHostMode,
+                    moimId = moimId,
+                    userId = participant.id,
+                    onCameButtonClicked = onCameButtonClicked
                 )
             }
         }
@@ -128,7 +134,10 @@ private fun ParticipantItem(
     nickname: String,
     team: String,
     hostNickname: String,
-    isHostMode: Boolean
+    isHostMode: Boolean,
+    moimId: Int,
+    userId: Int,
+    onCameButtonClicked: (Int, Int, Boolean) -> Unit,
 ) {
     var isCome by remember { mutableStateOf(false) }
     val buttonColor = if (isCome) {
@@ -176,46 +185,30 @@ private fun ParticipantItem(
                 }
             }
             if (isHostMode) {
-                if (hostNickname == nickname) {
-                    Button(
-                        modifier = Modifier.height(24.dp),
-                        onClick = { },
-                        shape = RoundedCornerShape(4.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.background
-                        ),
-                        text = stringResource(id = R.string.not_come),
-                        textStyle = MaterialTheme.typography.caption,
-                        contentPadding = PaddingValues(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 3.dp,
-                            bottom = 4.dp
-                        ),
-                        enabled = false
-                    )
-                } else {
-                    Button(
-                        modifier = Modifier.height(24.dp),
-                        onClick = { isCome = !isCome },
-                        shape = RoundedCornerShape(4.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = buttonColor
-                        ),
-                        text = if (isCome) {
-                            stringResource(id = R.string.not_come)
-                        } else {
-                            stringResource(id = R.string.come)
-                        },
-                        textStyle = MaterialTheme.typography.caption,
-                        contentPadding = PaddingValues(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 3.dp,
-                            bottom = 4.dp
-                        ),
-                    )
-                }
+                Button(
+                    modifier = Modifier.height(24.dp),
+                    onClick = {
+                        isCome = !isCome
+                        onCameButtonClicked(moimId, userId, isCome)
+                    },
+                    shape = RoundedCornerShape(4.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = buttonColor
+                    ),
+                    text = if (isCome) {
+                        stringResource(id = R.string.not_come)
+                    } else {
+                        stringResource(id = R.string.come)
+                    },
+                    textStyle = MaterialTheme.typography.caption,
+                    contentPadding = PaddingValues(
+                        start = 8.dp,
+                        end = 8.dp,
+                        top = 3.dp,
+                        bottom = 4.dp
+                    ),
+                    enabled = hostNickname != nickname
+                )
             }
         }
         Divider(
