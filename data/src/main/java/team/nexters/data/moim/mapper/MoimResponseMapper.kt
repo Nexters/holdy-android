@@ -14,7 +14,6 @@ internal fun MoimResponse.toDomain() = MoimModel(
     place = place.toDomain(),
     startDate = startDate,
     endDate = endDate
-
 )
 
 fun HostResponse.toDomain() = Host(
