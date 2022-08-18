@@ -109,7 +109,7 @@ private fun MoimListScreen(
     navigateToMoimDetail: (Int) -> Unit = {},
     navigateToHold: () -> Unit = {},
 ) {
-    var isHide by remember { mutableStateOf(false) }
+    var isClosedMoimHide by remember { mutableStateOf(false) }
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -130,7 +130,7 @@ private fun MoimListScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             if (moims.isEmpty()) {
-                NoMoim(navigateToMoimCreate)
+                NoMoim()
             } else {
                 Box(
                     modifier = Modifier.fillMaxWidth(),
@@ -138,12 +138,12 @@ private fun MoimListScreen(
                 ) {
                     EndMoimFilter(
                         modifier = Modifier
-                            .noRippleClickable { isHide = !isHide },
-                        checked = isHide,
+                            .noRippleClickable { isClosedMoimHide = !isClosedMoimHide },
+                        checked = isClosedMoimHide,
                         buttonText = stringResource(id = R.string.hide_finished_moim)
                     )
                 }
-                MoimListColumn(moims, navigateToMoimDetail)
+                MoimListColumn(moims, navigateToMoimDetail,isClosedMoimHide)
             }
         }
         Box(
