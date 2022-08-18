@@ -62,6 +62,7 @@ internal fun ParticipantContent(
     participants: List<Participant>,
     moimId: Int,
     isLoginUserHost: Boolean,
+    isEnd: Boolean,
     onInvite: () -> Unit,
     onCameButtonClicked: (Int, Int, Boolean) -> Unit,
 ) {
@@ -121,6 +122,7 @@ internal fun ParticipantContent(
                     isHostMode = isHostMode,
                     moimId = moimId,
                     userId = participant.id,
+                    isEnd = isEnd,
                     onCameButtonClicked = onCameButtonClicked
                 )
             }
@@ -137,6 +139,7 @@ private fun ParticipantItem(
     isHostMode: Boolean,
     moimId: Int,
     userId: Int,
+    isEnd: Boolean,
     onCameButtonClicked: (Int, Int, Boolean) -> Unit,
 ) {
     var isCome by remember { mutableStateOf(false) }
@@ -207,7 +210,7 @@ private fun ParticipantItem(
                         top = 3.dp,
                         bottom = 4.dp
                     ),
-                    enabled = hostNickname != nickname
+                    enabled = hostNickname != nickname || isEnd.not()
                 )
             }
         }

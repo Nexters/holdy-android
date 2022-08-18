@@ -124,6 +124,7 @@ private fun MoimDetailScreen(
                 participants = moimDetail.participants,
                 moimId = moimDetail.id,
                 isLoginUserHost = moimDetail.loginUser.isHost,
+                isEnd = moimDetail.isEnd,
                 onInvite = { onInvite(args) },
                 onCameButtonClicked = onCameButtonClicked
             )
@@ -176,7 +177,8 @@ private fun MoimDetailScreen(
                 } else {
                     stringResource(id = R.string.go)
                 },
-                textColor = textColor
+                textColor = textColor,
+                enabled = moimDetail.isEnd.not()
             )
         }
     }
