@@ -11,6 +11,7 @@ import team.nexters.data.user.mapper.toDomain
 import team.nexters.data.util.ResponseHandler.handleApi
 import team.nexters.data.util.ResponseHandler.headerIntercept
 import team.nexters.data.util.ResponseHandler.idIntercept
+import team.nexters.domain.user.model.LoginModel
 import team.nexters.domain.user.repository.UserRepository
 import team.nexters.domain.user.usecase.LoginUseCase
 import team.nexters.shared.ResultWrapper
@@ -27,6 +28,11 @@ class UserRepositoryImpl @Inject constructor(
             userApi.login(loginRequestModel.toData())
                 .headerIntercept(dataStore)
                 .idIntercept(dataStore)
+        }.flatMap { it.toDomain() }
+
+    override suspend fun getMyInfo(): ResultWrapper<LoginModel> =
+        handleApi {
+            userApi.getMyInfo()
         }.flatMap { it.toDomain() }
 
     override suspend fun getSession(): ResultWrapper<String> {

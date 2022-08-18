@@ -6,3 +6,8 @@ data class Attendance(
     @SerializedName("wantToAttend")
     val wantToAttend: Boolean
 )
+
+data class HostAttendance(
+    @SerializedName("attend")
+    val attend: Boolean
+)

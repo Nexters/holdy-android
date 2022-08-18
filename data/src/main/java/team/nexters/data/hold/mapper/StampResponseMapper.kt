@@ -7,6 +7,6 @@ import team.nexters.domain.hold.model.Hold
 fun Stamp.toDomain(): Hold {
     return Hold(
         id = this.id,
-        moimDetail = this.meeting.toDomain()
+        moim = this.meeting.toDomain()
     )
 }

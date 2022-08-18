@@ -8,5 +8,7 @@ data class LoginResponse(
     @SerializedName("nickname")
     val nickname: String,
     @SerializedName("group")
-    val group: String
+    val group: String,
+    @SerializedName("profileImageUrl")
+    val profileImageUrl: String
 )

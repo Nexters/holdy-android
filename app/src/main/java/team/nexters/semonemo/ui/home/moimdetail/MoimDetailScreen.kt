@@ -34,6 +34,7 @@ import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.share.ShareClient
 import com.kakao.sdk.share.WebSharerClient
 import team.nexters.domain.moim.model.MoimModel
+import team.nexters.domain.moim.model.Participant
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.ProgressIndicator
@@ -75,20 +76,19 @@ internal fun MoimDetailScreen(
                 }
             }
         }
-        viewModel.getMoimDetail(id)
     }
-    when (val state = viewModel.uiState.collectAsState().value) {
-        is MoimDetailState.Success -> {
-            MoimDetailScreen(
-                onBackPressed = { viewModel.postEvent(MoimDetailEvent.NavigateToMoimList) },
-                onInvite = { viewModel.postEvent(MoimDetailEvent.ShareKaKao(it)) },
-                onAttendanceButtonClicked = viewModel::onAttendanceButtonClicked,
-                moimDetail = state.moimDetailModel
-            )
-        }
-        else -> {
-            ProgressIndicator()
-        }
+    val state = viewModel.uiState.collectAsState().value
+    if (state.loading) {
+        ProgressIndicator()
+    } else {
+        MoimDetailScreen(
+            onBackPressed = { viewModel.postEvent(MoimDetailEvent.NavigateToMoimList) },
+            onInvite = { viewModel.postEvent(MoimDetailEvent.ShareKaKao(it)) },
+            onAttendanceButtonClicked = viewModel::onAttendanceButtonClicked,
+            onCameButtonClicked = viewModel::onCameButtonClicked,
+            moimDetail = state.moimDetailModel!!,
+            contentLoading = state.contentLoading
+        )
     }
 }
 
@@ -98,10 +98,12 @@ private fun MoimDetailScreen(
     onBackPressed: () -> Unit,
     onInvite: (Map<String, String>) -> Unit,
     onAttendanceButtonClicked: (Int, Boolean) -> Unit,
-    moimDetail: MoimModel
+    onCameButtonClicked: (Int, Int, Boolean) -> Unit,
+    moimDetail: MoimModel,
+    contentLoading: Boolean
 ) {
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
-    var isCome by remember { mutableStateOf(false) } // 갈게요 Button
+    var isCome by remember { mutableStateOf(moimDetail.loginUser.wantToAttend) } // 갈게요 Button
     val parsedDate = DateParser.toTemplateArgs(moimDetail.startDate, moimDetail.endDate)
     val args = mapOf(
         "moim_id" to "${moimDetail.id}",
@@ -116,11 +118,11 @@ private fun MoimDetailScreen(
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
                     .padding(top = 32.dp),
-                isHostMode = moimDetail.loginUser.isHost,
+                moim = moimDetail,
                 scaffoldState = scaffoldState,
-                hostNickname = moimDetail.host.nickname,
-                participants = moimDetail.participants,
+                contentLoading = contentLoading,
                 onInvite = { onInvite(args) },
+                onCameButtonClicked = onCameButtonClicked
             )
         },
         frontLayerScrimColor = Color.Unspecified,
@@ -171,7 +173,8 @@ private fun MoimDetailScreen(
                 } else {
                     stringResource(id = R.string.go)
                 },
-                textColor = textColor
+                textColor = textColor,
+                enabled = moimDetail.isEnd.not()
             )
         }
     }

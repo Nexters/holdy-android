@@ -9,10 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ProgressIndicator() {
+fun ProgressIndicator(
+    alignment: Alignment = Alignment.Center
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = alignment
     ) {
         CircularProgressIndicator(
             color = MaterialTheme.colors.primary

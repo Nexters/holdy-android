@@ -9,6 +9,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,6 +37,7 @@ class DataStoreManager @Inject constructor(
 
     val session = datastore.data
         .catch { exception ->
+            Timber.d("tag1 exception ${exception.message}")
             if (exception is IOException) {
                 emit(emptyPreferences())
             } else {

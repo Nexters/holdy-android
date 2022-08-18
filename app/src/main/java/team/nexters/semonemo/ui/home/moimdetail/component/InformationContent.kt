@@ -89,7 +89,7 @@ internal fun InformationContent(
                     .width(24.dp)
             )
             Text(
-                modifier = Modifier.clickable {  },
+                modifier = Modifier.clickable { },
                 text = stringResource(id = R.string.map_open),
                 style = MaterialTheme.typography.body2.copy(
                     color = MaterialTheme.colors.onPrimary.copy(

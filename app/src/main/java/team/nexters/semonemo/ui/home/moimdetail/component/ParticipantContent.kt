@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,34 +42,39 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.github.skgmn.composetooltip.AnchorEdge
 import kotlinx.coroutines.launch
-import team.nexters.domain.moim.model.Participant
+import team.nexters.domain.moim.model.MoimModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
+import team.nexters.semonemo.common.ProgressIndicator
 import team.nexters.semonemo.common.Tooltip
 import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Gray0
 import team.nexters.semonemo.theme.Gray1
 import team.nexters.semonemo.theme.Gray6
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ParticipantContent(
     modifier: Modifier = Modifier,
-    isHostMode: Boolean,
-    hostNickname: String,
+    moim: MoimModel,
     scaffoldState: BackdropScaffoldState,
-    participants: List<Participant>,
-    onInvite: () -> Unit
+    contentLoading: Boolean,
+    onInvite: () -> Unit,
+    onCameButtonClicked: (Int, Int, Boolean) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
     val context = LocalContext.current
-    val snackbarCoroutineScope = rememberCoroutineScope()
+    val snackBarCoroutineScope = rememberCoroutineScope()
+    val isHostMode = moim.loginUser.isHost
+    val participants = moim.participants
     Column(
         modifier = modifier
     ) {
-        InfoBox(isHostMode)
+        InfoBox(moim.loginUser.isHost)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -84,7 +90,7 @@ internal fun ParticipantContent(
                 )
             )
             Row {
-                if (participants.size == 1) {
+                if (participants.size == 1 && isHostMode) {
                     Tooltip(
                         text = stringResource(id = R.string.send_link_moim_invite),
                         maxLines = 1,
@@ -95,7 +101,7 @@ internal fun ParticipantContent(
                     Image(
                         modifier = Modifier.clickable {
                             onInvite()
-                            snackbarCoroutineScope.launch {
+                            snackBarCoroutineScope.launch {
                                 scaffoldState.snackbarHostState.showSnackbar(context.getString(R.string.link_copy))
                             }
                         },
@@ -106,31 +112,47 @@ internal fun ParticipantContent(
 
             }
         }
-        LazyColumn(
-            state = scrollState
-        ) {
-            items(participants) { participant ->
-                ParticipantItem(
-                    profile = R.drawable.holdy3,
-                    nickname = participant.nickname,
-                    team = participant.group,
-                    hostNickname = hostNickname,
-                    isHostMode = isHostMode
-                )
+        if (contentLoading) {
+            ProgressIndicator()
+        } else {
+            LazyColumn(
+                state = scrollState
+            ) {
+                items(participants) { participant ->
+                    ParticipantItem(
+                        profile = participant.profileImageUrl,
+                        nickname = participant.nickname,
+                        team = participant.group,
+                        hostNickname = moim.host.nickname,
+                        isHostMode = isHostMode,
+                        moimId = moim.id,
+                        userId = participant.id,
+                        isEnd = moim.isEnd,
+                        attend = participant.attended,
+                        onCameButtonClicked = onCameButtonClicked
+                    )
+                }
             }
         }
+
     }
 }
 
 @Composable
 private fun ParticipantItem(
-    profile: Int,
+    profile: String,
     nickname: String,
     team: String,
     hostNickname: String,
-    isHostMode: Boolean
+    isHostMode: Boolean,
+    moimId: Int,
+    userId: Int,
+    isEnd: Boolean,
+    attend: Boolean,
+    onCameButtonClicked: (Int, Int, Boolean) -> Unit,
 ) {
-    var isCome by remember { mutableStateOf(false) }
+    var isCome by remember { mutableStateOf(attend) }
+    Timber.e(isCome.toString())
     val buttonColor = if (isCome) {
         MaterialTheme.colors.background
     } else {
@@ -145,8 +167,9 @@ private fun ParticipantItem(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = profile),
+                AsyncImage(
+                    modifier = Modifier.size(56.dp),
+                    model = profile,
                     contentDescription = stringResource(id = R.string.holdy)
                 )
                 Spacer(modifier = Modifier.width(12.dp))
@@ -176,46 +199,30 @@ private fun ParticipantItem(
                 }
             }
             if (isHostMode) {
-                if (hostNickname == nickname) {
-                    Button(
-                        modifier = Modifier.height(24.dp),
-                        onClick = { },
-                        shape = RoundedCornerShape(4.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.background
-                        ),
-                        text = stringResource(id = R.string.not_come),
-                        textStyle = MaterialTheme.typography.caption,
-                        contentPadding = PaddingValues(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 3.dp,
-                            bottom = 4.dp
-                        ),
-                        enabled = false
-                    )
-                } else {
-                    Button(
-                        modifier = Modifier.height(24.dp),
-                        onClick = { isCome = !isCome },
-                        shape = RoundedCornerShape(4.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = buttonColor
-                        ),
-                        text = if (isCome) {
-                            stringResource(id = R.string.not_come)
-                        } else {
-                            stringResource(id = R.string.come)
-                        },
-                        textStyle = MaterialTheme.typography.caption,
-                        contentPadding = PaddingValues(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 3.dp,
-                            bottom = 4.dp
-                        ),
-                    )
-                }
+                Button(
+                    modifier = Modifier.height(24.dp),
+                    onClick = {
+                        isCome = !isCome
+                        onCameButtonClicked(moimId, userId, isCome)
+                    },
+                    shape = RoundedCornerShape(4.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = buttonColor
+                    ),
+                    text = if (isCome) {
+                        stringResource(id = R.string.not_come)
+                    } else {
+                        stringResource(id = R.string.come)
+                    },
+                    textStyle = MaterialTheme.typography.caption,
+                    contentPadding = PaddingValues(
+                        start = 8.dp,
+                        end = 8.dp,
+                        top = 3.dp,
+                        bottom = 4.dp
+                    ),
+                    enabled = (hostNickname != nickname) && isEnd.not()
+                )
             }
         }
         Divider(

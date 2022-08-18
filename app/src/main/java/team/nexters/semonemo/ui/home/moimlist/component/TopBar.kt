@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,7 +21,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.R
@@ -31,9 +32,6 @@ import team.nexters.semonemo.theme.White
 
 @Composable
 internal fun TopBar(
-    title: String,
-    painter: Painter,
-    contentDescription: String,
     navigateToHold: () -> Unit
 ) {
     Row(
@@ -43,16 +41,17 @@ internal fun TopBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.h2.copy(
-                color = MaterialTheme.colors.onBackground
-            )
+        Image(
+            modifier = Modifier
+                .width(90.dp)
+                .height(32.dp),
+            painter = painterResource(id = R.drawable.holdy_logo_title),
+            contentDescription = stringResource(id = R.string.holdy_logo)
         )
         Image(
             modifier = Modifier.noRippleClickable { navigateToHold() },
-            painter = painter,
-            contentDescription = contentDescription
+            painter = painterResource(id = R.drawable.small_holdy1),
+            contentDescription = stringResource(id = R.string.holdy)
         )
 
     }

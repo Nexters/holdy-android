@@ -49,6 +49,8 @@ data class ParticipantResponse(
     val nickname: String,
     @SerializedName("group")
     val group: String,
-    @SerializedName("attend")
-    val attend: Boolean
+    @SerializedName("attended")
+    val attended: Boolean,
+    @SerializedName("profileImageUrl")
+    val profileImageUrl: String
 )

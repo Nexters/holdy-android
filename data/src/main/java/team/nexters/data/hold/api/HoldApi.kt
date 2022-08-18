@@ -5,8 +5,8 @@ import retrofit2.http.GET
 import team.nexters.data.base.BaseResponse
 import team.nexters.data.hold.model.Stamp
 
-interface HoldApi {
 
+interface HoldApi {
     @GET("/api/stamps")
-    fun getStamps(): Response<BaseResponse<List<Stamp>>>
+    suspend fun getStamps(): Response<BaseResponse<List<Stamp>>>
 }
