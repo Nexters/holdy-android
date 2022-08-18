@@ -1,7 +1,10 @@
 package team.nexters.semonemo.ui.home.moimdetail
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,9 +28,13 @@ class MoimDetailViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<MoimDetailEvent>(extraBufferCapacity = 1)
     val eventFlow = _eventFlow.asSharedFlow()
 
-    private val _uiState = MutableStateFlow<MoimDetailState>(MoimDetailState.Empty)
+    private val _uiState = MutableStateFlow(MoimDetailState())
     val uiState: StateFlow<MoimDetailState>
         get() = _uiState
+
+    private val _isCome = mutableStateOf(false)
+    val isCome: State<Boolean>
+        get() = _isCome
 
     fun postEvent(event: MoimDetailEvent) {
         viewModelScope.launch {
@@ -35,11 +42,26 @@ class MoimDetailViewModel @Inject constructor(
         }
     }
 
-    fun getMoimDetail(id: Int) {
+    suspend fun getMoimDetail(
+        id: Int,
+        isContentLoading: Boolean = false
+    ) {
         viewModelScope.launch {
+            if (!isContentLoading) {
+                _uiState.value = _uiState.value.copy(loading = true)
+            }
             when (val result = moimDetailUseCase(GetMoimDetailUseCase.Param(id))) {
                 is ResultWrapper.Success -> {
-                    _uiState.value = MoimDetailState.Success(result.value)
+                    if (isContentLoading) {
+                        _uiState.value = _uiState.value.copy(
+                            moimDetailModel = result.value,
+                        )
+                    } else {
+                        _uiState.value = _uiState.value.copy(
+                            moimDetailModel = result.value,
+                            loading = false
+                        )
+                    }
                 }
                 is ResultWrapper.Error -> {
                     emitException(result.message)
@@ -48,13 +70,16 @@ class MoimDetailViewModel @Inject constructor(
                     result.e.message?.let { emitException(it) }
                 }
             }
-        }
+        }.join()
     }
 
     fun onAttendanceButtonClicked(moimId: Int, isCome: Boolean) {
+        _uiState.value = _uiState.value.copy(contentLoading = true)
         viewModelScope.launch {
             when (val result = putAttendanceUseCase(PutAttendanceUseCase.Param(moimId, isCome))) {
                 is ResultWrapper.Success -> {
+                    getMoimDetail(moimId, true)
+                    _uiState.value = _uiState.value.copy(contentLoading = false)
                     Timber.e("갈게요 성공")
                 }
                 is ResultWrapper.Error -> {
@@ -68,10 +93,13 @@ class MoimDetailViewModel @Inject constructor(
     }
 
     fun onCameButtonClicked(moimId: Int, userId: Int, isCome: Boolean) {
+        _uiState.value = _uiState.value.copy(contentLoading = true)
         viewModelScope.launch {
             when (val result =
                 putHostAttendanceUseCase(PutHostAttendanceUseCase.Param(moimId, userId, isCome))) {
                 is ResultWrapper.Success -> {
+                    getMoimDetail(moimId, true)
+                    _uiState.value = _uiState.value.copy(contentLoading = false)
                     Timber.e("왔어요 성공")
                 }
                 is ResultWrapper.Error -> {
