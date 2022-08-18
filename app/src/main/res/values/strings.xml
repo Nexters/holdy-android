@@ -84,5 +84,6 @@
     <string name="lying_holdy">lyingHoldy</string>
     <string name="splash">splash</string>
     <string name="holdy_logo">holdyLogo</string>
-    <string name="on_boarding_holdy">onboardingHoldy</string>
+    <string name="on_boarding_holdy">onBoardingHoldy</string>
+    <string name="hold_crown">holdCrown</string>
 </resources>

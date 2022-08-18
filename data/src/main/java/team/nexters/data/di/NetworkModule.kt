@@ -21,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import team.nexters.data.BuildConfig
 import team.nexters.data.base.HeaderInterceptor
 import team.nexters.data.datastore.DataStoreManager
+import team.nexters.data.hold.api.HoldApi
 import team.nexters.data.moim.api.MoimApi
 import team.nexters.data.user.api.UserApi
 import timber.log.Timber
@@ -43,6 +44,11 @@ internal class NetworkModule {
     @Singleton
     fun provideUserApi(retrofit: Retrofit): UserApi =
         retrofit.create(UserApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideHoldApi(retrofit: Retrofit): HoldApi =
+        retrofit.create(HoldApi::class.java)
 
     @Provides
     @Singleton

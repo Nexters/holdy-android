@@ -1,10 +1,7 @@
 package team.nexters.semonemo.ui.home.moimdetail
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,10 +28,6 @@ class MoimDetailViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MoimDetailState())
     val uiState: StateFlow<MoimDetailState>
         get() = _uiState
-
-    private val _isCome = mutableStateOf(false)
-    val isCome: State<Boolean>
-        get() = _isCome
 
     fun postEvent(event: MoimDetailEvent) {
         viewModelScope.launch {

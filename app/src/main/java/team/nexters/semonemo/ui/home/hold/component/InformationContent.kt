@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,12 +17,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import team.nexters.semonemo.R
 import team.nexters.semonemo.extension.noRippleClickable
 
 @Composable
 internal fun InformationContent(
     modifier: Modifier = Modifier,
+    profile: String,
     nickname: String,
     club: String,
     onBackPressed: () -> Unit
@@ -43,8 +46,9 @@ internal fun InformationContent(
             )
         }
         Spacer(modifier = Modifier.height(24.dp))
-        Image(
-            painter = painterResource(id = R.drawable.holdy3),
+        AsyncImage(
+            modifier = Modifier.size(64.dp),
+            model = profile,
             contentDescription = stringResource(id = R.string.holdy)
         )
         Spacer(modifier = Modifier.height(20.dp))

@@ -8,7 +8,8 @@ import team.nexters.domain.user.usecase.LoginUseCase
 internal fun LoginResponse.toDomain() = LoginModel(
     id = id,
     nickname = nickname,
-    group = group
+    group = group,
+    profileImageUrl = profileImageUrl
 )
 
 internal fun LoginUseCase.Param.toData() = LoginRequest(
