@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SemoNemo</string>
+    <string name="app_name">Holdy</string>
     //login
     <string name="placeholder_code">16자리 코드를 입력해주세요</string>
     <string name="start">시작하기</string>
