@@ -28,4 +28,13 @@ class HoldRepositoryImpl @Inject constructor(private val holdApi: HoldApi) : Hol
                 stamp.toDomain()
             }
         }
+
+    override suspend fun getRemovedNewHoldList(): ResultWrapper<List<NewHold>> =
+        ResponseHandler.handleApi {
+            holdApi.getRemovedNewStamps()
+        }.flatMap { stampList ->
+            stampList.map { stamp ->
+                stamp.toDomain()
+            }
+        }
 }
