@@ -12,6 +12,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.core.content.FileProvider
@@ -30,6 +32,9 @@ import java.io.IOException
 
 @AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, HomeActivity::class.java)
@@ -53,18 +58,12 @@ class HomeActivity : ComponentActivity() {
     }
 
     fun onShareButtonClicked(stickerBitmap: Bitmap) {
-        val writePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (writePermission == PackageManager.PERMISSION_GRANTED) {
-            val stickerBitmap = saveImageAtCacheDir(stickerBitmap)
-            val backgroundBitmap = saveImageAtCacheDir(drawableToBitmap(R.drawable.gray_background))
-            shareInstagram(stickerBitmap, backgroundBitmap)
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            val stickerUri = saveImageAtCacheDir(stickerBitmap) ?: Uri.EMPTY
+            val backgroundUri = saveImageAtCacheDir(drawableToBitmap(R.drawable.gray_background))
+            shareInstagram(stickerUri, backgroundUri)
         } else {
-            val requestExternalStorageCode = 1
-            val permissionStorage = arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            requestPermissions(permissionStorage, requestExternalStorageCode)
+            permissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
     }
 

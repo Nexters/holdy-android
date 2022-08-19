@@ -15,9 +15,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
+import team.nexters.semonemo.common.ErrorScreen
 import team.nexters.semonemo.common.TextField
 import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
@@ -43,6 +43,7 @@ internal fun LoginScreen(
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val scaffoldState = rememberScaffoldState()
+    var code by viewModel.code
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectWithLifecycle(lifecycleOwner) { event ->
             when (event) {
@@ -61,20 +62,34 @@ internal fun LoginScreen(
             )
         }
     }
+    val state = viewModel.loginUiState.collectAsState().value
     Scaffold(
         scaffoldState = scaffoldState,
     ) { contentPadding ->
         contentPadding
-        LoginScreen(onLogin = viewModel::login)
+        if (state.isNetworkError) {
+            ErrorScreen(
+                text = stringResource(id = R.string.network_error),
+                onclick = { viewModel.refresh() }
+            )
+        } else {
+            LoginScreen(
+                onLogin = viewModel::login,
+                code = code,
+                setCode = { code = it }
+            )
+        }
+
     }
 
 }
 
 @Composable
 private fun LoginScreen(
+    code: String,
+    setCode: (String) -> Unit,
     onLogin: (String) -> Unit
 ) {
-    var code by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -97,7 +112,7 @@ private fun LoginScreen(
             onValueChanged = { s ->
                 val count = s.count { it == '\n' }
                 if (count < 1) {
-                    code = s
+                    setCode(s)
                 }
 
             },
