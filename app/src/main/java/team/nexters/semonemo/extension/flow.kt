@@ -26,7 +26,7 @@ fun <T> Flow<T>.collectAsStateWithLifecycleRemember(
 
 fun <T> Flow<T>.collectWithLifecycle(
     lifecycleOwner: LifecycleOwner,
-    minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
+    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
     builder: Flow<T>.() -> Flow<T> = { this },
     action: suspend CoroutineScope.(T) -> Unit,
 ) {
