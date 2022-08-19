@@ -30,6 +30,9 @@ internal fun HomeNavigation(navController: NavHostController) {
                 },
                 navigateToHold = {
                     navController.navigate(HomeScreens.Hold.route)
+                },
+                navigateToShareSns = { backRoute ->
+                    navController.navigate("${HomeScreens.ShareSNS.route}/$backRoute")
                 }
             )
         }
@@ -58,14 +61,23 @@ internal fun HomeNavigation(navController: NavHostController) {
             route = HomeScreens.Hold.route
         ) {
             HoldScreen(
-                onBackPressed = { navController.navigate(HomeScreens.List.route) }
+                onBackPressed = { navController.navigate(HomeScreens.List.route) },
+                navigateToShareSns = { backRoute ->
+                    navController.navigate("${HomeScreens.ShareSNS.route}/$backRoute")
+                }
             )
         }
         composable(
-            route = HomeScreens.ShareSNS.route
-        ) {
+            route = HomeScreens.ShareSNS.route + "/{backRoute}",
+            arguments = listOf(
+                navArgument("backRoute") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
+            val backRoute = entry.arguments?.getString("backRoute") ?: ""
             ShareSnsScreen(
-                onBackPressed = { navController.navigate(HomeScreens.List.route) }
+                onBackPressed = { navController.navigate(backRoute) }
             )
         }
     }

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import team.nexters.domain.hold.usecase.GetNewHoldListUseCase
+import team.nexters.domain.hold.usecase.GetRemovedNoewHoldListUseCase
 import team.nexters.semonemo.base.BaseViewModel
 import team.nexters.shared.ResultWrapper
 import timber.log.Timber
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ShareSnsViewModel @Inject constructor(
-    private val newHoldListUseCase: GetNewHoldListUseCase
+    private val getRemovedNoewHoldListUseCase: GetRemovedNoewHoldListUseCase
 ) : BaseViewModel() {
     private val _eventFlow = MutableSharedFlow<ShareSnsEvent>(extraBufferCapacity = 1)
     val eventFlow = _eventFlow.asSharedFlow()
@@ -33,7 +34,7 @@ class ShareSnsViewModel @Inject constructor(
 
     fun getNewHoldList() = viewModelScope.launch {
         _uiState.value = _uiState.value.copy(loading = true)
-        when (val result = newHoldListUseCase(Unit)) {
+        when (val result = getRemovedNoewHoldListUseCase(Unit)) {
             is ResultWrapper.Success -> {
                 Timber.e("새 홀드성공")
                 _uiState.value = _uiState.value.copy(
