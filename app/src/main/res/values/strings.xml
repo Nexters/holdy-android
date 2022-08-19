@@ -35,8 +35,7 @@
     //moim list
     <string name="moim_title">모임</string>
     <string name="hide_finished_moim">끝난 모임 숨기기</string>
-    <string name="not_yet_moim">아직 초대받은 모임이 없어요</string>
-    <string name="not_yet_moim2">직접 만들어 볼까요?</string>
+    <string name="not_yet_moim">아직 초대받은 모임이 없어요\n직접 만들어 볼까요?</string>
 
     //moim detail
     <string name="link_copy">초대 링크를 클립보드에 복사했어요.</string>
@@ -63,6 +62,10 @@
     <string name="showing_hold2">홀드</string>
     <string name="showing_hold3">를 자랑해보세요!</string>
     <string name="share_instagram">인스타그램에 공유하기</string>
+
+    //error
+    <string name="network_error">인터넷 연결이 끊어졌어요\n네트워크를 확인하고 다시 시도해주세요</string>
+    <string name="retry">다시 시도</string>
 
     //content description
     <string name="checkbox">checkbox</string>
