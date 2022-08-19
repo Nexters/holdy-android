@@ -83,7 +83,7 @@ internal fun InformationContent(
             modifier = Modifier
                 .height(8.dp)
         )
-        Row {
+        /*Row { //TODO 초대 기능 구현 필요
             Spacer(
                 modifier = Modifier
                     .width(24.dp)
@@ -97,7 +97,7 @@ internal fun InformationContent(
                     )
                 )
             )
-        }
+        }*/
         Spacer(modifier = Modifier.height(40.dp))
     }
 }

@@ -2,7 +2,6 @@ package team.nexters.semonemo.ui.home.moimdetail.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,14 +42,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.github.skgmn.composetooltip.AnchorEdge
-import kotlinx.coroutines.launch
 import team.nexters.domain.moim.model.MoimModel
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
 import team.nexters.semonemo.common.ProgressIndicator
 import team.nexters.semonemo.common.Refresh
-import team.nexters.semonemo.common.Tooltip
 import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Gray0
 import team.nexters.semonemo.theme.Gray1
@@ -95,6 +91,7 @@ internal fun ParticipantContent(
                 Spacer(modifier = Modifier.width(4.dp))
                 Refresh(onClick = { onRefresh(moim.id) })
             }
+            /* //TODO 링크 기능 오류 수정 필요
             Row {
                 if (participants.size == 1 && isHostMode) {
                     Tooltip(
@@ -115,8 +112,8 @@ internal fun ParticipantContent(
                         contentDescription = stringResource(id = R.string.invite)
                     )
                 }
-
             }
+            */
         }
         if (contentLoading) {
             ProgressIndicator()
