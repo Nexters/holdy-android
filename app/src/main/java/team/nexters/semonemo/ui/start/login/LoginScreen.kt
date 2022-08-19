@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,8 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.R
 import team.nexters.semonemo.common.Button
@@ -31,10 +33,11 @@ import team.nexters.semonemo.common.ErrorScreen
 import team.nexters.semonemo.common.TextField
 import team.nexters.semonemo.extension.collectWithLifecycle
 import team.nexters.semonemo.extension.drawColoredShadow
-import team.nexters.semonemo.extension.noRippleClickable
 import team.nexters.semonemo.theme.Gray6
 import team.nexters.semonemo.ui.start.StartEvent
 import team.nexters.semonemo.ui.start.StartViewModel
+
+const val formUrl = "https://forms.gle/KHLr3mFohLBiXRTu8"
 
 @Composable
 internal fun LoginScreen(
@@ -127,12 +130,33 @@ private fun LoginScreen(
             shape = RoundedCornerShape(8.dp),
             text = stringResource(id = R.string.start)
         )
-        Text(
-            modifier = Modifier.noRippleClickable { },
-            text = stringResource(id = R.string.no_code),
-            style = MaterialTheme.typography.caption.copy(
-                color = Gray6
-            ),
-        )
+        AnnotatedClickableText()
     }
+}
+
+@Composable
+fun AnnotatedClickableText() {
+    val uriHandler = LocalUriHandler.current
+    val annotatedText = buildAnnotatedString {
+        pushStringAnnotation(
+            tag = "URL",
+            annotation = formUrl
+        )
+        append(stringResource(id = R.string.no_code))
+        pop()
+    }
+    ClickableText(
+        text = annotatedText,
+        onClick = { offset ->
+            annotatedText.getStringAnnotations(
+                tag = "URL", start = offset,
+                end = offset
+            ).firstOrNull()?.let { annotation ->
+                uriHandler.openUri(annotation.item)
+            }
+        },
+        style = MaterialTheme.typography.caption.copy(
+            color = Gray6
+        ),
+    )
 }
