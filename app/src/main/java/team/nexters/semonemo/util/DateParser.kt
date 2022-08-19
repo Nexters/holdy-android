@@ -33,6 +33,16 @@ object DateParser {
         return "${year}년 ${month}월 ${day}일 ${to12hour(startHour)}"
     }
 
+    fun toYearMonthDay(endDate: String): String {
+        val endTokens = endDate.split("T")
+        val endDateTokens = endTokens[0].split("-")
+        val year = endDateTokens[0]
+        val month =
+            if (endDateTokens[1].toInt() < 10) endDateTokens[1][1] else endDateTokens[1]
+        val day = if (endDateTokens[2].toInt() < 10) endDateTokens[2][1] else endDateTokens[2]
+        return "${year}년 ${month}월 ${day}일"
+    }
+
     private fun to12hour(hour: String): String {
         val intHour = hour.toInt()
         return if (intHour <= 12) {
