@@ -102,6 +102,7 @@ internal fun OnBoardingContent(
     onStartButtonClicked: () -> Unit
 ) {
     Column(
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
