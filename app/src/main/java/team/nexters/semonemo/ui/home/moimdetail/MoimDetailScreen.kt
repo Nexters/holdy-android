@@ -58,7 +58,7 @@ internal fun MoimDetailScreen(
             color = Primary
         )
     }
-    LaunchedEffect(Unit) {
+    LaunchedEffect(true) {
         viewModel.getMoimDetail(id)
     }
     LaunchedEffect(viewModel.eventFlow) {
