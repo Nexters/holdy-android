@@ -57,7 +57,7 @@ internal fun HoldScreen(
     if (state.loading || state.myInfo == null) {
         ProgressIndicator()
     } else {
-        HoldScreen(
+        HoldContent(
             onBackPressed = onBackPressed,
             myInfo = state.myInfo,
             holds = state.holds
@@ -67,7 +67,7 @@ internal fun HoldScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun HoldScreen(
+private fun HoldContent(
     onBackPressed: () -> Unit = {},
     myInfo: LoginModel,
     holds: List<Hold>

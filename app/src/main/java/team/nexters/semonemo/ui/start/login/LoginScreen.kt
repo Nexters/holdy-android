@@ -14,7 +14,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -37,7 +39,12 @@ import team.nexters.semonemo.theme.Gray6
 import team.nexters.semonemo.ui.start.StartEvent
 import team.nexters.semonemo.ui.start.StartViewModel
 
-const val formUrl = "https://forms.gle/KHLr3mFohLBiXRTu8"
+@Immutable
+object Url{
+    @Stable
+    const val form = "https://forms.gle/KHLr3mFohLBiXRTu8"
+}
+
 
 @Composable
 internal fun LoginScreen(
@@ -76,7 +83,7 @@ internal fun LoginScreen(
                 onclick = { viewModel.refresh() }
             )
         } else {
-            LoginScreen(
+            LoginContent(
                 onLogin = viewModel::login,
                 code = code,
                 setCode = { code = it }
@@ -88,7 +95,7 @@ internal fun LoginScreen(
 }
 
 @Composable
-private fun LoginScreen(
+private fun LoginContent(
     code: String,
     setCode: (String) -> Unit,
     onLogin: (String) -> Unit
@@ -140,7 +147,7 @@ fun AnnotatedClickableText() {
     val annotatedText = buildAnnotatedString {
         pushStringAnnotation(
             tag = "URL",
-            annotation = formUrl
+            annotation = Url.form
         )
         append(stringResource(id = R.string.no_code))
         pop()

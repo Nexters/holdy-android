@@ -103,7 +103,7 @@ internal fun MoimCreateScreen(
         scaffoldState = scaffoldState,
     ) { contentPadding ->
         contentPadding
-        MoimCreateScreen(
+        MoimCreateContent(
             date = date,
             startTime = startTime,
             endTime = endTime,
@@ -118,7 +118,7 @@ internal fun MoimCreateScreen(
 }
 
 @Composable
-private fun MoimCreateScreen(
+private fun MoimCreateContent(
     date: String,
     startTime: String,
     endTime: String,
