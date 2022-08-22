@@ -50,6 +50,7 @@ import team.nexters.semonemo.theme.Danger1
 import team.nexters.semonemo.theme.Tertiary
 import team.nexters.semonemo.ui.home.moimcreate.component.DateTextField
 import team.nexters.semonemo.ui.home.moimcreate.component.DoubleTextField
+import team.nexters.semonemo.util.DateParser.parseDate
 
 @Composable
 internal fun MoimCreateScreen(
@@ -309,3 +310,12 @@ private fun handleClipboard(
         }
     }
 }
+
+fun isMoimCreateAvailable(
+    date: String,
+    startTime: String,
+    endTime: String,
+    address: String,
+    detailAddress: String
+) =
+    date.isNotEmpty() && startTime.isNotEmpty() && endTime.isNotEmpty() && address.isNotEmpty() && detailAddress.isNotEmpty()
