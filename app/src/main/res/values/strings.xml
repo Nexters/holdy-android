@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Holdy</string>
     //login
-    <string name="placeholder_code">16자리 코드를 입력해주세요</string>
+    <string name="placeholder_code">10자리 코드를 입력해주세요</string>
     <string name="start">시작하기</string>
     <string name="no_code">코드가 없나요?</string>
     <string name="code_error">코드를 확인해 주세요</string>
