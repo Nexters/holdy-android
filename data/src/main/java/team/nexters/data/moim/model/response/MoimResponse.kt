@@ -23,7 +23,11 @@ data class MoimResponse(
 
 data class HostResponse(
     @SerializedName("nickname")
-    val nickname: String
+    val nickname: String,
+    @SerializedName("group")
+    val group: String,
+    @SerializedName("profileImageUrl")
+    val profileImageUrl: String,
 )
 
 data class PlaceResponse(

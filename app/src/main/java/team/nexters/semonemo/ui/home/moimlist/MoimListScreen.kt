@@ -95,7 +95,7 @@ internal fun MoimListScreen(
                 scaffoldState = scaffoldState,
             ) { contentPadding ->
                 contentPadding
-                MoimListScreen(
+                MoimListContent(
                     moims = state.moims,
                     navigateToMoimCreate = { viewModel.postEvent(MoimListEvent.NavigateToMoimCreate) },
                     navigateToMoimDetail = {
@@ -113,7 +113,7 @@ internal fun MoimListScreen(
 }
 
 @Composable
-private fun MoimListScreen(
+private fun MoimListContent(
     moims: List<MoimModel>,
     navigateToMoimCreate: () -> Unit = {},
     navigateToMoimDetail: (Int) -> Unit = {},

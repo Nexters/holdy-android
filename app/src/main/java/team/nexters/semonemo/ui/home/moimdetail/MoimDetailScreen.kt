@@ -58,7 +58,7 @@ internal fun MoimDetailScreen(
             color = Primary
         )
     }
-    LaunchedEffect(Unit) {
+    LaunchedEffect(true) {
         viewModel.getMoimDetail(id)
     }
     LaunchedEffect(viewModel.eventFlow) {
@@ -80,7 +80,7 @@ internal fun MoimDetailScreen(
     if (state.loading) {
         ProgressIndicator()
     } else {
-        MoimDetailScreen(
+        MoimDetailContent(
             onBackPressed = { viewModel.postEvent(MoimDetailEvent.NavigateToMoimList) },
             onInvite = { viewModel.postEvent(MoimDetailEvent.ShareKaKao(it)) },
             onAttendanceButtonClicked = viewModel::onAttendanceButtonClicked,
@@ -94,7 +94,7 @@ internal fun MoimDetailScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun MoimDetailScreen(
+private fun MoimDetailContent(
     onBackPressed: () -> Unit,
     onInvite: (Map<String, String>) -> Unit,
     onAttendanceButtonClicked: (Int, Boolean) -> Unit,

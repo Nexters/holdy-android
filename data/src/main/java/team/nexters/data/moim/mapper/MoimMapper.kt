@@ -32,7 +32,9 @@ internal fun MoimResponse.toDomain() = MoimModel(
 
 
 internal fun HostResponse.toDomain() = Host(
-    nickname = nickname
+    nickname = nickname,
+    group = group,
+    profileImageUrl = profileImageUrl,
 )
 
 internal fun PlaceResponse.toDomain() = Place(

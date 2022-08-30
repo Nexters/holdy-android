@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SemoNemo"
         android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="${KAKAO_NATIVE_APP_KEY}" />
 
         <activity
             android:name=".ui.splash.SplashActivity"

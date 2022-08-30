@@ -11,22 +11,27 @@ android {
     namespace = "team.nexters.semonemo"
     val kakaoNativeAppkey = "bce48acc93854a13f254a2c429f23856"
     defaultConfig {
+        manifestPlaceholders += mapOf()
         minSdk = Apps.minSdk
         targetSdk = Apps.targetSdk
         versionCode = Apps.versionCode
         versionName = Apps.versionName
         buildConfigField("String", "KAKAO_NATIVE_APP_KEY", "\"$kakaoNativeAppkey\"")
+        signingConfig = signingConfigs.getByName("debug")
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = kakaoNativeAppkey
     }
 
     buildTypes {
         release {
-            isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
         }
         debug {
-
+            isDebuggable = true
+            isMinifyEnabled = false
         }
     }
 

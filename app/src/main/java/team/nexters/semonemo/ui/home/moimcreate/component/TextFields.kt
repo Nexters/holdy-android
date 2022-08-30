@@ -25,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
@@ -33,6 +34,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import team.nexters.semonemo.common.TexFieldState
@@ -90,6 +92,7 @@ internal fun DoubleTextField(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun DateTextField(
     modifier: Modifier = Modifier,
@@ -107,6 +110,9 @@ internal fun DateTextField(
     thirdPlaceHolderText: String,
 ) {
     var textFieldState by remember { mutableStateOf(TexFieldState.EMPTY) }
+    LocalSoftwareKeyboardController.current?.run {
+        hide()
+    }
     val color = when (textFieldState) {
         TexFieldState.EMPTY -> Gray3
         TexFieldState.FOCUSING -> MaterialTheme.colors.primary
@@ -244,7 +250,7 @@ private fun InnerTextField(
                             TexFieldState.Written
                         }
                     )
-                    if(focusState.isFocused){
+                    if (focusState.isFocused) {
                         onFocused()
                     }
                 }

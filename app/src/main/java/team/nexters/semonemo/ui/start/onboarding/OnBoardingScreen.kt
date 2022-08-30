@@ -16,8 +16,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -41,8 +41,8 @@ import team.nexters.semonemo.ui.start.StartEvent
 import team.nexters.semonemo.ui.start.StartActivity
 import team.nexters.semonemo.ui.start.StartViewModel
 
+@Immutable
 object Page {
-    @Stable
     const val count = 4
 }
 

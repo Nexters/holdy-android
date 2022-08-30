@@ -93,7 +93,7 @@ internal fun ShareSnsScreen(
     if (state.loading) {
         ProgressIndicator()
     } else {
-        ShareSnsScreen(
+        ShareSnsContent(
             modifier = Modifier.fillMaxSize(),
             captureController = captureController,
             backgroundColor = backgroundColor,
@@ -108,7 +108,7 @@ internal fun ShareSnsScreen(
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-private fun ShareSnsScreen(
+private fun ShareSnsContent(
     modifier: Modifier = Modifier,
     captureController: CaptureController,
     backgroundColor: Color,
