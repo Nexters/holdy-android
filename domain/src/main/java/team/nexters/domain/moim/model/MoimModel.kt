@@ -24,7 +24,9 @@ data class Participant(
     val profileImageUrl: String
 )
 data class Host(
-    val nickname: String
+    val nickname: String,
+    val group: String,
+    val profileImageUrl: String,
 )
 
 data class Place(
