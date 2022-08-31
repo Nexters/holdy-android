@@ -82,24 +82,51 @@ internal fun OnBoardingScreen(
             count = count
         ) { page ->
             OnBoardingContent(
-                pagerState = pagerState,
                 page = page,
                 image = getHoldyImage(page),
                 introduce = getIntroduceText(page),
-                onStartButtonClicked = { viewModel.onStartButtonClicked() }
             )
         }
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            if (pagerState.currentPage < pagerState.pageCount - 1) {
+                HorizontalPagerIndicator(
+                    modifier = Modifier.padding(bottom = 56.dp),
+                    pagerState = pagerState,
+                    inactiveColor = MaterialTheme.colors.onSecondary,
+                    activeColor = MaterialTheme.colors.secondary,
+                    indicatorWidth = 8.dp,
+                    indicatorHeight = 8.dp
+                )
+            } else {
+                Button(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .padding(bottom = 40.dp)
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    onClick = { viewModel.onStartButtonClicked() },
+                    shape = RoundedCornerShape(8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.onPrimary
+                    ),
+                    textColor = MaterialTheme.colors.primary,
+                    text = stringResource(id = R.string.start)
+                )
+            }
+        }
+
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 internal fun OnBoardingContent(
-    pagerState: PagerState,
     page: Int,
     @DrawableRes image: Int,
     @StringRes introduce: Int,
-    onStartButtonClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -116,36 +143,6 @@ internal fun OnBoardingContent(
             color = MaterialTheme.colors.onPrimary
         )
         Spacer(modifier = Modifier.height(164.dp))
-    }
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        if (page == Page.count - 1) {
-            Button(
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .padding(bottom = 40.dp)
-                    .fillMaxWidth()
-                    .height(48.dp),
-                onClick = { onStartButtonClicked() },
-                shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.onPrimary
-                ),
-                textColor = MaterialTheme.colors.primary,
-                text = stringResource(id = R.string.start)
-            )
-        } else {
-            HorizontalPagerIndicator(
-                modifier = Modifier.padding(bottom = 56.dp),
-                pagerState = pagerState,
-                inactiveColor = MaterialTheme.colors.onSecondary,
-                activeColor = MaterialTheme.colors.secondary,
-                indicatorWidth = 8.dp,
-                indicatorHeight = 8.dp
-            )
-        }
     }
 }
 
