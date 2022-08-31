@@ -133,11 +133,13 @@ private fun MoimListItem(
                 )
             )
             Spacer(modifier = Modifier.height(20.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.Top) {
                 Image(
+                    modifier = Modifier.padding(top = 1.dp),
                     painter = painterResource(id = R.drawable.location),
                     contentDescription = stringResource(R.string.location),
                 )
+                Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = place,
                     style = MaterialTheme.typography.body2.copy(
@@ -151,6 +153,7 @@ private fun MoimListItem(
                     painter = painterResource(id = R.drawable.calendar),
                     contentDescription = stringResource(id = R.string.calendar)
                 )
+                Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = date,
                     style = MaterialTheme.typography.body2.copy(
