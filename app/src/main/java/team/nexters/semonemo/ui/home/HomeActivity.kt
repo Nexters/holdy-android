@@ -46,13 +46,7 @@ class HomeActivity : ComponentActivity() {
         setContent {
             SemoNemoTheme {
                 val navController = rememberNavController()
-                val coroutineScope = rememberCoroutineScope()
                 HomeNavigation(navController = navController)
-                BackHandler {
-                    coroutineScope.launch {
-                        navController.navigate(HomeScreens.List.route)
-                    }
-                }
             }
         }
     }

@@ -23,13 +23,19 @@ internal fun HomeNavigation(navController: NavHostController) {
         ) {
             MoimListScreen(
                 navigateToMoimCreate = {
-                    navController.navigate(HomeScreens.Creating.route)
+                    navController.navigate(HomeScreens.Creating.route){
+                        launchSingleTop = true
+                    }
                 },
                 navigateToMoimDetail = { id ->
-                    navController.navigate("${HomeScreens.Detail.route}/$id")
+                    navController.navigate("${HomeScreens.Detail.route}/$id"){
+                        launchSingleTop = true
+                    }
                 },
                 navigateToHold = {
-                    navController.navigate(HomeScreens.Hold.route)
+                    navController.navigate(HomeScreens.Hold.route){
+                        launchSingleTop = true
+                    }
                 },
                 navigateToShareSns = { backRoute ->
                     navController.navigate("${HomeScreens.ShareSNS.route}/$backRoute")
@@ -40,7 +46,7 @@ internal fun HomeNavigation(navController: NavHostController) {
             route = HomeScreens.Creating.route,
         ) {
             MoimCreateScreen(
-                onBackPressed = { navController.navigate(HomeScreens.List.route) }
+                onBackPressed = { navController.navigateUp() }
             )
         }
         composable(
@@ -53,7 +59,7 @@ internal fun HomeNavigation(navController: NavHostController) {
         ) { entry ->
             val id = entry.arguments?.getInt("id") ?: 0
             MoimDetailScreen(
-                onBackPressed = { navController.navigate(HomeScreens.List.route) },
+                onBackPressed = { navController.navigateUp() },
                 id = id
             )
         }
@@ -61,7 +67,7 @@ internal fun HomeNavigation(navController: NavHostController) {
             route = HomeScreens.Hold.route
         ) {
             HoldScreen(
-                onBackPressed = { navController.navigate(HomeScreens.List.route) },
+                onBackPressed = { navController.navigateUp() },
                 navigateToShareSns = { backRoute ->
                     navController.navigate("${HomeScreens.ShareSNS.route}/$backRoute")
                 }
